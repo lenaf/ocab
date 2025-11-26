@@ -1,0 +1,15 @@
+export const brandColors = [
+  { title: "OCAB Red", value: "red", hex: "#dc2626" },
+  { title: "OCAB Blue", value: "blue", hex: "#3b82f6" },
+  { title: "OCAB Orange", value: "orange", hex: "#f59e0b" },
+  { title: "OCAB Green", value: "green", hex: "#10b981" },
+  { title: "OCAB Purple", value: "purple", hex: "#7c3aed" },
+  { title: "OCAB Brown", value: "brown", hex: "#8b7355" },
+  { title: "OCAB Sage", value: "sage", hex: "#9ca38f" },
+  { title: "OCAB Olive", value: "olive", hex: "#6b7c59" },
+  { title: "OCAB Tan", value: "tan", hex: "#a0826d" },
+  { title: "OCAB Dark", value: "dark", hex: "#2c2c2c" },
+  { title: "OCAB Light", value: "light", hex: "#f7f5f2" },
+  { title: "Black", value: "black", hex: "#000000" },
+  { title: "White", value: "white", hex: "#ffffff" },
+];
