@@ -31,9 +31,9 @@ export default defineType({
       },
       initialValue: "1-1-1",
     },
-    {name: "column1", title: "Column 1", type: "columnElement"},
-    {name: "column2", title: "Column 2", type: "columnElement"},
-    {name: "column3", title: "Column 3", type: "columnElement"},
+    {name: "column1", title: "Column 1", type: "richText"},
+    {name: "column2", title: "Column 2", type: "richText"},
+    {name: "column3", title: "Column 3", type: "richText"},
   ],
   preview: {
     select: { description: "description" },

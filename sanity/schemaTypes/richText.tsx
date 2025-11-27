@@ -28,12 +28,35 @@ export default defineType({
           {title: 'Strike', value: 'strike-through'},
         ],
         annotations: [
-          {name: 'link', type: 'linkAnnotation'},
-          {name: 'color', type: 'colorAnnotation'},
+          {
+            name: 'link',
+            type: 'linkAnnotation',
+            icon: () => '🔗',
+            components: {
+              annotation: (props: any) => <span className="text-blue-500 underline">{props.children}</span>
+            }
+          },
+          {
+            name: 'color',
+            type: 'colorAnnotation',
+            icon: () => '🎨',
+            components: {
+              annotation: (props: any) => <span style={{color: props.value?.value?.value}}>{props.children}</span>
+            }
+          },
+          {
+            name: 'backgroundColor',
+            type: 'backgroundColorAnnotation',
+            icon: () => '🖍️',
+            components: {
+              annotation: (props: any) => <span style={{backgroundColor: props.value?.value?.value}} className="px-1">{props.children}</span>
+            }
+          },
         ],
       },
     }),
     defineArrayMember({type: 'richTextImage'}),
+    defineArrayMember({type: 'richTextButton'}),
     defineArrayMember({type: 'table'}),
   ],
 })

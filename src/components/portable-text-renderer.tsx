@@ -3,11 +3,24 @@ import {SanityImage} from './ui/sanity-image'
 
 export const portableTextComponents = {
   types: {
-    image: ({value}: any) => (
+    richTextImage: ({value}: any) => (
       <figure className="my-8">
         <SanityImage asset={value.asset} alt={value.alt} className="rounded-lg w-full shadow-md" />
         {value.caption && <figcaption className="text-center text-sm text-gray-600 mt-3">{value.caption}</figcaption>}
       </figure>
+    ),
+    richTextButton: ({value}: any) => (
+      <a
+        href={value.link}
+        className="inline-block px-6 py-3 font-bold uppercase tracking-wide transition-all my-4"
+        style={{
+          backgroundColor: value.style === 'solid' ? (value.color?.value || '#000') : 'transparent',
+          color: value.textColor?.value || (value.style === 'solid' ? '#fff' : '#000'),
+          border: value.style === 'transparent' ? `2px solid ${value.color?.value || '#000'}` : 'none',
+        }}
+      >
+        {value.text}
+      </a>
     ),
     table: ({value}: any) => (
       <div className="overflow-x-auto my-8 rounded-lg border border-gray-200 shadow-sm">
@@ -31,6 +44,9 @@ export const portableTextComponents = {
     ),
     color: ({value, children}: any) => (
       <span style={{color: value.value?.value}}>{children}</span>
+    ),
+    backgroundColor: ({value, children}: any) => (
+      <span style={{backgroundColor: value.value?.value}} className="px-1">{children}</span>
     ),
   },
   block: {

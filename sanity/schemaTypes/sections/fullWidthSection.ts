@@ -6,10 +6,7 @@ export default defineType({
   type: 'object',
   fields: [
     {name: 'description', title: 'Description', type: 'string', description: 'Internal label to identify this section', validation: (Rule) => Rule.required()},
-    {name: 'backgroundColor', title: 'Background Color', type: 'simplerColor'},
-    {name: 'backgroundImage', title: 'Background Image', type: 'image', options: {hotspot: true}},
-    {name: 'alignment', title: 'Content Alignment', type: 'string', options: {list: [{title: 'Left', value: 'left'}, {title: 'Center', value: 'center'}, {title: 'Right', value: 'right'}]}, initialValue: 'left'},
-    {name: 'elements', title: 'Elements', type: 'array', of: [{type: 'richTextElement'}, {type: 'mediaElement'}, {type: 'buttonElement'}, {type: 'carouselElement'}]},
+    {name: 'content', title: 'Content', type: 'richText'},
   ],
   preview: {
     select: {description: 'description'},

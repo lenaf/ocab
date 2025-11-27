@@ -47,9 +47,9 @@ export type ThreeColumnSection = {
   description: string;
   backgroundColor?: SimplerColor;
   ratio?: "1-1-1" | "2-1-1" | "1-2-1" | "1-1-2";
-  column1?: ColumnElement;
-  column2?: ColumnElement;
-  column3?: ColumnElement;
+  column1?: RichText;
+  column2?: RichText;
+  column3?: RichText;
 };
 
 export type TwoColumnSection = {
@@ -57,36 +57,14 @@ export type TwoColumnSection = {
   description: string;
   backgroundColor?: SimplerColor;
   ratio?: "1-1" | "3-2" | "2-3" | "2-1" | "1-2";
-  leftColumn?: ColumnElement;
-  rightColumn?: ColumnElement;
+  leftColumn?: RichText;
+  rightColumn?: RichText;
 };
 
 export type FullWidthSection = {
   _type: "fullWidthSection";
   description: string;
-  backgroundColor?: SimplerColor;
-  backgroundImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  alignment?: "left" | "center" | "right";
-  elements?: Array<{
-    _key: string;
-  } & RichTextElement | {
-    _key: string;
-  } & MediaElement | {
-    _key: string;
-  } & ButtonElement | {
-    _key: string;
-  } & CarouselElement>;
+  content?: RichText;
 };
 
 export type BannerSection = {
@@ -104,13 +82,7 @@ export type BannerSection = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  elements?: Array<{
-    _key: string;
-  } & RichTextElement | {
-    _key: string;
-  } & MediaElement | {
-    _key: string;
-  } & ButtonElement>;
+  content?: RichText;
 };
 
 export type HeroSlide = {
@@ -137,88 +109,6 @@ export type HeroSlide = {
   overlayOpacity?: number;
 };
 
-export type ColumnElement = {
-  _type: "columnElement";
-  backgroundColor?: SimplerColor;
-  backgroundImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  elements?: Array<{
-    _key: string;
-  } & RichTextElement | {
-    _key: string;
-  } & MediaElement | {
-    _key: string;
-  } & ButtonElement | {
-    _key: string;
-  } & CarouselElement>;
-};
-
-export type CarouselImage = {
-  _type: "carouselImage";
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: string;
-  caption?: string;
-};
-
-export type CarouselElement = {
-  _type: "carouselElement";
-  images?: Array<{
-    _key: string;
-  } & CarouselImage>;
-  autoplay?: boolean;
-};
-
-export type ButtonElement = {
-  _type: "buttonElement";
-  text: string;
-  link: string;
-  color?: SimplerColor;
-  textColor?: SimplerColor;
-  style?: "solid" | "transparent";
-  size?: "sm" | "default" | "lg";
-};
-
-export type MediaElement = {
-  _type: "mediaElement";
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  alt?: string;
-  caption?: string;
-};
-
-export type RichTextElement = {
-  _type: "richTextElement";
-  content?: RichText;
-};
-
 export type RichText = Array<{
   children?: Array<{
     marks?: Array<string>;
@@ -231,7 +121,8 @@ export type RichText = Array<{
   markDefs?: Array<unknown // Unable to locate the referenced type "link" in schema
   | {
     _key: string;
-  } & Color>;
+  } & Color | unknown // Unable to locate the referenced type "backgroundColor" in schema
+  >;
   level?: number;
   _type: "block";
   _key: string;
@@ -239,7 +130,19 @@ export type RichText = Array<{
   _key: string;
 } & RichTextImage | {
   _key: string;
+} & RichTextButton | {
+  _key: string;
 } & Table>;
+
+export type RichTextButton = {
+  _type: "richTextButton";
+  text: string;
+  link: string;
+  color?: SimplerColor;
+  textColor?: SimplerColor;
+  style?: "solid" | "transparent";
+  size?: "sm" | "default" | "lg";
+};
 
 export type RichTextImage = {
   _type: "richTextImage";
@@ -254,6 +157,11 @@ export type RichTextImage = {
   crop?: SanityImageCrop;
   alt?: string;
   caption?: string;
+};
+
+export type BackgroundColorAnnotation = {
+  _type: "backgroundColorAnnotation";
+  value?: SimplerColor;
 };
 
 export type ColorAnnotation = {
@@ -606,5 +514,5 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = HeroCarouselSection | EventsCarouselSection | PressCarouselSection | BlogPostsCarouselSection | ThreeColumnSection | TwoColumnSection | FullWidthSection | BannerSection | HeroSlide | ColumnElement | CarouselImage | CarouselElement | ButtonElement | MediaElement | RichTextElement | RichText | RichTextImage | ColorAnnotation | LinkAnnotation | PressArticle | SimplerColor | SanityImageCrop | SanityImageHotspot | BlogPost | Markdown | Slug | Event | Page | SiteSettings | Table | TableRow | MediaTag | HighlightColor | TextColor | Color | RgbaColor | HsvaColor | HslaColor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = HeroCarouselSection | EventsCarouselSection | PressCarouselSection | BlogPostsCarouselSection | ThreeColumnSection | TwoColumnSection | FullWidthSection | BannerSection | HeroSlide | RichText | RichTextButton | RichTextImage | BackgroundColorAnnotation | ColorAnnotation | LinkAnnotation | PressArticle | SimplerColor | SanityImageCrop | SanityImageHotspot | BlogPost | Markdown | Slug | Event | Page | SiteSettings | Table | TableRow | MediaTag | HighlightColor | TextColor | Color | RgbaColor | HsvaColor | HslaColor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;

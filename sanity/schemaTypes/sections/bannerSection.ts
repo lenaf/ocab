@@ -17,21 +17,15 @@ export default defineType({
       options: { hotspot: true },
     },
     {
-      name: "elements",
-      title: "Elements",
-      type: "array",
-      of: [
-        { type: "richTextElement" },
-        { type: "mediaElement" },
-        { type: "buttonElement" },
-      ],
+      name: "content",
+      title: "Content",
+      type: "richText",
     },
   ],
   preview: {
-    select: { elements: "elements" },
-    prepare({ elements }) {
+    prepare() {
       return {
-        title: `Banner (${elements?.length || 0} elements)`,
+        title: "Banner Section",
         media: () => "🎯",
       };
     },
