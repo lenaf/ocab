@@ -49,7 +49,7 @@ export default defineType({
     {
       name: 'backgroundColor',
       title: 'Background Color',
-      type: 'customColor',
+      type: 'simplerColor',
     },
   ],
 })

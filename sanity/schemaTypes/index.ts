@@ -4,7 +4,7 @@ import blogPost from "./blogPost";
 import pressArticle from "./pressArticle";
 import siteSettings from "./siteSettings";
 import richText from "./richText";
-import customColor from "./customColor";
+
 import columnContainer from "./elements/columnContainer";
 import pageSectionContainer from "./elements/pageSectionContainer";
 import collageItem from "./elements/collageItem";
@@ -34,7 +34,6 @@ export const schemaTypes = [
   richTextImage,
   richTextButton,
   richText,
-  customColor,
   columnContainer,
   pageSectionContainer,
   collageItem,

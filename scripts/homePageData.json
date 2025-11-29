@@ -4,7 +4,9 @@
       "_key": "banner1",
       "_type": "bannerSection",
       "backgroundColor": {
-        "value": "#f3f4f6"
+        "label": "Color",
+        "label": "OurCity Green",
+        "value": "#10b981"
       },
       "content": [
         {
@@ -76,6 +78,7 @@
       "_type": "fullWidthSection",
       "container": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#3D9BE9"
         },
         "collageItems": [
@@ -225,6 +228,7 @@
           "_key": "slide1",
           "_type": "heroSlide",
           "backgroundColor": {
+        "label": "Color",
             "value": "transparent"
           },
           "backgroundImage": {
@@ -279,6 +283,7 @@
           "_key": "slide2",
           "_type": "heroSlide",
           "backgroundColor": {
+        "label": "Color",
             "value": "transparent"
           },
           "backgroundImage": {
@@ -333,6 +338,7 @@
           "_key": "slide3",
           "_type": "heroSlide",
           "backgroundColor": {
+        "label": "Color",
             "value": "transparent"
           },
           "backgroundImage": {
@@ -390,6 +396,7 @@
       "_type": "fullWidthSection",
       "container": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#F7B32B"
         },
         "content": [
@@ -467,6 +474,7 @@
       "_type": "twoColumnSection",
       "leftColumn": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#3D9BE9"
         },
         "content": [
@@ -505,6 +513,7 @@
       "ratio": "1-2",
       "rightColumn": {
         "backgroundColor": {
+        "label": "Color",
           "value": "transparent"
         },
         "content": [
@@ -601,6 +610,7 @@
       "_type": "threeColumnSection",
       "column1": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#f3f4f6"
         },
         "content": [
@@ -638,6 +648,7 @@
       },
       "column2": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#f3f4f6"
         },
         "content": [
@@ -675,6 +686,7 @@
       },
       "column3": {
         "backgroundColor": {
+        "label": "Color",
           "value": "#f3f4f6"
         },
         "content": [
@@ -717,6 +729,7 @@
       "_type": "fullWidthSection",
       "container": {
         "backgroundColor": {
+        "label": "Color",
           "value": "transparent"
         },
         "content": [
@@ -759,6 +772,7 @@
       "_key": "blog1",
       "_type": "blogPostsCarouselSection",
       "backgroundColor": {
+        "label": "Color",
         "value": "#f9fafb"
       },
       "heading": "Latest News & Analysis",
@@ -768,6 +782,7 @@
       "_key": "press1",
       "_type": "pressCarouselSection",
       "backgroundColor": {
+        "label": "Color",
         "value": "#374151"
       },
       "heading": "In The News",
@@ -777,6 +792,7 @@
       "_key": "events1",
       "_type": "eventsCarouselSection",
       "backgroundColor": {
+        "label": "Color",
         "value": "#111827"
       },
       "heading": "Upcoming Actions",
