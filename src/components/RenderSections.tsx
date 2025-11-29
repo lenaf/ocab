@@ -1,6 +1,6 @@
 import { PortableTextRenderer } from "./portable-text-renderer";
 import { SanityImage } from "./ui/sanity-image";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 import { client } from "@/lib/sanity";
 import { HeroCarousel } from "./HeroCarousel";
 import { CarouselNav } from "./CarouselNav";
@@ -129,57 +129,64 @@ async function SectionComponent({ section }: { section: Section }) {
   if (_type === "bannerSection") {
     return (
       <section
-        className="py-4"
+        className="py-3 px-6 md:px-12 lg:px-24"
         style={{
           backgroundColor: section.backgroundColor?.value || "transparent",
         }}
       >
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            {section.elements?.map((element, i) => {
-              if (element._type === "mediaElement") {
-                return (
-                  <SanityImage
-                    key={i}
-                    asset={element.image?.asset}
-                    alt={element.alt}
-                    className="h-12"
-                  />
-                );
-              }
-              return renderElement(element, i, "prose");
-            })}
-          </div>
+        {renderBackgroundImage(section.backgroundImage)}
+        <div className="prose max-w-none text-center mx-auto [&>*]:my-0">
+          <PortableTextRenderer value={section.content} />
         </div>
       </section>
     );
   }
 
   if (_type === "fullWidthSection") {
-    const alignClass =
-      section.alignment === "center"
-        ? "items-center text-center"
-        : section.alignment === "right"
-          ? "items-end text-right"
-          : "items-start text-left";
-
+    const bgColor = section.container?.backgroundColor?.value || 'transparent';
+    const maxWidthClass = 
+      section.container?.maxWidth === '1/2' ? 'max-w-[50%]' :
+      section.container?.maxWidth === '1/3' ? 'max-w-[33.333%]' :
+      section.container?.maxWidth === '2/3' ? 'max-w-[66.666%]' : 'max-w-none';
+    
     return (
-      <section
-        className="py-12 md:py-16 lg:py-20"
-        style={{
-          backgroundColor: section.backgroundColor?.value || "transparent",
-        }}
-      >
-        {renderBackgroundImage(section.backgroundImage)}
-        <div className="container mx-auto px-6 md:px-12">
-          <div className={`flex flex-col gap-6 md:gap-8 ${alignClass}`}>
-            {section.elements?.map((element, i) =>
-              renderElement(
-                element,
-                i,
-                "prose prose-lg max-w-none prose-headings:text-inherit prose-p:text-inherit"
-              )
-            )}
+      <section className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 relative" style={{ backgroundColor: bgColor }}>
+        {section.container?.backgroundImage?.asset && (
+          <div className="absolute inset-0 -z-10">
+            <SanityImage asset={section.container.backgroundImage.asset} alt="" className="w-full h-full object-cover" width={1920} />
+          </div>
+        )}
+        {section.container?.collageItems?.map((item, i: number) => (
+          <div
+            key={i}
+            className="absolute z-0 hidden md:block"
+            style={{
+              left: `${item.position?.x || 0}%`,
+              top: `${item.position?.y || 0}%`,
+              width: `${item.position?.width || 30}%`,
+              height: `${item.position?.height || 30}%`,
+            }}
+          >
+            <SanityImage asset={item.image?.asset} alt={item.alt || ''} className="w-full h-full object-contain" />
+          </div>
+        ))}
+        {section.container?.collageItems?.map((item, i: number) => (
+          <div
+            key={`mobile-${i}`}
+            className="absolute z-0 md:hidden"
+            style={{
+              left: `${item.mobilePosition?.x || 0}%`,
+              top: `${item.mobilePosition?.y || 0}%`,
+              width: `${item.mobilePosition?.width || 40}%`,
+              height: `${item.mobilePosition?.height || 40}%`,
+            }}
+          >
+            <SanityImage asset={item.image?.asset} alt={item.alt || ''} className="w-full h-full object-contain" />
+          </div>
+        ))}
+        <div className={`relative z-10 flex ${section.container?.contentAlignment === 'left' ? 'justify-start' : section.container?.contentAlignment === 'right' ? 'justify-end' : 'justify-center'}`}>
+          <div className={`prose prose-lg ${maxWidthClass} text-${section.container?.contentAlignment || 'center'} ${section.container?.textColor === 'light' ? 'text-white prose-invert' : 'text-gray-900'}`}>
+            <PortableTextRenderer value={section.container?.content} />
           </div>
         </div>
       </section>
@@ -188,25 +195,34 @@ async function SectionComponent({ section }: { section: Section }) {
 
   if (_type === "twoColumnSection") {
     const ratioClass =
-      section.ratio === "3-2"
-        ? "md:grid-cols-[3fr_2fr]"
-        : section.ratio === "2-3"
-          ? "md:grid-cols-[2fr_3fr]"
-          : section.ratio === "2-1"
-            ? "md:grid-cols-[2fr_1fr]"
-            : section.ratio === "1-2"
-              ? "md:grid-cols-[1fr_2fr]"
-              : "md:grid-cols-2";
+      section.ratio === "3-2" ? "md:grid-cols-[3fr_2fr]" :
+      section.ratio === "2-3" ? "md:grid-cols-[2fr_3fr]" :
+      section.ratio === "2-1" ? "md:grid-cols-[2fr_1fr]" :
+      section.ratio === "1-2" ? "md:grid-cols-[1fr_2fr]" : "md:grid-cols-2";
+
+    const renderCol = (col: TwoColumnSection['leftColumn']) => {
+      if (!col) return null;
+      const bgColor = col.backgroundColor?.value || 'transparent';
+      const textColorClass = col.textColor === 'light' ? 'text-white prose-invert' : 'text-gray-900';
+      return (
+        <div className="relative p-6 md:p-8 lg:p-12" style={{ backgroundColor: bgColor }}>
+          {col.backgroundImage?.asset && (
+            <div className="absolute inset-0 -z-10">
+              <SanityImage asset={col.backgroundImage.asset} alt="" className="w-full h-full object-cover" />
+            </div>
+          )}
+          <div className={`prose max-w-none text-${col.contentAlignment || 'left'} ${textColorClass}`}>
+            <PortableTextRenderer value={col.content} />
+          </div>
+        </div>
+      );
+    };
 
     return (
-      <section
-        style={{
-          backgroundColor: section.backgroundColor?.value || "transparent",
-        }}
-      >
+      <section>
         <div className={`grid ${ratioClass}`}>
-          {renderColumn(section.leftColumn, "left")}
-          {renderColumn(section.rightColumn, "right")}
+          {renderCol(section.leftColumn)}
+          {renderCol(section.rightColumn)}
         </div>
       </section>
     );
@@ -214,24 +230,34 @@ async function SectionComponent({ section }: { section: Section }) {
 
   if (_type === "threeColumnSection") {
     const ratioClass =
-      section.ratio === "2-1-1"
-        ? "md:grid-cols-[2fr_1fr_1fr]"
-        : section.ratio === "1-2-1"
-          ? "md:grid-cols-[1fr_2fr_1fr]"
-          : section.ratio === "1-1-2"
-            ? "md:grid-cols-[1fr_1fr_2fr]"
-            : "md:grid-cols-3";
+      section.ratio === "2-1-1" ? "md:grid-cols-[2fr_1fr_1fr]" :
+      section.ratio === "1-2-1" ? "md:grid-cols-[1fr_2fr_1fr]" :
+      section.ratio === "1-1-2" ? "md:grid-cols-[1fr_1fr_2fr]" : "md:grid-cols-3";
+
+    const renderCol = (col: ThreeColumnSection['column1']) => {
+      if (!col) return null;
+      const bgColor = col.backgroundColor?.value || 'transparent';
+      const textColorClass = col.textColor === 'light' ? 'text-white prose-invert' : 'text-gray-900';
+      return (
+        <div className="relative p-6 md:p-8 lg:p-12" style={{ backgroundColor: bgColor }}>
+          {col.backgroundImage?.asset && (
+            <div className="absolute inset-0 -z-10">
+              <SanityImage asset={col.backgroundImage.asset} alt="" className="w-full h-full object-cover" />
+            </div>
+          )}
+          <div className={`prose max-w-none text-${col.contentAlignment || 'left'} ${textColorClass}`}>
+            <PortableTextRenderer value={col.content} />
+          </div>
+        </div>
+      );
+    };
 
     return (
-      <section
-        style={{
-          backgroundColor: section.backgroundColor?.value || "transparent",
-        }}
-      >
+      <section>
         <div className={`grid ${ratioClass}`}>
-          {renderColumn(section.column1, "col1")}
-          {renderColumn(section.column2, "col2")}
-          {renderColumn(section.column3, "col3")}
+          {renderCol(section.column1)}
+          {renderCol(section.column2)}
+          {renderCol(section.column3)}
         </div>
       </section>
     );
@@ -259,7 +285,7 @@ async function SectionComponent({ section }: { section: Section }) {
 
     return (
       <section
-        className="py-20 px-6 md:px-12 relative"
+        className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 relative"
         style={{ backgroundColor: section.backgroundColor?.value || "#f5f3f0" }}
       >
         {section.heading && (
@@ -268,7 +294,7 @@ async function SectionComponent({ section }: { section: Section }) {
           </h2>
         )}
         <div
-          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24"
           id="blog-posts-carousel"
         >
           <div className="flex gap-4 pb-4">
@@ -329,7 +355,7 @@ async function SectionComponent({ section }: { section: Section }) {
 
     return (
       <section
-        className="py-20 px-6 md:px-12 relative"
+        className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 relative"
         style={{ backgroundColor: section.backgroundColor?.value || "#8b7355" }}
       >
         {section.heading && (
@@ -338,7 +364,7 @@ async function SectionComponent({ section }: { section: Section }) {
           </h2>
         )}
         <div
-          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24"
           id="press-carousel"
         >
           <div className="flex gap-4 pb-4">
@@ -405,7 +431,7 @@ async function SectionComponent({ section }: { section: Section }) {
 
     return (
       <section
-        className="py-20 px-6 md:px-12 relative"
+        className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 relative"
         style={{ backgroundColor: section.backgroundColor?.value || "#2c2c2c" }}
       >
         {section.heading && (
@@ -414,7 +440,7 @@ async function SectionComponent({ section }: { section: Section }) {
           </h2>
         )}
         <div
-          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+          className="overflow-x-auto scrollbar-hide -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24"
           id="events-carousel"
         >
           <div className="flex gap-4 pb-4">

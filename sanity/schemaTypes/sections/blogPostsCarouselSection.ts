@@ -19,15 +19,19 @@ export default defineType({
     {
       name: "backgroundColor",
       title: "Background Color",
-      type: "simplerColor",
+      type: "customColor",
     },
   ],
   preview: {
-    select: { title: "heading" },
-    prepare({ title }) {
+    select: { 
+      title: "heading",
+      limit: "limit",
+    },
+    prepare({ title, limit }) {
       return {
-        title: title || "Blog Posts Carousel",
-        subtitle: "Blog Posts Carousel Section",
+        title: title || 'Blog Posts',
+        subtitle: `Carousel • ${limit || 12} articles`,
+        media: () => '📰',
       };
     },
   },

@@ -44,27 +44,23 @@ export type BlogPostsCarouselSection = {
 
 export type ThreeColumnSection = {
   _type: "threeColumnSection";
-  description: string;
-  backgroundColor?: SimplerColor;
   ratio?: "1-1-1" | "2-1-1" | "1-2-1" | "1-1-2";
-  column1?: RichText;
-  column2?: RichText;
-  column3?: RichText;
+  column1?: ColumnContainer;
+  column2?: ColumnContainer;
+  column3?: ColumnContainer;
 };
 
 export type TwoColumnSection = {
   _type: "twoColumnSection";
-  description: string;
-  backgroundColor?: SimplerColor;
   ratio?: "1-1" | "3-2" | "2-3" | "2-1" | "1-2";
-  leftColumn?: RichText;
-  rightColumn?: RichText;
+  leftColumn?: ColumnContainer;
+  rightColumn?: ColumnContainer;
 };
 
 export type FullWidthSection = {
   _type: "fullWidthSection";
-  description: string;
-  content?: RichText;
+  maxWidth?: "full" | "2/3" | "1/2" | "1/3";
+  container?: PageSectionContainer;
 };
 
 export type BannerSection = {
@@ -85,9 +81,11 @@ export type BannerSection = {
   content?: RichText;
 };
 
-export type HeroSlide = {
-  _type: "heroSlide";
-  image?: {
+export type HeroSlide = HeroSlide;
+
+export type CollageItem = {
+  _type: "collageItem";
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -99,14 +97,77 @@ export type HeroSlide = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  heading?: string;
-  text?: string;
-  buttonText?: string;
-  buttonLink?: string;
-  buttonColor?: SimplerColor;
-  buttonTextColor?: SimplerColor;
-  overlayColor?: SimplerColor;
-  overlayOpacity?: number;
+  alt?: string;
+  position?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  mobilePosition?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+};
+
+export type PageSectionContainer = {
+  _type: "pageSectionContainer";
+  content?: RichText;
+  textColor?: "dark" | "light";
+  alignment?: "left" | "center" | "right";
+  backgroundColor: SimplerColor;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  backgroundMobileImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  collageItems?: Array<{
+    _key: string;
+  } & CollageItem>;
+};
+
+export type ColumnContainer = {
+  _type: "columnContainer";
+  content?: RichText;
+  textColor?: "dark" | "light";
+  alignment?: "left" | "center" | "right";
+  backgroundColor: SimplerColor;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  collageItems?: Array<{
+    _key: string;
+  } & CollageItem>;
 };
 
 export type RichText = Array<{
@@ -118,11 +179,13 @@ export type RichText = Array<{
   }>;
   style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
   listItem?: "bullet" | "number";
-  markDefs?: Array<unknown // Unable to locate the referenced type "link" in schema
-  | {
+  markDefs?: Array<{
     _key: string;
-  } & Color | unknown // Unable to locate the referenced type "backgroundColor" in schema
-  >;
+  } & LinkAnnotation | {
+    variant?: "blue" | "yellow" | "orange" | "dark" | "light";
+    _type: "highlight";
+    _key: string;
+  }>;
   level?: number;
   _type: "block";
   _key: string;
@@ -130,31 +193,30 @@ export type RichText = Array<{
   _key: string;
 } & RichTextImage | {
   _key: string;
-} & RichTextButton | {
-  _key: string;
-} & Table>;
+} & RichTextButton>;
 
 export type RichTextButton = {
   _type: "richTextButton";
   text: string;
   link: string;
-  color?: SimplerColor;
-  textColor?: SimplerColor;
-  style?: "solid" | "transparent";
+  variant?: "primary" | "secondary" | "accent" | "outline-dark" | "outline-light";
   size?: "sm" | "default" | "lg";
 };
 
 export type RichTextImage = {
   _type: "richTextImage";
   asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
   alt?: string;
   caption?: string;
 };
@@ -162,6 +224,12 @@ export type RichTextImage = {
 export type BackgroundColorAnnotation = {
   _type: "backgroundColorAnnotation";
   value?: SimplerColor;
+};
+
+export type SimplerColor = {
+  _type: "simplerColor";
+  label?: string;
+  value?: string;
 };
 
 export type ColorAnnotation = {
@@ -200,12 +268,6 @@ export type PressArticle = {
   };
   tags?: Array<string>;
   backgroundColor?: SimplerColor;
-};
-
-export type SimplerColor = {
-  _type: "simplerColor";
-  label?: string;
-  value?: string;
 };
 
 export type SanityImageCrop = {
@@ -514,5 +576,5 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = HeroCarouselSection | EventsCarouselSection | PressCarouselSection | BlogPostsCarouselSection | ThreeColumnSection | TwoColumnSection | FullWidthSection | BannerSection | HeroSlide | RichText | RichTextButton | RichTextImage | BackgroundColorAnnotation | ColorAnnotation | LinkAnnotation | PressArticle | SimplerColor | SanityImageCrop | SanityImageHotspot | BlogPost | Markdown | Slug | Event | Page | SiteSettings | Table | TableRow | MediaTag | HighlightColor | TextColor | Color | RgbaColor | HsvaColor | HslaColor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = HeroCarouselSection | EventsCarouselSection | PressCarouselSection | BlogPostsCarouselSection | ThreeColumnSection | TwoColumnSection | FullWidthSection | BannerSection | HeroSlide | CollageItem | PageSectionContainer | ColumnContainer | RichText | RichTextButton | RichTextImage | BackgroundColorAnnotation | SimplerColor | ColorAnnotation | LinkAnnotation | PressArticle | SanityImageCrop | SanityImageHotspot | BlogPost | Markdown | Slug | Event | Page | SiteSettings | Table | TableRow | MediaTag | HighlightColor | TextColor | Color | RgbaColor | HsvaColor | HslaColor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;

@@ -4,13 +4,16 @@ import blogPost from "./blogPost";
 import pressArticle from "./pressArticle";
 import siteSettings from "./siteSettings";
 import richText from "./richText";
+import customColor from "./customColor";
+import columnContainer from "./elements/columnContainer";
+import pageSectionContainer from "./elements/pageSectionContainer";
+import collageItem from "./elements/collageItem";
 
 
 import linkAnnotation from "./annotations/linkAnnotation";
-import colorAnnotation from "./annotations/colorAnnotation";
-import backgroundColorAnnotation from "./annotations/backgroundColorAnnotation";
 import richTextImage from "./blocks/richTextImage";
 import richTextButton from "./blocks/richTextButton";
+
 import bannerSection from "./sections/bannerSection";
 import fullWidthSection from "./sections/fullWidthSection";
 import twoColumnSection from "./sections/twoColumnSection";
@@ -28,11 +31,13 @@ export const schemaTypes = [
   blogPost,
   pressArticle,
   linkAnnotation,
-  colorAnnotation,
-  backgroundColorAnnotation,
   richTextImage,
   richTextButton,
   richText,
+  customColor,
+  columnContainer,
+  pageSectionContainer,
+  collageItem,
   heroSlide,
   bannerSection,
   fullWidthSection,

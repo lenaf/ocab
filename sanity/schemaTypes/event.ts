@@ -12,6 +12,5 @@ export default defineType({
     {name: 'description', type: 'array', of: [{type: 'block'}], title: 'Description'},
     {name: 'actionNetworkUrl', type: 'url', title: 'Action Network Event URL', description: 'Link to RSVP on Action Network'},
     {name: 'image', type: 'image', title: 'Image'},
-    {name: 'backgroundColor', type: 'simplerColor', title: 'Background Color'},
   ],
 })

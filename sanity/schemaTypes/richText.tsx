@@ -23,40 +23,37 @@ export default defineType({
         decorators: [
           {title: 'Strong', value: 'strong'},
           {title: 'Emphasis', value: 'em'},
-          {title: 'Code', value: 'code'},
           {title: 'Underline', value: 'underline'},
-          {title: 'Strike', value: 'strike-through'},
         ],
         annotations: [
+          {type: 'linkAnnotation'},
           {
-            name: 'link',
-            type: 'linkAnnotation',
-            icon: () => '🔗',
-            components: {
-              annotation: (props: any) => <span className="text-blue-500 underline">{props.children}</span>
-            }
-          },
-          {
-            name: 'color',
-            type: 'colorAnnotation',
-            icon: () => '🎨',
-            components: {
-              annotation: (props: any) => <span style={{color: props.value?.value?.value}}>{props.children}</span>
-            }
-          },
-          {
-            name: 'backgroundColor',
-            type: 'backgroundColorAnnotation',
-            icon: () => '🖍️',
-            components: {
-              annotation: (props: any) => <span style={{backgroundColor: props.value?.value?.value}} className="px-1">{props.children}</span>
-            }
+            name: 'highlight',
+            type: 'object',
+            title: 'Highlight',
+            fields: [
+              {
+                name: 'variant',
+                type: 'string',
+                title: 'Color',
+                options: {
+                  list: [
+                    {title: 'Blue', value: 'blue'},
+                    {title: 'Yellow', value: 'yellow'},
+                    {title: 'Orange', value: 'orange'},
+                    {title: 'Dark', value: 'dark'},
+                    {title: 'Light', value: 'light'},
+                  ],
+                  layout: 'radio',
+                },
+                initialValue: 'blue',
+              },
+            ],
           },
         ],
       },
     }),
     defineArrayMember({type: 'richTextImage'}),
     defineArrayMember({type: 'richTextButton'}),
-    defineArrayMember({type: 'table'}),
   ],
 })

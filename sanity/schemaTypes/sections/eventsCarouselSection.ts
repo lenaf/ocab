@@ -19,7 +19,7 @@ export default defineType({
     {
       name: 'backgroundColor',
       title: 'Background Color',
-      type: 'simplerColor',
+      type: 'customColor',
     },
     {
       name: 'showCalendar',
@@ -29,11 +29,15 @@ export default defineType({
     },
   ],
   preview: {
-    select: {title: 'heading'},
-    prepare({title}) {
+    select: {
+      title: 'heading',
+      limit: 'limit',
+    },
+    prepare({title, limit}) {
       return {
-        title: title || 'Events Carousel',
-        subtitle: 'Events Carousel Section',
+        title: title || 'Events',
+        subtitle: `Carousel • ${limit || 12} events`,
+        media: () => '📅',
       }
     },
   },
