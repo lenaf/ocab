@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as fs from 'fs';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
@@ -15,7 +16,12 @@ const client = createClient({
 async function populateHomePage() {
   const homePageId = 'home-page';
   
-  const sections = [
+  const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'homePageData.json'), 'utf-8'));
+  const sections = data.sections;
+  
+  /*
+  // Original sections data (kept for reference)
+  const sectionsOriginal = [
     {
       _type: 'fullWidthSection',
       _key: 'intro',
@@ -478,6 +484,7 @@ async function populateHomePage() {
       backgroundColor: { value: '#111827' },
     },
   ];
+  */
 
   await client.createOrReplace({
     _id: homePageId,
@@ -489,7 +496,7 @@ async function populateHomePage() {
 
   await client.delete(`drafts.${homePageId}`).catch(() => {});
 
-  console.log('✓ Home page created with OurCity Buffalo brand colors');
+  console.log('✓ Home page updated from homePageData.json');
 }
 
 populateHomePage().catch(console.error);

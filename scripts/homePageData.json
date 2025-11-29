@@ -1,0 +1,786 @@
+{
+  "sections": [
+    {
+      "_key": "banner1",
+      "_type": "bannerSection",
+      "backgroundColor": {
+        "value": "#f3f4f6"
+      },
+      "content": [
+        {
+          "_key": "b1",
+          "_type": "block",
+          "children": [
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3m7W",
+              "_type": "span",
+              "marks": [],
+              "text": "🏘️ "
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mBL",
+              "_type": "span",
+              "marks": [
+                "strong"
+              ],
+              "text": "Housing is a Human Right"
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mFA",
+              "_type": "span",
+              "marks": [],
+              "text": " • "
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mIz",
+              "_type": "span",
+              "marks": [],
+              "text": "✊ "
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mMo",
+              "_type": "span",
+              "marks": [
+                "strong"
+              ],
+              "text": "Workers United"
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mQd",
+              "_type": "span",
+              "marks": [],
+              "text": " • "
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mUS",
+              "_type": "span",
+              "marks": [],
+              "text": "🌱 "
+            },
+            {
+              "_key": "VLGqHVu3fANOxaDCOZ3mYH",
+              "_type": "span",
+              "marks": [
+                "strong"
+              ],
+              "text": "Community Control"
+            }
+          ],
+          "markDefs": [],
+          "style": "normal"
+        }
+      ]
+    },
+    {
+      "_key": "intro",
+      "_type": "fullWidthSection",
+      "container": {
+        "backgroundColor": {
+          "value": "#3D9BE9"
+        },
+        "collageItems": [
+          {
+            "_key": "collage1",
+            "_type": "collageItem",
+            "alt": "Class War Sign",
+            "image": {
+              "_type": "image",
+              "asset": {
+                "_ref": "image-b3143357a873e9d79ede33c2f04b144879bc1289-379x417-png",
+                "_type": "reference"
+              }
+            },
+            "mobilePosition": {
+              "height": 25,
+              "width": 30,
+              "x": 5,
+              "y": 10
+            },
+            "position": {
+              "height": 35,
+              "width": 20,
+              "x": 5,
+              "y": 15
+            }
+          },
+          {
+            "_key": "collage2",
+            "_type": "collageItem",
+            "alt": "ICE Sign",
+            "image": {
+              "_type": "image",
+              "asset": {
+                "_ref": "image-0d917c179efe78e6866f8041dffa9a377eaaa889-562x345-png",
+                "_type": "reference"
+              }
+            },
+            "mobilePosition": {
+              "height": 28,
+              "width": 32,
+              "x": 65,
+              "y": 15
+            },
+            "position": {
+              "height": 30,
+              "width": 22,
+              "x": 75,
+              "y": 20
+            }
+          },
+          {
+            "_key": "collage3",
+            "_type": "collageItem",
+            "alt": "Ida",
+            "image": {
+              "_type": "image",
+              "asset": {
+                "_ref": "image-3395379947c6b2d08fc05522b04983f3b75e4962-617x444-png",
+                "_type": "reference"
+              }
+            },
+            "mobilePosition": {
+              "height": 22,
+              "width": 28,
+              "x": 8,
+              "y": 65
+            },
+            "position": {
+              "height": 28,
+              "width": 18,
+              "x": 10,
+              "y": 60
+            }
+          },
+          {
+            "_key": "collage4",
+            "_type": "collageItem",
+            "alt": "Leighton",
+            "image": {
+              "_type": "image",
+              "asset": {
+                "_ref": "image-b610dbab4e447f8f72c5dfaf70571bd86f72bfe6-300x363-png",
+                "_type": "reference"
+              }
+            },
+            "mobilePosition": {
+              "height": 20,
+              "width": 26,
+              "x": 68,
+              "y": 70
+            },
+            "position": {
+              "height": 25,
+              "width": 16,
+              "x": 78,
+              "y": 65
+            }
+          }
+        ],
+        "content": [
+          {
+            "_key": "intro1",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "17c25fa6df73",
+                "_type": "span",
+                "marks": [],
+                "text": "This is "
+              },
+              {
+                "_key": "ff5955397f31",
+                "_type": "span",
+                "marks": [
+                  "highlight-blue"
+                ],
+                "text": "OUR CITY"
+              },
+              {
+                "_key": "114aca858e08",
+                "_type": "span",
+                "marks": [],
+                "text": " and we have a right to it"
+              }
+            ],
+            "markDefs": [
+              {
+                "_key": "highlight-blue",
+                "_type": "highlight",
+                "variant": "light"
+              }
+            ],
+            "style": "h1"
+          }
+        ],
+        "contentAlignment": "left",
+        "maxWidth": "2/3",
+        "textColor": "dark"
+      }
+    },
+    {
+      "_key": "hero1",
+      "_type": "heroCarouselSection",
+      "slides": [
+        {
+          "_key": "slide1",
+          "_type": "heroSlide",
+          "backgroundColor": {
+            "value": "transparent"
+          },
+          "backgroundImage": {
+            "_type": "image",
+            "asset": {
+              "_ref": "image-7e65f835cc9f7fff7d3ab67441328fac9ed69917-6720x4480-jpg",
+              "_type": "reference"
+            }
+          },
+          "content": [
+            {
+              "_key": "h1",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3lka",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Rent Control Now"
+                }
+              ],
+              "markDefs": [],
+              "style": "h1"
+            },
+            {
+              "_key": "p1",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3loP",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Fighting for affordable housing and tenant protections"
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            },
+            {
+              "_key": "btn1",
+              "_type": "richTextButton",
+              "link": "/campaigns/rent-control",
+              "size": "lg",
+              "text": "Sign the Petition",
+              "variant": "primary"
+            }
+          ],
+          "contentAlignment": "center",
+          "textColor": "light"
+        },
+        {
+          "_key": "slide2",
+          "_type": "heroSlide",
+          "backgroundColor": {
+            "value": "transparent"
+          },
+          "backgroundImage": {
+            "_type": "image",
+            "asset": {
+              "_ref": "image-7e65f835cc9f7fff7d3ab67441328fac9ed69917-6720x4480-jpg",
+              "_type": "reference"
+            }
+          },
+          "content": [
+            {
+              "_key": "h2",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3lsE",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Workers United"
+                }
+              ],
+              "markDefs": [],
+              "style": "h1"
+            },
+            {
+              "_key": "p2",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3lw3",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Building power through union organizing and solidarity"
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            },
+            {
+              "_key": "btn2",
+              "_type": "richTextButton",
+              "link": "/get-involved",
+              "size": "lg",
+              "text": "Get Involved",
+              "variant": "secondary"
+            }
+          ],
+          "contentAlignment": "center",
+          "textColor": "light"
+        },
+        {
+          "_key": "slide3",
+          "_type": "heroSlide",
+          "backgroundColor": {
+            "value": "transparent"
+          },
+          "backgroundImage": {
+            "_type": "image",
+            "asset": {
+              "_ref": "image-7e65f835cc9f7fff7d3ab67441328fac9ed69917-6720x4480-jpg",
+              "_type": "reference"
+            }
+          },
+          "content": [
+            {
+              "_key": "h3",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3lzs",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Community Control"
+                }
+              ],
+              "markDefs": [],
+              "style": "h1"
+            },
+            {
+              "_key": "p3",
+              "_type": "block",
+              "children": [
+                {
+                  "_key": "VLGqHVu3fANOxaDCOZ3m3h",
+                  "_type": "span",
+                  "marks": [],
+                  "text": "Taking back our neighborhoods from corporate developers"
+                }
+              ],
+              "markDefs": [],
+              "style": "normal"
+            },
+            {
+              "_key": "btn3",
+              "_type": "richTextButton",
+              "link": "/about",
+              "size": "lg",
+              "text": "Learn More",
+              "variant": "accent"
+            }
+          ],
+          "contentAlignment": "center",
+          "textColor": "light"
+        }
+      ]
+    },
+    {
+      "_key": "full1",
+      "_type": "fullWidthSection",
+      "container": {
+        "backgroundColor": {
+          "value": "#F7B32B"
+        },
+        "content": [
+          {
+            "_key": "f1",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mc6",
+                "_type": "span",
+                "marks": [],
+                "text": "Who We Are"
+              }
+            ],
+            "markDefs": [],
+            "style": "h2"
+          },
+          {
+            "_key": "f2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mfv",
+                "_type": "span",
+                "marks": [],
+                "text": "OurCity Action Buffalo is a "
+              },
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mjk",
+                "_type": "span",
+                "marks": [
+                  "strong"
+                ],
+                "text": "grassroots organization"
+              },
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mnZ",
+                "_type": "span",
+                "marks": [],
+                "text": " fighting for economic and racial justice in Western New York. We believe in "
+              },
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mrO",
+                "_type": "span",
+                "marks": [
+                  "em"
+                ],
+                "text": "community power"
+              },
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mvD",
+                "_type": "span",
+                "marks": [],
+                "text": ", not corporate greed."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "fbtn",
+            "_type": "richTextButton",
+            "link": "/about",
+            "size": "default",
+            "text": "Learn More About Us",
+            "variant": "outline-dark"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "dark"
+      }
+    },
+    {
+      "_key": "two1",
+      "_type": "twoColumnSection",
+      "leftColumn": {
+        "backgroundColor": {
+          "value": "#3D9BE9"
+        },
+        "content": [
+          {
+            "_key": "l1",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nI9",
+                "_type": "span",
+                "marks": [],
+                "text": "Rent Control"
+              }
+            ],
+            "markDefs": [],
+            "style": "h3"
+          },
+          {
+            "_key": "l2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nLy",
+                "_type": "span",
+                "marks": [],
+                "text": "Fighting for affordable housing"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "light"
+      },
+      "ratio": "1-2",
+      "rightColumn": {
+        "backgroundColor": {
+          "value": "transparent"
+        },
+        "content": [
+          {
+            "_key": "r1",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3mz2",
+                "_type": "span",
+                "marks": [],
+                "text": "Why Rent Control Matters"
+              }
+            ],
+            "markDefs": [],
+            "style": "h3"
+          },
+          {
+            "_key": "r2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3n2r",
+                "_type": "span",
+                "marks": [
+                  "strong"
+                ],
+                "text": "Buffalo's housing crisis is real:"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "r3",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3n6g",
+                "_type": "span",
+                "marks": [],
+                "text": "Rents up 40% in 5 years"
+              }
+            ],
+            "listItem": "bullet",
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "r4",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nAV",
+                "_type": "span",
+                "marks": [],
+                "text": "Evictions at record highs"
+              }
+            ],
+            "listItem": "bullet",
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "r5",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nEK",
+                "_type": "span",
+                "marks": [],
+                "text": "Working families displaced"
+              }
+            ],
+            "listItem": "bullet",
+            "markDefs": [],
+            "style": "normal"
+          },
+          {
+            "_key": "rbtn",
+            "_type": "richTextButton",
+            "link": "/campaigns/rent-control",
+            "size": "lg",
+            "text": "Sign the Petition",
+            "variant": "secondary"
+          }
+        ],
+        "contentAlignment": "left",
+        "textColor": "dark"
+      }
+    },
+    {
+      "_key": "three1",
+      "_type": "threeColumnSection",
+      "column1": {
+        "backgroundColor": {
+          "value": "#f3f4f6"
+        },
+        "content": [
+          {
+            "_key": "c1h",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nXR",
+                "_type": "span",
+                "marks": [],
+                "text": "🏠 Housing Justice"
+              }
+            ],
+            "markDefs": [],
+            "style": "h4"
+          },
+          {
+            "_key": "c1p",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nbG",
+                "_type": "span",
+                "marks": [],
+                "text": "Everyone deserves a safe, affordable place to call home"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "dark"
+      },
+      "column2": {
+        "backgroundColor": {
+          "value": "#f3f4f6"
+        },
+        "content": [
+          {
+            "_key": "c2h",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nf5",
+                "_type": "span",
+                "marks": [],
+                "text": "✊ Worker Power"
+              }
+            ],
+            "markDefs": [],
+            "style": "h4"
+          },
+          {
+            "_key": "c2p",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3niu",
+                "_type": "span",
+                "marks": [],
+                "text": "Strong unions and fair wages for all workers"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "dark"
+      },
+      "column3": {
+        "backgroundColor": {
+          "value": "#f3f4f6"
+        },
+        "content": [
+          {
+            "_key": "c3h",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nPn",
+                "_type": "span",
+                "marks": [],
+                "text": "🌱 Community Control"
+              }
+            ],
+            "markDefs": [],
+            "style": "h4"
+          },
+          {
+            "_key": "c3p",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nTc",
+                "_type": "span",
+                "marks": [],
+                "text": "Decisions made by the people, for the people"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "dark"
+      },
+      "ratio": "1-1-1"
+    },
+    {
+      "_key": "full2",
+      "_type": "fullWidthSection",
+      "container": {
+        "backgroundColor": {
+          "value": "transparent"
+        },
+        "content": [
+          {
+            "_key": "q1",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nmj",
+                "_type": "span",
+                "marks": [],
+                "text": "OurCity Action helped me fight my eviction and win. They showed up when no one else would. This organization is the real deal."
+              }
+            ],
+            "markDefs": [],
+            "style": "blockquote"
+          },
+          {
+            "_key": "q2",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "VLGqHVu3fANOxaDCOZ3nqY",
+                "_type": "span",
+                "marks": [
+                  "em"
+                ],
+                "text": "— Maria Rodriguez, West Side Tenant"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
+        "contentAlignment": "center",
+        "textColor": "dark"
+      }
+    },
+    {
+      "_key": "blog1",
+      "_type": "blogPostsCarouselSection",
+      "backgroundColor": {
+        "value": "#f9fafb"
+      },
+      "heading": "Latest News & Analysis",
+      "limit": 8
+    },
+    {
+      "_key": "press1",
+      "_type": "pressCarouselSection",
+      "backgroundColor": {
+        "value": "#374151"
+      },
+      "heading": "In The News",
+      "limit": 6
+    },
+    {
+      "_key": "events1",
+      "_type": "eventsCarouselSection",
+      "backgroundColor": {
+        "value": "#111827"
+      },
+      "heading": "Upcoming Actions",
+      "limit": 8
+    }
+  ]
+}
