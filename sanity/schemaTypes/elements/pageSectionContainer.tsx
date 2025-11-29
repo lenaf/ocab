@@ -1,4 +1,5 @@
 import { defineType } from "sanity";
+import { CollageArrayInput } from '../../components/CollageArrayInput';
 
 export default defineType({
   name: "pageSectionContainer",
@@ -87,7 +88,9 @@ export default defineType({
       type: "array",
       of: [{ type: "collageItem" }],
       description: "Images that overlay on background, behind content",
-
+      components: {
+        input: CollageArrayInput,
+      },
     },
   ],
 });
