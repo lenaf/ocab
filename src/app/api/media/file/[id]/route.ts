@@ -12,7 +12,8 @@ export async function GET(
     const { id } = await params;
     const payload = await getPayload();
     const media = await payload.findByID({
-      collection: "media",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      collection: "media" as any,
       id,
     });
 
