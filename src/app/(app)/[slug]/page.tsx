@@ -1,32 +1,49 @@
-import { client } from '@/lib/sanity'
+import { getPayload } from '@/lib/payload'
 import { RenderSections } from '@/components/RenderSections'
 import { notFound } from 'next/navigation'
+import type { Page } from '@/payload-types'
 
 export async function generateStaticParams() {
-  const pages = await client.fetch(`*[_type == "page" && slug.current != "home"]{
-    "slug": slug.current
-  }`)
+  const payload = await getPayload()
+  const pages = await payload.find({
+    collection: 'pages',
+    where: {
+      slug: {
+        not_contains: 'home'
+      }
+    }
+  })
   
-  return pages.map((page: any) => ({
+  return pages.docs.map((page) => ({
     slug: page.slug,
   }))
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const page = await client.fetch(`*[_type == "page" && slug.current == $slug][0]{
-    _id,
-    _type,
-    title,
-    sections
-  }`, { slug: params.slug })
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const payload = await getPayload()
+  
+  const pages = await payload.find({
+    collection: 'pages',
+    where: {
+      slug: {
+        equals: slug
+      }
+    },
+    depth: 3
+  })
+  
+  const page = pages.docs[0] as Page
   
   if (!page) {
     notFound()
   }
   
+  const sections = JSON.parse(JSON.stringify(page.sections || []))
+  
   return (
-    <main className="min-h-screen" data-sanity-document-id={page._id}>
-      <RenderSections sections={page.sections} />
+    <main className="min-h-screen">
+      <RenderSections sections={sections} />
     </main>
   )
 }
