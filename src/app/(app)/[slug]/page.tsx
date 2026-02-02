@@ -9,7 +9,7 @@ export async function generateStaticParams() {
     collection: 'pages',
     where: {
       slug: {
-        not_contains: 'home'
+        not_equals: 'home'
       }
     }
   })
