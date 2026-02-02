@@ -3,11 +3,10 @@
 import type { ButtonVariant } from '@/payload-types'
 
 interface ButtonPreviewCellProps {
-  cellData: any
   rowData: ButtonVariant
 }
 
-export const ButtonPreviewCell = ({ cellData, rowData }: ButtonPreviewCellProps) => {
+export const ButtonPreviewCell = ({ rowData }: ButtonPreviewCellProps) => {
   const bgColor = typeof rowData?.colorSettings?.backgroundColor === 'object' 
     ? rowData.colorSettings.backgroundColor?.hexValue 
     : undefined

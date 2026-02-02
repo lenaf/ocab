@@ -4,7 +4,6 @@ import {
   lexicalEditor,
   BlocksFeature,
   TextStateFeature,
-  defaultColors,
 } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -71,38 +70,31 @@ export default buildConfig({
             default: { label: "Default", css: {} },
             primary: {
               label: "Primary",
-              css: { color: "#3D9BE9", fontWeight: "bold" },
-              preview: { background: "#3D9BE9", color: "white" },
+              css: { color: "#3D9BE9", "font-weight": "bold" },
             },
             warning: {
               label: "Warning",
-              css: { color: "#EF4444", fontWeight: "bold" },
-              preview: { background: "#EF4444", color: "white" },
+              css: { color: "#EF4444", "font-weight": "bold" },
             },
             success: {
               label: "Success",
-              css: { color: "#10B981", fontWeight: "bold" },
-              preview: { background: "#10B981", color: "white" },
+              css: { color: "#10B981", "font-weight": "bold" },
             },
             textLight: {
               label: "Light Text",
-              css: { color: "#FFFFFF", fontWeight: "bold" },
-              preview: { background: "#FFFFFF", color: "black" },
+              css: { color: "#FFFFFF", "font-weight": "bold" },
             },
             textDark: {
               label: "Dark Text",
-              css: { color: "#1F2937", fontWeight: "bold" },
-              preview: { background: "#1F2937", color: "white" },
+              css: { color: "#1F2937", "font-weight": "bold" },
             },
             yellow: {
               label: "Yellow",
-              css: { color: "#F7B32B", fontWeight: "bold" },
-              preview: { background: "#F7B32B", color: "black" },
+              css: { color: "#F7B32B", "font-weight": "bold" },
             },
             orange: {
               label: "Orange",
-              css: { color: "#FF6B35", fontWeight: "bold" },
-              preview: { background: "#FF6B35", color: "white" },
+              css: { color: "#FF6B35", "font-weight": "bold" },
             },
           },
         },
@@ -117,7 +109,8 @@ export default buildConfig({
               {
                 name: "designVariant",
                 type: "relationship",
-                relationTo: "button-variants",
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                relationTo: ButtonVariants.slug as any,
                 required: true,
               },
             ],
