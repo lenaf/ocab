@@ -28,12 +28,14 @@ export const PressArticles: CollectionConfig = {
     {
       name: 'image',
       type: 'upload',
-      relationTo: 'media',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: 'media' as any,
     },
     {
       name: 'backgroundColor',
       type: 'relationship',
-      relationTo: 'brand-colors',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: 'brand-colors' as any,
       admin: {
         components: {
           Field: '@/payload/components/ColorSelectField#ColorSelectField',

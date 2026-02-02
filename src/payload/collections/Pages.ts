@@ -19,7 +19,8 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
         {
           name: "backgroundColor",
           type: "relationship",
-          relationTo: "brand-colors",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          relationTo: "brand-colors" as any,
           label: "Background Color",
           admin: {
             components: {
@@ -31,7 +32,8 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
         {
           name: "backgroundImage",
           type: "upload",
-          relationTo: "media",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          relationTo: "media" as any,
           label: "Background Image",
           admin: { width: "50%" },
         },
@@ -134,7 +136,8 @@ const floatingImagesCollapsible: Field = {
         {
           name: "image",
           type: "upload",
-          relationTo: "media",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          relationTo: "media" as any,
           required: true,
           label: "Image",
         },

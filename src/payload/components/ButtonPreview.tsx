@@ -7,16 +7,19 @@ import type { BrandColor } from '@/payload-types'
 export const ButtonPreview = () => {
   const [colors, setColors] = useState<Record<string, BrandColor>>({})
   
-  const colorSettings = useFormFields(([fields]) => fields.colorSettings?.value)
-  const borderSettings = useFormFields(([fields]) => fields.borderSettings?.value)
-  const shapeSettings = useFormFields(([fields]) => fields.shapeSettings?.value)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const colorSettings = useFormFields(([fields]) => fields.colorSettings?.value) as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const borderSettings = useFormFields(([fields]) => fields.borderSettings?.value) as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const shapeSettings = useFormFields(([fields]) => fields.shapeSettings?.value) as any
 
   useEffect(() => {
     fetch('/api/brand-colors?limit=100')
       .then(res => res.json())
       .then(data => {
-        const colorMap = {}
-        data.docs?.forEach(color => {
+        const colorMap: Record<string, BrandColor> = {}
+        data.docs?.forEach((color: BrandColor) => {
           colorMap[color.id] = color
         })
         setColors(colorMap)
