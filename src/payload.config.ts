@@ -47,9 +47,19 @@ export default buildConfig({
       },
     },
   ],
-  cors: ["http://localhost:3002", "http://localhost:3000"],
-  csrf: ["http://localhost:3002", "http://localhost:3000"],
-  serverURL: "http://localhost:3000",
+  cors: [
+    "http://localhost:3002",
+    "http://localhost:3000",
+    "https://ocab.vercel.app",
+    process.env.NEXT_PUBLIC_SERVER_URL || "",
+  ].filter(Boolean),
+  csrf: [
+    "http://localhost:3002",
+    "http://localhost:3000",
+    "https://ocab.vercel.app",
+    process.env.NEXT_PUBLIC_SERVER_URL || "",
+  ].filter(Boolean),
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000",
   collections: [
     Users,
     Media,
