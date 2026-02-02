@@ -95,9 +95,9 @@ export const FloatingArrayField: ArrayFieldClientComponent = (
 
       if (type === "drag") setIsDragging(true);
       else setIsResizing(true);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [validItems, aspectRatio],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [validItems, aspectRatio, arrayItems],
   );
 
   const handleMouseMove = useCallback(
@@ -160,8 +160,8 @@ export const FloatingArrayField: ArrayFieldClientComponent = (
         });
         setModified(true);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       isDragging,
       isResizing,
@@ -171,6 +171,7 @@ export const FloatingArrayField: ArrayFieldClientComponent = (
       fields,
       path,
       dispatchFields,
+      setModified,
     ],
   );
 

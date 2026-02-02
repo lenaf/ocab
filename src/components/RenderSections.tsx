@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { LexicalRenderer } from "./LexicalRenderer";
 import { HeroCarousel } from "./HeroCarousel";
 import { useState, useEffect } from "react";
@@ -158,7 +159,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     {posts.map((post, i) => (
                       <div key={i} className="flex-shrink-0 w-80">
-                        <a href={`/blog/${post.slug}`} className="block h-full">
+                        <Link href={`/blog/${post.slug}`} className="block h-full">
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
@@ -187,7 +188,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                               </div>
                             </div>
                           </div>
-                        </a>
+                        </Link>
                       </div>
                     ))}
                   </div>
@@ -216,7 +217,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     {events.map((event, i) => (
                       <div key={i} className="flex-shrink-0 w-80">
-                        <a
+                        <Link
                           href={`/events/${event.slug}`}
                           className="block h-full"
                         >
@@ -241,7 +242,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                               </div>
                             </div>
                           </div>
-                        </a>
+                        </Link>
                       </div>
                     ))}
                   </div>

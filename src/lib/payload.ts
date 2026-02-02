@@ -1,7 +1,8 @@
 import { getPayload as getPayloadInstance } from 'payload'
 import config from '../payload.config'
+import type { Payload } from 'payload'
 
-let cachedPayload: any = null
+let cachedPayload: Payload | null = null
 
 export async function getPayload() {
   if (!cachedPayload) {

@@ -3,9 +3,20 @@
 import { useField } from '@payloadcms/ui'
 import { useEffect, useState } from 'react'
 
-export const ColorSelectField = ({ field, path }) => {
+interface ColorSelectFieldProps {
+  field: { label: string }
+  path: string
+}
+
+interface BrandColor {
+  id: string
+  name: string
+  hexValue: string
+}
+
+export const ColorSelectField = ({ field, path }: ColorSelectFieldProps) => {
   const { value, setValue } = useField({ path })
-  const [colors, setColors] = useState<any[]>([])
+  const [colors, setColors] = useState<BrandColor[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
