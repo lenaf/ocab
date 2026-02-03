@@ -13,7 +13,8 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'logo',
       type: 'upload',
-      relationTo: 'media',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: 'media' as any,
       label: 'Site Logo',
     },
     {
