@@ -464,12 +464,12 @@ export interface Page {
  */
 export interface BrandColor {
   id: string;
+  hexValue?: string | null;
   name: string;
   /**
    * Choose between a single solid color or a multi-color gradient
    */
   colorType: 'solid' | 'gradient';
-  hexValue?: string | null;
   gradient?: {
     angle?: number | null;
     stops?:
@@ -997,9 +997,9 @@ export interface PressArticlesSelect<T extends boolean = true> {
  * via the `definition` "brand-colors_select".
  */
 export interface BrandColorsSelect<T extends boolean = true> {
+  hexValue?: T;
   name?: T;
   colorType?: T;
-  hexValue?: T;
   gradient?:
     | T
     | {

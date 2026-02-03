@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "payload:generate": "payload generate:types"
+    "payload:generate": "payload generate:types",
+    "payload:importmap": "payload generate:importmap"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

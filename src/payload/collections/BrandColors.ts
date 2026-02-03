@@ -1,119 +1,129 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const BrandColors: CollectionConfig = {
-  slug: 'brand-colors' as const,
+  slug: "brand-colors" as const,
   labels: {
-    singular: 'Brand Color',
-    plural: 'Brand Colors',
+    singular: "Brand Color",
+    plural: "Brand Colors",
   },
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'colorType', 'hexValue'],
-    listSearchableFields: ['name'],
-    group: 'Design',
+    useAsTitle: "name",
+    defaultColumns: ["name", "hexValue", "colorType"],
+    listSearchableFields: ["name"],
+    group: "Design",
+    components: {
+      views: {
+        list: {
+          Component: "@/payload/components/BrandColorsGridView#BrandColorsGridView",
+        },
+      },
+    },
   },
   fields: [
     {
-      name: 'name',
-      type: 'text',
+      name: "hexValue",
+      type: "text",
       required: true,
-      label: 'Color Name',
+      label: "Color",
+      defaultValue: "#000000",
       admin: {
-        style: {
-          maxWidth: '250px',
+        condition: (data) => data.colorType === "solid",
+        components: {
+          Field: "@/payload/components/ColorPickerField#ColorPickerField",
+          Cell: "@/payload/components/ColorCell#ColorCell",
         },
       },
     },
     {
-      name: 'colorType',
-      type: 'radio',
+      name: "name",
+      type: "text",
       required: true,
-      defaultValue: 'solid',
-      options: [
-        { 
-          label: 'Solid Color', 
-          value: 'solid',
+      label: "Color Name",
+      admin: {
+        style: {
+          maxWidth: "250px",
         },
-        { 
-          label: 'Gradient', 
-          value: 'gradient',
+      },
+    },
+    {
+      name: "colorType",
+      type: "radio",
+      required: true,
+      defaultValue: "solid",
+      options: [
+        {
+          label: "Solid Color",
+          value: "solid",
+        },
+        {
+          label: "Gradient",
+          value: "gradient",
         },
       ],
       admin: {
-        description: 'Choose between a single solid color or a multi-color gradient',
-        layout: 'horizontal',
+        description:
+          "Choose between a single solid color or a multi-color gradient",
+        layout: "horizontal",
       },
     },
     {
-      name: 'hexValue',
-      type: 'text',
-      required: true,
-      label: 'Color',
-      defaultValue: '#000000',
+      name: "gradient",
+      type: "group",
+      label: "Gradient Settings",
       admin: {
-        condition: (data) => data.colorType === 'solid',
-        components: {
-          Field: '@/payload/components/ColorPickerField#ColorPickerField',
-        },
-      },
-    },
-    {
-      name: 'gradient',
-      type: 'group',
-      label: 'Gradient Settings',
-      admin: {
-        condition: (data) => data.colorType === 'gradient',
+        condition: (data) => data.colorType === "gradient",
       },
       fields: [
         {
-          name: 'angle',
-          type: 'number',
+          name: "angle",
+          type: "number",
           min: 0,
           max: 360,
           defaultValue: 90,
-          label: 'Angle (degrees)',
+          label: "Angle (degrees)",
           admin: {
             style: {
-              maxWidth: '120px',
+              maxWidth: "120px",
             },
           },
         },
         {
-          name: 'stops',
-          type: 'array',
-          label: 'Gradient Colors',
+          name: "stops",
+          type: "array",
+          label: "Gradient Colors",
           minRows: 2,
           fields: [
             {
-              type: 'row',
+              type: "row",
               fields: [
                 {
-                  name: 'hexValue',
-                  type: 'text',
+                  name: "hexValue",
+                  type: "text",
                   required: true,
-                  label: 'Color',
-                  defaultValue: '#000000',
+                  label: "Color",
+                  defaultValue: "#000000",
                   admin: {
-                    width: '60%',
+                    width: "60%",
                     components: {
-                      Field: '@/payload/components/ColorPickerField#ColorPickerField',
+                      Field:
+                        "@/payload/components/ColorPickerField#ColorPickerField",
                     },
                     style: {
-                      maxWidth: '150px',
+                      maxWidth: "150px",
                     },
                   },
                 },
                 {
-                  name: 'position',
-                  type: 'number',
+                  name: "position",
+                  type: "number",
                   min: 0,
                   max: 100,
                   defaultValue: 0,
-                  label: 'Position (%)',
+                  label: "Position (%)",
                   admin: {
-                    width: '40%',
+                    width: "40%",
                     style: {
-                      maxWidth: '80px',
+                      maxWidth: "80px",
                     },
                   },
                 },
@@ -121,24 +131,24 @@ export const BrandColors: CollectionConfig = {
             },
           ],
           defaultValue: [
-            { color: '#3D9BE9', position: 0 },
-            { color: '#6366F1', position: 100 },
+            { color: "#3D9BE9", position: 0 },
+            { color: "#6366F1", position: 100 },
           ],
         },
       ],
     },
     {
-      name: 'opacity',
-      type: 'number',
+      name: "opacity",
+      type: "number",
       min: 0,
       max: 1,
       defaultValue: 1,
       admin: {
         step: 0.1,
         style: {
-          maxWidth: '100px',
+          maxWidth: "100px",
         },
       },
     },
   ],
-}
+};
