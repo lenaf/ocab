@@ -10,7 +10,7 @@ export const BrandColors: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'colorType', 'hexValue'],
     listSearchableFields: ['name'],
-    group: 'Design Options',
+    group: 'Design',
   },
   fields: [
     {

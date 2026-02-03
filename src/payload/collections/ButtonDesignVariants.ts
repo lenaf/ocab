@@ -9,7 +9,7 @@ export const ButtonVariants: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "preview"],
-    group: "Design Options",
+    group: "Design",
   },
   fields: [
     {

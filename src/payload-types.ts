@@ -101,11 +101,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
-    'design-settings': DesignSetting;
+    'text-colors': TextColor;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-    'design-settings': DesignSettingsSelect<false> | DesignSettingsSelect<true>;
+    'text-colors': TextColorsSelect<false> | TextColorsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1102,9 +1102,9 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "design-settings".
+ * via the `definition` "text-colors".
  */
-export interface DesignSetting {
+export interface TextColor {
   id: string;
   /**
    * Used for text on dark backgrounds
@@ -1130,9 +1130,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "design-settings_select".
+ * via the `definition` "text-colors_select".
  */
-export interface DesignSettingsSelect<T extends boolean = true> {
+export interface TextColorsSelect<T extends boolean = true> {
   lightTextColor?: T;
   darkTextColor?: T;
   updatedAt?: T;

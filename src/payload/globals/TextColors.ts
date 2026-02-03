@@ -1,13 +1,13 @@
 import type { GlobalConfig } from "payload";
 
 export const DesignSettings: GlobalConfig = {
-  slug: "design-settings",
+  slug: "text-colors",
   access: {
     read: () => true,
     update: ({ req: { user } }) => !!user,
   },
   admin: {
-    group: 'Settings',
+    group: 'Design',
   },
   fields: [
     {

@@ -18,7 +18,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
   });
 
   useEffect(() => {
-    fetch("/api/globals/design-settings")
+    fetch("/api/globals/text-colors")
       .then((res) => res.json())
       .then((data) => {
         setDesignDefaults({
@@ -33,6 +33,9 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               ? data.darkTextColor.hexValue
               : "#1F2937",
         });
+      })
+      .catch(() => {
+        // Keep default values on error
       });
   }, []);
   if (!sections || sections.length === 0) {

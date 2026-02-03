@@ -16,7 +16,7 @@ import { PressArticles } from "./payload/collections/PressArticles";
 import { Media } from "./payload/collections/Media";
 import { BrandColors } from "./payload/collections/BrandColors";
 import { ButtonVariants } from "./payload/collections/ButtonDesignVariants";
-import { DesignSettings } from "./payload/globals/DesignSettings";
+import { DesignSettings } from "./payload/globals/TextColors";
 import { SiteSettings } from "./payload/globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
