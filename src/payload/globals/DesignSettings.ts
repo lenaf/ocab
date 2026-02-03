@@ -13,7 +13,8 @@ export const DesignSettings: GlobalConfig = {
     {
       name: "lightTextColor",
       type: "relationship",
-      relationTo: "brand-colors",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: "brand-colors" as any,
       label: "Light Text Color",
       required: true,
       admin: {
@@ -26,7 +27,8 @@ export const DesignSettings: GlobalConfig = {
     {
       name: "darkTextColor",
       type: "relationship",
-      relationTo: "brand-colors",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: "brand-colors" as any,
       label: "Dark Text Color",
       required: true,
       admin: {
