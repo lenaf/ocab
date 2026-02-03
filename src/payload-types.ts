@@ -99,8 +99,14 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+    'design-settings': DesignSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'design-settings': DesignSettingsSelect<false> | DesignSettingsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -1082,6 +1088,56 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  logo?: (string | null) | Media;
+  siteName?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "design-settings".
+ */
+export interface DesignSetting {
+  id: string;
+  /**
+   * Used for text on dark backgrounds
+   */
+  lightTextColor: string | BrandColor;
+  /**
+   * Used for text on light backgrounds
+   */
+  darkTextColor: string | BrandColor;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  logo?: T;
+  siteName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "design-settings_select".
+ */
+export interface DesignSettingsSelect<T extends boolean = true> {
+  lightTextColor?: T;
+  darkTextColor?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

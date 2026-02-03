@@ -9,6 +9,32 @@ import type { Page, BlogPost, Event, PressArticle } from "@/payload-types";
 type Section = NonNullable<Page["sections"]>[number];
 
 export function RenderSections({ sections }: { sections: Section[] }) {
+  const [designDefaults, setDesignDefaults] = useState<{
+    lightText: string;
+    darkText: string;
+  }>({
+    lightText: "#FFFFFF",
+    darkText: "#1F2937",
+  });
+
+  useEffect(() => {
+    fetch("/api/globals/design-settings")
+      .then((res) => res.json())
+      .then((data) => {
+        setDesignDefaults({
+          lightText:
+            typeof data.lightTextColor === "object" &&
+            data.lightTextColor?.hexValue
+              ? data.lightTextColor.hexValue
+              : "#FFFFFF",
+          darkText:
+            typeof data.darkTextColor === "object" &&
+            data.darkTextColor?.hexValue
+              ? data.darkTextColor.hexValue
+              : "#1F2937",
+        });
+      });
+  }, []);
   if (!sections || sections.length === 0) {
     return <div>No sections to display</div>;
   }
@@ -19,6 +45,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
     if (!bgColor) return "transparent";
     if (typeof bgColor === "string") return bgColor;
     return bgColor.hexValue || "transparent";
+  };
+
+  const getTextColor = (textColor: string | null | undefined) => {
+    if (textColor === "light") return designDefaults.lightText;
+    if (textColor === "dark") return designDefaults.darkText;
+    return "inherit";
   };
 
   const getMediaUrl = (media: string | { id: string } | null | undefined) => {
@@ -63,7 +95,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 />
               )}
               {section.floatingItems?.map((item, i) => {
-                const mediaAlt = typeof item.image === 'object' && item.image?.alt ? item.image.alt : '';
+                const mediaAlt =
+                  typeof item.image === "object" && item.image?.alt
+                    ? item.image.alt
+                    : "";
                 return (
                   <div key={i}>
                     <img
@@ -94,9 +129,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 );
               })}
               <div
-                className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-${section.contentAlignment || "left"} ${
-                  section.textColor === "light" ? "text-white" : "text-gray-900"
-                }`}
+                className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-${section.contentAlignment || "left"}`}
                 style={{
                   maxWidth:
                     section.maxWidth === "2/3"
@@ -104,6 +137,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       : section.maxWidth === "1/2"
                         ? "50%"
                         : "100%",
+                  color: getTextColor(section.textColor),
                 }}
               >
                 <LexicalRenderer content={section.content} />
@@ -126,11 +160,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 >
                   <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8 z-10">
                     <div
-                      className={`max-w-5xl w-full text-${slide.contentAlignment || "center"} ${
-                        slide.textColor === "light"
-                          ? "text-white"
-                          : "text-gray-900"
-                      }`}
+                      className={`max-w-5xl w-full text-${slide.contentAlignment || "center"}`}
+                      style={{
+                        color: getTextColor(slide.textColor),
+                      }}
                     >
                       <LexicalRenderer content={slide.content} />
                     </div>
@@ -159,7 +192,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     {posts.map((post, i) => (
                       <div key={i} className="flex-shrink-0 w-80">
-                        <Link href={`/blog/${post.slug}`} className="block h-full">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          className="block h-full"
+                        >
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
@@ -350,7 +386,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   }}
                 >
                   <div
-                    className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 ${section.leftColumn?.textColor === "light" ? "text-white" : "text-gray-900"} text-${section.leftColumn?.contentAlignment || "left"}`}
+                    className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 text-${section.leftColumn?.contentAlignment || "left"}`}
+                    style={{
+                      color: getTextColor(section.leftColumn?.textColor),
+                    }}
                   >
                     <LexicalRenderer content={section.leftColumn?.content} />
                   </div>
@@ -364,7 +403,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   }}
                 >
                   <div
-                    className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 ${section.rightColumn?.textColor === "light" ? "text-white" : "text-gray-900"} text-${section.rightColumn?.contentAlignment || "left"}`}
+                    className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 text-${section.rightColumn?.contentAlignment || "left"}`}
+                    style={{
+                      color: getTextColor(section.rightColumn?.textColor),
+                    }}
                   >
                     <LexicalRenderer content={section.rightColumn?.content} />
                   </div>
@@ -391,7 +433,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       }}
                     >
                       <div
-                        className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 ${col?.textColor === "light" ? "text-white" : "text-gray-900"} text-${col?.contentAlignment || "left"}`}
+                        className={`py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 text-${col?.contentAlignment || "left"}`}
+                        style={{
+                          color: getTextColor(col?.textColor),
+                        }}
                       >
                         <LexicalRenderer content={col?.content} />
                       </div>

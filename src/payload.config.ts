@@ -16,6 +16,8 @@ import { PressArticles } from "./payload/collections/PressArticles";
 import { Media } from "./payload/collections/Media";
 import { BrandColors } from "./payload/collections/BrandColors";
 import { ButtonVariants } from "./payload/collections/ButtonDesignVariants";
+import { DesignSettings } from "./payload/globals/DesignSettings";
+import { SiteSettings } from "./payload/globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -70,7 +72,7 @@ export default buildConfig({
     BrandColors,
     ButtonVariants,
   ],
-  globals: [],
+  globals: [SiteSettings, DesignSettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

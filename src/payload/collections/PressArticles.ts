@@ -5,6 +5,7 @@ export const PressArticles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'publication', 'publishedAt'],
+    group: 'Content',
   },
   fields: [
     {

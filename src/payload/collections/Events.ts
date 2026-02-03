@@ -5,6 +5,7 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'date', 'location'],
+    group: 'Content',
   },
   fields: [
     {
