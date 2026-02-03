@@ -11,13 +11,6 @@ export const BrandColors: CollectionConfig = {
     defaultColumns: ["name", "hexValue", "colorType"],
     listSearchableFields: ["name"],
     group: "Design",
-    components: {
-      views: {
-        list: {
-          Component: "@/payload/components/BrandColorsGridView#BrandColorsGridView",
-        },
-      },
-    },
   },
   fields: [
     {

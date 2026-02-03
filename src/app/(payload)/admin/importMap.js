@@ -27,7 +27,6 @@ import { ColorSelectField as ColorSelectField_ff6b7a181a6476ad76b9c1d6f738c5d7 }
 import { FloatingArrayField as FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3 } from '@/payload/components/FloatingArrayField'
 import { ColorCell as ColorCell_1d42ba9948cda43eac86713599840807 } from '@/payload/components/ColorCell'
 import { ColorPickerField as ColorPickerField_231cea9390dde05be64e71973c26440a } from '@/payload/components/ColorPickerField'
-import { BrandColorsGridView as BrandColorsGridView_96e7e1ff1e96796b8350850ff8a2ccd5 } from '@/payload/components/BrandColorsGridView'
 import { ButtonPreview as ButtonPreview_d4b56cb850a9c261acf4b484819af703 } from '@/payload/components/ButtonPreview'
 import { ButtonPreviewCell as ButtonPreviewCell_b432084dc92dcef15dc5a1f6b4fbf280 } from '@/payload/components/ButtonPreviewCell'
 import { LogoutButton as LogoutButton_4fa0da4f39e65c0a260a976af575b7d4 } from '@/payload/components/LogoutButton'
@@ -63,7 +62,6 @@ export const importMap = {
   "@/payload/components/FloatingArrayField#FloatingArrayField": FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3,
   "@/payload/components/ColorCell#ColorCell": ColorCell_1d42ba9948cda43eac86713599840807,
   "@/payload/components/ColorPickerField#ColorPickerField": ColorPickerField_231cea9390dde05be64e71973c26440a,
-  "@/payload/components/BrandColorsGridView#BrandColorsGridView": BrandColorsGridView_96e7e1ff1e96796b8350850ff8a2ccd5,
   "@/payload/components/ButtonPreview#ButtonPreview": ButtonPreview_d4b56cb850a9c261acf4b484819af703,
   "@/payload/components/ButtonPreviewCell#ButtonPreviewCell": ButtonPreviewCell_b432084dc92dcef15dc5a1f6b4fbf280,
   "@/payload/components/LogoutButton#LogoutButton": LogoutButton_4fa0da4f39e65c0a260a976af575b7d4,

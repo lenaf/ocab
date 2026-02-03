@@ -32,6 +32,30 @@ export const BrandColorsGridView = () => {
 
   return (
     <div style={{ padding: "24px" }}>
+      <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1 style={{ fontSize: "24px", fontWeight: "600", margin: 0 }}>Brand Colors</h1>
+        <button
+          onClick={() => router.push("/admin/collections/brand-colors/create")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#3D9BE9",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "500",
+            fontSize: "14px",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#2d8bd8";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#3D9BE9";
+          }}
+        >
+          + Create New
+        </button>
+      </div>
       <div
         style={{
           display: "grid",
