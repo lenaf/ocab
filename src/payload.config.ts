@@ -14,10 +14,9 @@ import { BlogPosts } from "./payload/collections/BlogPosts";
 import { Events } from "./payload/collections/Events";
 import { PressArticles } from "./payload/collections/PressArticles";
 import { Media } from "./payload/collections/Media";
-import { BrandColors } from "./payload/collections/BrandColors";
-import { ButtonVariants } from "./payload/collections/ButtonDesignVariants";
-import { DesignSettings } from "./payload/globals/TextColors";
 import { SiteSettings } from "./payload/globals/SiteSettings";
+
+import { themeConfig } from "@/config/theme";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -69,10 +68,8 @@ export default buildConfig({
     BlogPosts,
     Events,
     PressArticles,
-    BrandColors,
-    ButtonVariants,
   ],
-  globals: [SiteSettings, DesignSettings],
+  globals: [SiteSettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
@@ -82,15 +79,15 @@ export default buildConfig({
             default: { label: "Default", css: {} },
             primary: {
               label: "Primary",
-              css: { color: "#3D9BE9", "font-weight": "bold" },
+              css: { color: themeConfig.colors.primary, "font-weight": "bold" },
             },
-            warning: {
-              label: "Warning",
-              css: { color: "#EF4444", "font-weight": "bold" },
+            secondary: {
+              label: "Secondary",
+              css: { color: themeConfig.colors.secondary, "font-weight": "bold" },
             },
-            success: {
-              label: "Success",
-              css: { color: "#10B981", "font-weight": "bold" },
+            accent: {
+              label: "Accent",
+              css: { color: themeConfig.colors.accent, "font-weight": "bold" },
             },
             textLight: {
               label: "Light Text",
@@ -100,14 +97,6 @@ export default buildConfig({
               label: "Dark Text",
               css: { color: "#1F2937", "font-weight": "bold" },
             },
-            yellow: {
-              label: "Yellow",
-              css: { color: "#F7B32B", "font-weight": "bold" },
-            },
-            orange: {
-              label: "Orange",
-              css: { color: "#FF6B35", "font-weight": "bold" },
-            },
           },
         },
       }),
@@ -115,15 +104,33 @@ export default buildConfig({
         blocks: [
           {
             slug: "button",
+            labels: { singular: "Button", plural: "Buttons" },
             fields: [
-              { name: "text", type: "text", required: true },
-              { name: "url", type: "text", required: true },
+              { name: "text", type: "text", required: true, label: "Button Text" },
+              { name: "url", type: "text", required: true, label: "Link URL" },
               {
-                name: "designVariant",
-                type: "relationship",
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                relationTo: ButtonVariants.slug as any,
+                name: "style",
+                type: "text",
                 required: true,
+                label: "Button Style",
+                defaultValue: "btn-primary",
+                admin: {
+                  components: {
+                    Field: "@/payload/components/ButtonStylePreviewField#ButtonStylePreviewField",
+                  },
+                },
+              },
+              {
+                name: "size",
+                type: "select",
+                label: "Button Size",
+                defaultValue: "md",
+                options: [
+                  { label: "Extra Small", value: "xs" },
+                  { label: "Small", value: "sm" },
+                  { label: "Medium", value: "md" },
+                  { label: "Large", value: "lg" },
+                ],
               },
             ],
           },

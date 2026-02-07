@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./colors.css";
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  body {
+    background-color: #f7f5f2;
+    font-family: var(--font-poppins), system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  b, strong {
+    font-family: var(--font-poppins-bold), var(--font-poppins), system-ui, sans-serif;
+    font-weight: 700;
+  }
+  h1 {
+    font-family: var(--font-poppins-extrabold), var(--font-poppins), system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  h2, h3, h4, h5, h6 {
+    font-family: var(--font-poppins-semibold), var(--font-poppins), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -10,6 +10,8 @@ function getImageUrl(image: string | Media | null | undefined) {
   return null;
 }
 
+import { Button } from "@/components/ui/Button";
+
 export function LexicalRenderer({
   content,
   textColor,
@@ -46,27 +48,11 @@ export function LexicalRenderer({
       );
     }
     if (node.type === "block" && node.fields?.blockType === "button") {
-      const { text, url, variant = "primary", size = "medium" } = node.fields;
-      const sizeClass =
-        size === "small"
-          ? "px-4 py-2 text-sm"
-          : size === "large"
-            ? "px-8 py-4 text-lg"
-            : "px-6 py-3";
-      const variantClass =
-        variant === "secondary"
-          ? "bg-[#FF6B35] hover:bg-[#e55a2a]"
-          : variant === "outline"
-            ? "border-2 border-current bg-transparent hover:bg-white/10"
-            : "bg-[#3D9BE9] hover:bg-[#116dff]";
+      const { text, url, style = "btn-primary", size = "md" } = node.fields;
       return (
-        <a
-          key={i}
-          href={url}
-          className={`inline-flex ${sizeClass} ${variantClass} text-white font-bold uppercase tracking-wide transition-all rounded mx-2 my-2`}
-        >
+        <Button key={i} classNames={style} size={size} href={url}>
           {text}
-        </a>
+        </Button>
       );
     }
     if (node.type === "link") {

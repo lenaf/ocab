@@ -1,7 +1,7 @@
+import "@/app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Poppins } from "next/font/google";
-import "./globals.css";
 
 const poppinsLight = Poppins({
   weight: "300",
@@ -39,14 +39,12 @@ const poppinsBlack = Poppins({
   variable: "--font-poppins-black",
 });
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${poppinsLight.variable} ${poppinsRegular.variable} ${poppinsSemiBold.variable} ${poppinsBold.variable} ${poppinsExtraBold.variable} ${poppinsBlack.variable} font-sans`}>
+      <body
+        className={`${poppinsLight.variable} ${poppinsRegular.variable} ${poppinsSemiBold.variable} ${poppinsBold.variable} ${poppinsExtraBold.variable} ${poppinsBlack.variable} font-sans`}
+      >
         <Header />
         {children}
         <Footer />

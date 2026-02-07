@@ -73,8 +73,6 @@ export interface Config {
     'blog-posts': BlogPost;
     events: Event;
     'press-articles': PressArticle;
-    'brand-colors': BrandColor;
-    'button-variants': ButtonVariant;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,8 +86,6 @@ export interface Config {
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     'press-articles': PressArticlesSelect<false> | PressArticlesSelect<true>;
-    'brand-colors': BrandColorsSelect<false> | BrandColorsSelect<true>;
-    'button-variants': ButtonVariantsSelect<false> | ButtonVariantsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -101,11 +97,9 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
-    'text-colors': TextColor;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-    'text-colors': TextColorsSelect<false> | TextColorsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -230,9 +224,10 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            backgroundColor?: (string | null) | BrandColor;
+            backgroundColor?:
+              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+              | null;
             backgroundImage?: (string | null) | Media;
-            textColor?: ('dark' | 'light') | null;
             contentAlignment?: ('left' | 'center' | 'right') | null;
             id?: string | null;
             blockName?: string | null;
@@ -256,9 +251,10 @@ export interface Page {
                     };
                     [k: string]: unknown;
                   } | null;
-                  backgroundColor?: (string | null) | BrandColor;
+                  backgroundColor?:
+                    | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                    | null;
                   backgroundImage?: (string | null) | Media;
-                  textColor?: ('dark' | 'light') | null;
                   contentAlignment?: ('left' | 'center' | 'right') | null;
                   id?: string | null;
                 }[]
@@ -304,9 +300,10 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            backgroundColor?: (string | null) | BrandColor;
+            backgroundColor?:
+              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+              | null;
             backgroundImage?: (string | null) | Media;
-            textColor?: ('dark' | 'light') | null;
             contentAlignment?: ('left' | 'center' | 'right') | null;
             maxWidth?: ('full' | '2/3' | '1/2' | '1/3') | null;
             /**
@@ -353,9 +350,10 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?: (string | null) | BrandColor;
+              backgroundColor?:
+                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                | null;
               backgroundImage?: (string | null) | Media;
-              textColor?: ('dark' | 'light') | null;
               contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             rightColumn?: {
@@ -374,9 +372,10 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?: (string | null) | BrandColor;
+              backgroundColor?:
+                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                | null;
               backgroundImage?: (string | null) | Media;
-              textColor?: ('dark' | 'light') | null;
               contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             id?: string | null;
@@ -401,9 +400,10 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?: (string | null) | BrandColor;
+              backgroundColor?:
+                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                | null;
               backgroundImage?: (string | null) | Media;
-              textColor?: ('dark' | 'light') | null;
               contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             column2?: {
@@ -422,9 +422,10 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?: (string | null) | BrandColor;
+              backgroundColor?:
+                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                | null;
               backgroundImage?: (string | null) | Media;
-              textColor?: ('dark' | 'light') | null;
               contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             column3?: {
@@ -443,9 +444,10 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?: (string | null) | BrandColor;
+              backgroundColor?:
+                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                | null;
               backgroundImage?: (string | null) | Media;
-              textColor?: ('dark' | 'light') | null;
               contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             id?: string | null;
@@ -457,32 +459,6 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "brand-colors".
- */
-export interface BrandColor {
-  id: string;
-  hexValue?: string | null;
-  name: string;
-  /**
-   * Choose between a single solid color or a multi-color gradient
-   */
-  colorType: 'solid' | 'gradient';
-  gradient?: {
-    angle?: number | null;
-    stops?:
-      | {
-          hexValue: string;
-          position?: number | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  opacity?: number | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -509,7 +485,7 @@ export interface BlogPost {
     [k: string]: unknown;
   } | null;
   image?: (string | null) | Media;
-  backgroundColor?: (string | null) | BrandColor;
+  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   publishedAt: string;
   category?: ('News' | 'Action' | 'Victory' | 'Analysis') | null;
   tags?:
@@ -547,7 +523,7 @@ export interface Event {
     [k: string]: unknown;
   } | null;
   image?: (string | null) | Media;
-  backgroundColor?: (string | null) | BrandColor;
+  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   actionNetworkUrl?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -563,7 +539,7 @@ export interface PressArticle {
   excerpt?: string | null;
   url: string;
   image?: (string | null) | Media;
-  backgroundColor?: (string | null) | BrandColor;
+  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   publishedAt: string;
   tags?:
     | {
@@ -571,32 +547,6 @@ export interface PressArticle {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "button-variants".
- */
-export interface ButtonVariant {
-  id: string;
-  name: string;
-  colorSettings: {
-    backgroundColor?: (string | null) | BrandColor;
-    textColor: string | BrandColor;
-  };
-  colorSettingsHovered?: {
-    hoverEffect?: ('darken' | 'lighten' | 'fade' | 'lift' | 'scale' | 'none') | null;
-  };
-  borderSettings?: {
-    borderColor?: (string | null) | BrandColor;
-    borderWidth?: number | null;
-    hoverBorderEffect?: ('same' | 'darken' | 'lighten' | 'custom') | null;
-    hoverBorderColor?: (string | null) | BrandColor;
-  };
-  shapeSettings?: {
-    borderRadius?: ('0' | '4' | '8' | '16' | '999') | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -647,14 +597,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'press-articles';
         value: string | PressArticle;
-      } | null)
-    | ({
-        relationTo: 'brand-colors';
-        value: string | BrandColor;
-      } | null)
-    | ({
-        relationTo: 'button-variants';
-        value: string | ButtonVariant;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -789,7 +731,6 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
-              textColor?: T;
               contentAlignment?: T;
               id?: T;
               blockName?: T;
@@ -803,7 +744,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                     id?: T;
                   };
@@ -840,7 +780,6 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
-              textColor?: T;
               contentAlignment?: T;
               maxWidth?: T;
               floatingItems?:
@@ -879,7 +818,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                   };
               rightColumn?:
@@ -888,7 +826,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                   };
               id?: T;
@@ -904,7 +841,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                   };
               column2?:
@@ -913,7 +849,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                   };
               column3?:
@@ -922,7 +857,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    textColor?: T;
                     contentAlignment?: T;
                   };
               id?: T;
@@ -994,63 +928,6 @@ export interface PressArticlesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "brand-colors_select".
- */
-export interface BrandColorsSelect<T extends boolean = true> {
-  hexValue?: T;
-  name?: T;
-  colorType?: T;
-  gradient?:
-    | T
-    | {
-        angle?: T;
-        stops?:
-          | T
-          | {
-              hexValue?: T;
-              position?: T;
-              id?: T;
-            };
-      };
-  opacity?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "button-variants_select".
- */
-export interface ButtonVariantsSelect<T extends boolean = true> {
-  name?: T;
-  colorSettings?:
-    | T
-    | {
-        backgroundColor?: T;
-        textColor?: T;
-      };
-  colorSettingsHovered?:
-    | T
-    | {
-        hoverEffect?: T;
-      };
-  borderSettings?:
-    | T
-    | {
-        borderColor?: T;
-        borderWidth?: T;
-        hoverBorderEffect?: T;
-        hoverBorderColor?: T;
-      };
-  shapeSettings?:
-    | T
-    | {
-        borderRadius?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1102,39 +979,11 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "text-colors".
- */
-export interface TextColor {
-  id: string;
-  /**
-   * Used for text on dark backgrounds
-   */
-  lightTextColor: string | BrandColor;
-  /**
-   * Used for text on light backgrounds
-   */
-  darkTextColor: string | BrandColor;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   siteName?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "text-colors_select".
- */
-export interface TextColorsSelect<T extends boolean = true> {
-  lightTextColor?: T;
-  darkTextColor?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

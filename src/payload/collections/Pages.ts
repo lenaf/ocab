@@ -18,14 +18,18 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
       fields: [
         {
           name: "backgroundColor",
-          type: "relationship",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          relationTo: "brand-colors" as any,
+          type: "select",
           label: "Background Color",
+          options: [
+            { label: "Primary", value: "primary" },
+            { label: "Secondary", value: "secondary" },
+            { label: "Accent", value: "accent" },
+            { label: "Neutral", value: "neutral" },
+            { label: "Base 100", value: "base-100" },
+            { label: "Base 200", value: "base-200" },
+            { label: "Base 300", value: "base-300" },
+          ],
           admin: {
-            components: {
-              Field: "@/payload/components/ColorSelectField#ColorSelectField",
-            },
             width: "50%",
           },
         },
@@ -43,17 +47,6 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
       type: "row",
       fields: [
         {
-          name: "textColor",
-          type: "select",
-          label: "Text Color",
-          options: [
-            { label: "Dark", value: "dark" },
-            { label: "Light", value: "light" },
-          ],
-          defaultValue: "dark",
-          admin: { width: includeMaxWidth ? "33%" : "50%" },
-        },
-        {
           name: "contentAlignment",
           type: "select",
           label: "Content Alignment",
@@ -63,7 +56,7 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
             { label: "Right", value: "right" },
           ],
           defaultValue: "center",
-          admin: { width: includeMaxWidth ? "33%" : "50%" },
+          admin: { width: includeMaxWidth ? "50%" : "100%" },
         },
         ...(includeMaxWidth
           ? [
@@ -78,7 +71,7 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
                   { label: "1/3 Width", value: "1/3" },
                 ],
                 defaultValue: "full",
-                admin: { width: "34%" },
+                admin: { width: "50%" },
               },
             ]
           : []),

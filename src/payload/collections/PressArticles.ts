@@ -34,14 +34,17 @@ export const PressArticles: CollectionConfig = {
     },
     {
       name: 'backgroundColor',
-      type: 'relationship',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: 'brand-colors' as any,
-      admin: {
-        components: {
-          Field: '@/payload/components/ColorSelectField#ColorSelectField',
-        },
-      },
+      type: 'select',
+      label: 'Background Color',
+      options: [
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+        { label: 'Accent', value: 'accent' },
+        { label: 'Neutral', value: 'neutral' },
+        { label: 'Base 100', value: 'base-100' },
+        { label: 'Base 200', value: 'base-200' },
+        { label: 'Base 300', value: 'base-300' },
+      ],
     },
     {
       name: 'publishedAt',
