@@ -7,21 +7,21 @@
  */
 
 export const themeConfig = {
-  // BRAND COLORS (hex format)
+  // BRAND COLORS (hex format) - ChoiceEQ inspired
   colors: {
-    primary: "#3D9BE9",
-    secondary: "#6366F1",
-    accent: "#F59E0B",
-    neutral: "#6B7280",
-    base100: "#FFFFFF",
-    base200: "#F3F4F6",
-    base300: "#E5E7EB",
+    primary: "#0EA5E9",    // Sky blue
+    secondary: "#06B6D4",  // Cyan
+    accent: "#F59E0B",     // Amber accent
+    neutral: "#64748B",    // Slate
+    base100: "#FFFFFF",    // White
+    base200: "#F8FAFC",    // Light gray
+    base300: "#E2E8F0",    // Gray
   },
 
   // LOGO
   logo: {
     src: "/logo.png",
-    alt: "OurCity Buffalo",
+    alt: "ChoiceEQ",
     width: 180,
     height: 60,
   },
