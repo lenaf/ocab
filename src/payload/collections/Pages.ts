@@ -43,40 +43,23 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
         },
       ],
     },
-    {
-      type: "row",
-      fields: [
-        {
-          name: "contentAlignment",
-          type: "select",
-          label: "Content Alignment",
-          options: [
-            { label: "Left", value: "left" },
-            { label: "Center", value: "center" },
-            { label: "Right", value: "right" },
-          ],
-          defaultValue: "center",
-          admin: { width: includeMaxWidth ? "50%" : "100%" },
-        },
-        ...(includeMaxWidth
-          ? [
-              {
-                name: "maxWidth",
-                type: "select" as const,
-                label: "Content Max Width",
-                options: [
-                  { label: "Full Width", value: "full" },
-                  { label: "2/3 Width", value: "2/3" },
-                  { label: "1/2 Width", value: "1/2" },
-                  { label: "1/3 Width", value: "1/3" },
-                ],
-                defaultValue: "full",
-                admin: { width: "50%" },
-              },
-            ]
-          : []),
-      ],
-    },
+    ...(includeMaxWidth
+      ? [
+          {
+            name: "padding",
+            type: "select" as const,
+            label: "Padding",
+            options: [
+              { label: "None", value: "none" },
+              { label: "Small", value: "small" },
+              { label: "Standard", value: "standard" },
+              { label: "Large", value: "large" },
+            ],
+            defaultValue: "standard",
+            admin: { width: "50%" },
+          },
+        ]
+      : []),
   ],
 });
 

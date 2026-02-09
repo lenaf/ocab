@@ -1,15 +1,33 @@
 /* Auto-generated from /src/config/theme.ts - DO NOT EDIT */
 @theme {
-  --color-primary: oklch(0.68 0.15 237);        /* #0EA5E9 */
-  --color-secondary: oklch(0.71 0.13 215);      /* #06B6D4 */
-  --color-accent: oklch(0.77 0.16 70);          /* #F59E0B */
-  --color-neutral: oklch(0.55 0.04 257);        /* #64748B */
-  --color-base-100: oklch(1.00 0.00 0);               /* #FFFFFF */
-  --color-base-200: oklch(0.98 0.00 248);            /* #F8FAFC */
-  --color-base-300: oklch(0.93 0.01 256);            /* #E2E8F0 */
-  --color-info: oklch(0.75 0.13 220);
-  --color-success: oklch(0.75 0.15 160);
-  --color-warning: oklch(0.80 0.15 85);
-  --color-error: oklch(0.70 0.20 25);
+  --color-primary: oklch(0.7206 0.1043 164.14);
+  --color-primary-content: oklch(0.1451 0.0189 166.11);
+  
+  --color-secondary: oklch(0.5685 0.2131 253.55);
+  --color-secondary-content: oklch(0.9843 0.0055 264.53);
+  
+  --color-accent: oklch(0.5685 0.1451 13.11);
+  --color-accent-content: oklch(0.9843 0.0055 264.53);
+  
+  --color-neutral: oklch(0.2647 0.0189 255.71);
+  --color-neutral-content: oklch(0.8039 0.0189 252.42);
+  
+  --color-base-100: oklch(1 0 0);
+  --color-base-200: oklch(0.9608 0 0);
+  --color-base-300: oklch(0.9216 0 0);
+  --color-base-content: oklch(0.1804 0.0189 252.42);
+  
+  --color-info: oklch(0.7206 0.1686 231.6);
+  --color-info-content: oklch(0.1451 0.0189 231.6);
+  
+  --color-success: oklch(0.7647 0.1686 162.48);
+  --color-success-content: oklch(0.1451 0.0189 166.11);
+  
+  --color-warning: oklch(0.8471 0.1686 75.85);
+  --color-warning-content: oklch(0.1451 0.0189 75.85);
+  
+  --color-error: oklch(0.7176 0.1686 22.18);
+  --color-error-content: oklch(0.9843 0.0055 264.53);
+  
   --rounded-btn: 0.5rem;
 }

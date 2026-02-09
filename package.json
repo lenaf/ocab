@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "generate-colors": "node scripts/generate-colors.mjs",
-    "populate": "tsx scripts/scrape-and-populate.ts",
+    "populate": "tsx scripts/populate-pages.ts",
     "payload:generate": "payload generate:types",
     "payload:importmap": "payload generate:importmap"
   },

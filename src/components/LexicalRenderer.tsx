@@ -63,10 +63,13 @@ export function LexicalRenderer({
       );
     }
     if (node.type === "paragraph") {
+      const alignmentClass = node.format === 'center' ? 'text-center' : 
+                            node.format === 'right' ? 'text-right' : 
+                            node.format === 'justify' ? 'text-justify' : '';
       return (
         <p
           key={i}
-          className="my-4 text-sm md:text-base lg:text-lg leading-relaxed"
+          className={`my-4 text-sm md:text-base lg:text-lg leading-relaxed ${alignmentClass}`}
         >
           {node.children?.map(renderNode)}
         </p>
@@ -79,7 +82,10 @@ export function LexicalRenderer({
         h3: "text-xl md:text-2xl lg:text-4xl font-bold my-4 leading-snug uppercase",
         h4: "text-lg md:text-xl lg:text-2xl font-bold my-3 leading-snug uppercase",
       };
-      const classes = headingClasses[node.tag] || "";
+      const alignmentClass = node.format === 'center' ? 'text-center' : 
+                            node.format === 'right' ? 'text-right' : 
+                            node.format === 'justify' ? 'text-justify' : '';
+      const classes = `${headingClasses[node.tag] || ''} ${alignmentClass}`;
       const Tag = node.tag as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       return (
         <Tag key={i} className={classes}>

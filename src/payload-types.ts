@@ -228,7 +228,6 @@ export interface Page {
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
             backgroundImage?: (string | null) | Media;
-            contentAlignment?: ('left' | 'center' | 'right') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'bannerSection';
@@ -255,7 +254,6 @@ export interface Page {
                     | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                     | null;
                   backgroundImage?: (string | null) | Media;
-                  contentAlignment?: ('left' | 'center' | 'right') | null;
                   id?: string | null;
                 }[]
               | null;
@@ -304,8 +302,7 @@ export interface Page {
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
             backgroundImage?: (string | null) | Media;
-            contentAlignment?: ('left' | 'center' | 'right') | null;
-            maxWidth?: ('full' | '2/3' | '1/2' | '1/3') | null;
+            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             /**
              * Drag and resize images in the preview box, then configure details below.
              */
@@ -354,7 +351,6 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
-              contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             rightColumn?: {
               content?: {
@@ -376,7 +372,6 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
-              contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -404,7 +399,6 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
-              contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             column2?: {
               content?: {
@@ -426,7 +420,6 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
-              contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             column3?: {
               content?: {
@@ -448,7 +441,6 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
-              contentAlignment?: ('left' | 'center' | 'right') | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -731,7 +723,6 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
-              contentAlignment?: T;
               id?: T;
               blockName?: T;
             };
@@ -744,7 +735,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                     id?: T;
                   };
               id?: T;
@@ -780,8 +770,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
-              contentAlignment?: T;
-              maxWidth?: T;
+              padding?: T;
               floatingItems?:
                 | T
                 | {
@@ -818,7 +807,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                   };
               rightColumn?:
                 | T
@@ -826,7 +814,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                   };
               id?: T;
               blockName?: T;
@@ -841,7 +828,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                   };
               column2?:
                 | T
@@ -849,7 +835,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                   };
               column3?:
                 | T
@@ -857,7 +842,6 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
-                    contentAlignment?: T;
                   };
               id?: T;
               blockName?: T;

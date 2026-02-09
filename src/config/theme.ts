@@ -2,20 +2,42 @@
  * THEME CONFIGURATION
  * 
  * This is the ONLY file you need to edit for theming.
- * Edit hex colors here, then manually convert to OKLCH at https://oklch.com
- * and update the matching values in /src/app/globals.css @theme section.
+ * Run `npm run build:colors` after editing to regenerate colors.css
+ * 
+ * Current theme: Emerald (from DaisyUI)
  */
 
 export const themeConfig = {
-  // BRAND COLORS (hex format) - ChoiceEQ inspired
+  // BRAND COLORS (hex format) - Emerald theme
   colors: {
-    primary: "#0EA5E9",    // Sky blue
-    secondary: "#06B6D4",  // Cyan
-    accent: "#F59E0B",     // Amber accent
-    neutral: "#64748B",    // Slate
-    base100: "#FFFFFF",    // White
-    base200: "#F8FAFC",    // Light gray
-    base300: "#E2E8F0",    // Gray
+    primary: "#66CC8A",           // Emerald green
+    primaryContent: "#000000",    // Black text on primary
+    
+    secondary: "#377CFB",         // Blue
+    secondaryContent: "#FFFFFF",  // White text on secondary
+    
+    accent: "#EA5234",            // Orange-red
+    accentContent: "#FFFFFF",     // White text on accent
+    
+    neutral: "#333C4D",           // Dark blue-gray
+    neutralContent: "#FFFFFF",    // White text on neutral
+    
+    base100: "#FFFFFF",           // White
+    base200: "#F2F2F2",           // Light gray
+    base300: "#E5E6E6",           // Medium gray
+    baseContent: "#333C4D",       // Dark text on base colors
+    
+    info: "#3ABFF8",              // Cyan
+    infoContent: "#000000",       // Black text on info
+    
+    success: "#36D399",           // Green
+    successContent: "#000000",    // Black text on success
+    
+    warning: "#FBBD23",           // Yellow
+    warningContent: "#000000",    // Black text on warning
+    
+    error: "#F87272",             // Red
+    errorContent: "#FFFFFF",      // White text on error
   },
 
   // LOGO

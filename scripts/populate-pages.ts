@@ -2,11 +2,15 @@
  * Payload CMS Page Population Script - ChoiceEQ Content
  * 
  * Usage:
- * export MONGODB_URI="USE_ENVIRONMENT_VARIABLE_INSTEAD" && npx tsx scripts/populate-pages.ts
+ * npm run populate
  */
 
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { config as dotenvConfig } from 'dotenv';
+
+// Load environment variables from .env.local
+dotenvConfig({ path: '.env.local' });
 
 async function populate() {
   const payload = await getPayload({ config });
@@ -31,6 +35,7 @@ async function populate() {
                 {
                   type: "heading",
                   tag: "h1",
+                  format: "center",
                   children: [
                     {
                       type: "text",
@@ -40,6 +45,7 @@ async function populate() {
                 },
                 {
                   type: "paragraph",
+                  format: "center",
                   children: [
                     {
                       type: "text",
@@ -51,7 +57,6 @@ async function populate() {
             },
           },
           backgroundColor: "primary",
-          contentAlignment: "center",
         },
         {
           blockType: "fullWidthSection",
@@ -62,10 +67,12 @@ async function populate() {
                 {
                   type: "heading",
                   tag: "h2",
+                  format: "center",
                   children: [{ type: "text", text: "the choice. philosophy" }],
                 },
                 {
                   type: "paragraph",
+                  format: "center",
                   children: [
                     {
                       type: "text",
@@ -77,8 +84,6 @@ async function populate() {
             },
           },
           backgroundColor: "base-100",
-          contentAlignment: "center",
-          maxWidth: "2/3",
         },
         {
           blockType: "threeColumnSection",
@@ -91,10 +96,12 @@ async function populate() {
                   {
                     type: "heading",
                     tag: "h3",
+                    format: "center",
                     children: [{ type: "text", text: "TRAINING" }],
                   },
                   {
                     type: "paragraph",
+                    format: "center",
                     children: [
                       { type: "text", text: "sustainable partnerships" },
                     ],
@@ -103,7 +110,6 @@ async function populate() {
               },
             },
             backgroundColor: "secondary",
-            contentAlignment: "center",
           },
           column2: {
             content: {
@@ -113,17 +119,18 @@ async function populate() {
                   {
                     type: "heading",
                     tag: "h3",
+                    format: "center",
                     children: [{ type: "text", text: "TEACHING" }],
                   },
                   {
                     type: "paragraph",
+                    format: "center",
                     children: [{ type: "text", text: "with intention" }],
                   },
                 ],
               },
             },
             backgroundColor: "secondary",
-            contentAlignment: "center",
           },
           column3: {
             content: {
@@ -133,17 +140,18 @@ async function populate() {
                   {
                     type: "heading",
                     tag: "h3",
+                    format: "center",
                     children: [{ type: "text", text: "MINDFULNESS" }],
                   },
                   {
                     type: "paragraph",
+                    format: "center",
                     children: [{ type: "text", text: "a healthy balance" }],
                   },
                 ],
               },
             },
             backgroundColor: "secondary",
-            contentAlignment: "center",
           },
         },
         {
@@ -154,6 +162,7 @@ async function populate() {
               children: [
                 {
                   type: "paragraph",
+                  format: "center",
                   children: [
                     {
                       type: "text",
@@ -165,8 +174,6 @@ async function populate() {
             },
           },
           backgroundColor: "base-100",
-          contentAlignment: "center",
-          maxWidth: "2/3",
         },
       ],
     },
