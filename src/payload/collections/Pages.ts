@@ -19,7 +19,7 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
         {
           name: "backgroundColor",
           type: "select",
-          label: "Background Color",
+          label: "Color Scheme",
           options: [
             { label: "Primary", value: "primary" },
             { label: "Secondary", value: "secondary" },
@@ -31,6 +31,9 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
           ],
           admin: {
             width: "50%",
+            components: {
+              Field: "@/payload/components/ColorSchemeField#ColorSchemeField",
+            },
           },
         },
         {
