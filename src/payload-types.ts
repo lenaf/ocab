@@ -97,9 +97,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
+    navigation: Navigation;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: null;
   user: User & {
@@ -228,6 +230,10 @@ export interface Page {
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
             backgroundImage?: (string | null) | Media;
+            /**
+             * Adds a dark semi-transparent overlay to improve text readability
+             */
+            darkScrim?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'bannerSection';
@@ -254,6 +260,10 @@ export interface Page {
                     | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                     | null;
                   backgroundImage?: (string | null) | Media;
+                  /**
+                   * Adds a dark semi-transparent overlay to improve text readability
+                   */
+                  darkScrim?: boolean | null;
                   id?: string | null;
                 }[]
               | null;
@@ -302,6 +312,10 @@ export interface Page {
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
             backgroundImage?: (string | null) | Media;
+            /**
+             * Adds a dark semi-transparent overlay to improve text readability
+             */
+            darkScrim?: boolean | null;
             padding?: ('none' | 'small' | 'standard' | 'large') | null;
             /**
              * Drag and resize images in the preview box, then configure details below.
@@ -351,6 +365,10 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
+              /**
+               * Adds a dark semi-transparent overlay to improve text readability
+               */
+              darkScrim?: boolean | null;
             };
             rightColumn?: {
               content?: {
@@ -372,6 +390,10 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
+              /**
+               * Adds a dark semi-transparent overlay to improve text readability
+               */
+              darkScrim?: boolean | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -399,6 +421,10 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
+              /**
+               * Adds a dark semi-transparent overlay to improve text readability
+               */
+              darkScrim?: boolean | null;
             };
             column2?: {
               content?: {
@@ -420,6 +446,10 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
+              /**
+               * Adds a dark semi-transparent overlay to improve text readability
+               */
+              darkScrim?: boolean | null;
             };
             column3?: {
               content?: {
@@ -441,6 +471,10 @@ export interface Page {
                 | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
                 | null;
               backgroundImage?: (string | null) | Media;
+              /**
+               * Adds a dark semi-transparent overlay to improve text readability
+               */
+              darkScrim?: boolean | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -723,6 +757,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
+              darkScrim?: T;
               id?: T;
               blockName?: T;
             };
@@ -735,6 +770,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                     id?: T;
                   };
               id?: T;
@@ -770,6 +806,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
+              darkScrim?: T;
               padding?: T;
               floatingItems?:
                 | T
@@ -807,6 +844,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                   };
               rightColumn?:
                 | T
@@ -814,6 +852,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                   };
               id?: T;
               blockName?: T;
@@ -828,6 +867,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                   };
               column2?:
                 | T
@@ -835,6 +875,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                   };
               column3?:
                 | T
@@ -842,6 +883,7 @@ export interface PagesSelect<T extends boolean = true> {
                     content?: T;
                     backgroundColor?: T;
                     backgroundImage?: T;
+                    darkScrim?: T;
                   };
               id?: T;
               blockName?: T;
@@ -963,11 +1005,62 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: string;
+  navItems?:
+    | {
+        page: string | Page;
+        /**
+         * Leave blank to use page title
+         */
+        label?: string | null;
+        icon?: ('' | 'home' | 'info' | 'calendar' | 'users' | 'mail' | 'phone' | 'map-pin' | 'heart' | 'star') | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton?: {
+    enabled?: boolean | null;
+    label?: string | null;
+    page?: (string | null) | Page;
+  };
+  style?: ('solid' | 'glass') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   siteName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        page?: T;
+        label?: T;
+        icon?: T;
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        page?: T;
+      };
+  style?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

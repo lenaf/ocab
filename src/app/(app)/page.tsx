@@ -29,10 +29,11 @@ export default async function Home() {
     );
   }
 
-  const sections = JSON.parse(JSON.stringify(page.sections || []));
+  const sections = page.sections || [];
 
   return (
-    <main className="min-h-screen">
+    // add padding top for nav
+    <main className="min-h-screen pt-20">
       <RenderSections sections={sections} />
     </main>
   );

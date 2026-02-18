@@ -4,39 +4,39 @@
  * This is the ONLY file you need to edit for theming.
  * Run `npm run build:colors` after editing to regenerate colors.css
  * 
- * Current theme: Emerald (from DaisyUI)
+ * Current theme: Natural Equestrian (landscape-inspired colors)
  */
 
 export const themeConfig = {
-  // BRAND COLORS (hex format) - Emerald theme
+  // BRAND COLORS (hex format) - Natural Equestrian theme
   colors: {
-    primary: "#66CC8A",           // Emerald green
-    primaryContent: "#000000",    // Black text on primary
+    primary: "#556B5E",           // Cool sage (darker green)
+    primaryContent: "#FFFFFF",    // White text on primary
     
-    secondary: "#377CFB",         // Blue
+    secondary: "#6B5B7F",         // Heather purple (wildflower, muted)
     secondaryContent: "#FFFFFF",  // White text on secondary
     
-    accent: "#EA5234",            // Orange-red
+    accent: "#5B9A92",            // Sage teal (natural water/stone)
     accentContent: "#FFFFFF",     // White text on accent
     
-    neutral: "#333C4D",           // Dark blue-gray
+    neutral: "#1A2B3C",           // Dark navy
     neutralContent: "#FFFFFF",    // White text on neutral
     
-    base100: "#FFFFFF",           // White
-    base200: "#F2F2F2",           // Light gray
-    base300: "#E5E6E6",           // Medium gray
-    baseContent: "#333C4D",       // Dark text on base colors
+    base100: "#FFFFFF",           // Pure white (clean, modern)
+    base200: "#F7F7F7",           // Light gray
+    base300: "#E8E8E8",           // Medium gray
+    baseContent: "#2A3B2D",       // Dark text
     
-    info: "#3ABFF8",              // Cyan
-    infoContent: "#000000",       // Black text on info
+    info: "#5FA3D0",              // Sky blue
+    infoContent: "#FFFFFF",       // White text on info
     
-    success: "#36D399",           // Green
-    successContent: "#000000",    // Black text on success
+    success: "#5FAD56",           // Grass green
+    successContent: "#FFFFFF",    // White text on success
     
-    warning: "#FBBD23",           // Yellow
-    warningContent: "#000000",    // Black text on warning
+    warning: "#E8B44F",           // Bright gold
+    warningContent: "#2A2A2A",    // Dark text on warning
     
-    error: "#F87272",             // Red
+    error: "#D65D5D",             // Coral red
     errorContent: "#FFFFFF",      // White text on error
   },
 

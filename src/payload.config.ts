@@ -18,6 +18,8 @@ import { SiteSettings } from "./payload/globals/SiteSettings";
 
 import { themeConfig } from "@/config/theme";
 
+import { Navigation } from "./payload/globals/Navigation";
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -69,7 +71,7 @@ export default buildConfig({
     Events,
     PressArticles,
   ],
-  globals: [SiteSettings],
+  globals: [SiteSettings, Navigation],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

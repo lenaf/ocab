@@ -46,6 +46,15 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
         },
       ],
     },
+    {
+      name: "darkScrim",
+      type: "checkbox",
+      label: "Dark Overlay on Background Image",
+      defaultValue: false,
+      admin: {
+        description: "Adds a dark semi-transparent overlay to improve text readability",
+      },
+    },
     ...(includeMaxWidth
       ? [
           {

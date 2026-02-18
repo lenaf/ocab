@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PageComponent({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const payload = await getPayload()
   
@@ -39,10 +39,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     notFound()
   }
   
-  const sections = JSON.parse(JSON.stringify(page.sections || []))
+  const sections = page.sections || []
   
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pt-20">
       <RenderSections sections={sections} />
     </main>
   )

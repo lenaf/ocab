@@ -5,7 +5,13 @@ import { LexicalRenderer } from "./LexicalRenderer";
 import { HeroCarousel } from "./HeroCarousel";
 import { themeConfig } from "@/config/theme";
 import { useState, useEffect } from "react";
-import type { Page, BlogPost, Event, PressArticle } from "@/payload-types";
+import type {
+  Page,
+  BlogPost,
+  Event,
+  PressArticle,
+  Media,
+} from "@/payload-types";
 
 type Section = NonNullable<Page["sections"]>[number];
 
@@ -37,10 +43,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
     return `var(--color-${bgColor}-content)`;
   };
 
-  const getMediaUrl = (media: string | { id: string } | null | undefined) => {
+  const getMediaUrl = (media: string | Media | null | undefined): string => {
     if (!media) return "";
-    if (typeof media === "string") return `/api/media/file/${media}`;
-    return `/api/media/file/${media.id}`;
+    if (typeof media === "string") return "";
+    return media.url || (media.filename ? `/media/${media.filename}` : "");
   };
 
   return (
@@ -68,10 +74,13 @@ export function RenderSections({ sections }: { sections: Section[] }) {
             <section
               key={index}
               className={`relative py-16 md:py-24 ${
-                section.padding === "none" ? "px-0" :
-                section.padding === "small" ? "px-4 sm:px-8" :
-                section.padding === "large" ? "px-16 sm:px-32 lg:px-48" :
-                "px-8 sm:px-16 lg:px-24"
+                section.padding === "none"
+                  ? "px-0"
+                  : section.padding === "small"
+                    ? "px-4 sm:px-8"
+                    : section.padding === "large"
+                      ? "px-16 sm:px-32 lg:px-48"
+                      : "px-8 sm:px-16 lg:px-24"
               }`}
               style={{
                 backgroundColor: getBgClass(section.backgroundColor),
@@ -79,11 +88,16 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               }}
             >
               {section.backgroundImage && (
-                <img
-                  src={getMediaUrl(section.backgroundImage)}
-                  alt="Background"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                <>
+                  <img
+                    src={getMediaUrl(section.backgroundImage)}
+                    alt="Background"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  {section.darkScrim && (
+                    <div className="absolute inset-0 bg-black/50" />
+                  )}
+                </>
               )}
               {section.floatingItems?.map((item, i) => {
                 const mediaAlt =
@@ -175,8 +189,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
-                              backgroundColor: getBgClass(post.backgroundColor || 'primary'),
-                              color: getContentClass(post.backgroundColor || 'primary'),
+                              backgroundColor: getBgClass(
+                                post.backgroundColor || "primary",
+                              ),
+                              color: getContentClass(
+                                post.backgroundColor || "primary",
+                              ),
                             }}
                           >
                             <div className="p-6 h-full flex flex-col justify-between">
@@ -234,8 +252,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
-                              backgroundColor: getBgClass(event.backgroundColor || 'secondary'),
-                              color: getContentClass(event.backgroundColor || 'secondary'),
+                              backgroundColor: getBgClass(
+                                event.backgroundColor || "secondary",
+                              ),
+                              color: getContentClass(
+                                event.backgroundColor || "secondary",
+                              ),
                             }}
                           >
                             <div className="p-6 h-full flex flex-col justify-between">
@@ -288,8 +310,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
-                              backgroundColor: getBgClass(article.backgroundColor || 'accent'),
-                              color: getContentClass(article.backgroundColor || 'accent'),
+                              backgroundColor: getBgClass(
+                                article.backgroundColor || "accent",
+                              ),
+                              color: getContentClass(
+                                article.backgroundColor || "accent",
+                              ),
                             }}
                           >
                             <div className="p-6 h-full flex flex-col justify-between">
@@ -349,7 +375,9 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 <div
                   className={leftSpan}
                   style={{
-                    backgroundColor: getBgClass(section.leftColumn?.backgroundColor),
+                    backgroundColor: getBgClass(
+                      section.leftColumn?.backgroundColor,
+                    ),
                     color: getContentClass(section.leftColumn?.backgroundColor),
                   }}
                 >
@@ -360,8 +388,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 <div
                   className={rightSpan}
                   style={{
-                    backgroundColor: getBgClass(section.rightColumn?.backgroundColor),
-                    color: getContentClass(section.rightColumn?.backgroundColor),
+                    backgroundColor: getBgClass(
+                      section.rightColumn?.backgroundColor,
+                    ),
+                    color: getContentClass(
+                      section.rightColumn?.backgroundColor,
+                    ),
                   }}
                 >
                   <div className="py-12 md:py-16 max-w-7xl mx-auto px-6 sm:px-8 lg:px-16">
