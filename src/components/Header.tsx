@@ -9,14 +9,16 @@ import type { Media, Navigation, SiteSetting } from "@/payload-types";
 export async function Header() {
   const payload = await getPayload({ config });
 
-  const navigation: Navigation = await payload.findGlobal({
+  const navigation = (await payload.findGlobal({
+    // @ts-expect-error - Payload global types are overly strict
     slug: "navigation",
     depth: 2,
-  });
-  const siteSettings: SiteSetting = await payload.findGlobal({
+  })) as Navigation;
+  const siteSettings = (await payload.findGlobal({
+    // @ts-expect-error - Payload global types are overly strict
     slug: "site-settings",
     depth: 2,
-  });
+  })) as SiteSetting;
 
   const getMediaUrl = (media: string | Media | null | undefined): string => {
     if (!media) return "";
