@@ -512,6 +512,7 @@ export interface BlogPost {
   image?: (string | null) | Media;
   backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   publishedAt: string;
+  author?: (string | null) | User;
   category?: ('News' | 'Action' | 'Victory' | 'Analysis') | null;
   tags?:
     | {
@@ -519,6 +520,10 @@ export interface BlogPost {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Select related blog posts to display
+   */
+  relatedPosts?: (string | BlogPost)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -961,6 +966,7 @@ export interface BlogPostsSelect<T extends boolean = true> {
   image?: T;
   backgroundColor?: T;
   publishedAt?: T;
+  author?: T;
   category?: T;
   tags?:
     | T
@@ -968,6 +974,7 @@ export interface BlogPostsSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1114,6 +1121,19 @@ export interface Navigation {
          */
         label?: string | null;
         icon?: ('' | 'home' | 'info' | 'calendar' | 'users' | 'mail' | 'phone' | 'map-pin' | 'heart' | 'star') | null;
+        /**
+         * Add dropdown menu items under this navigation item
+         */
+        subItems?:
+          | {
+              page: string | Page;
+              /**
+               * Leave blank to use page title
+               */
+              label?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1148,6 +1168,13 @@ export interface NavigationSelect<T extends boolean = true> {
         page?: T;
         label?: T;
         icon?: T;
+        subItems?:
+          | T
+          | {
+              page?: T;
+              label?: T;
+              id?: T;
+            };
         id?: T;
       };
   ctaButton?:

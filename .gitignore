@@ -42,3 +42,12 @@ next-env.d.ts
 
 # payload uploads
 /media
+
+# migration scripts (local only)
+/scripts
+
+/data/
+MIGRATION_STATUS.md
+
+# public media (too large for git)
+/public/migrated-media/

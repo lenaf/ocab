@@ -9,6 +9,14 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/payload/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Source Sans 3', 'sans-serif'],
+        heading: ['Nunito Sans', 'sans-serif'],
+      },
+    },
+  },
   plugins: [daisyui],
 };
 

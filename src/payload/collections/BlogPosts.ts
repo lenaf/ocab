@@ -5,7 +5,6 @@ export const BlogPosts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'publishedAt'],
-    group: 'Content',
   },
   fields: [
     {
@@ -59,6 +58,14 @@ export const BlogPosts: CollectionConfig = {
       },
     },
     {
+      name: 'author',
+      type: 'relationship',
+      relationTo: 'users',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'category',
       type: 'select',
       options: [
@@ -82,6 +89,16 @@ export const BlogPosts: CollectionConfig = {
       ],
       admin: {
         position: 'sidebar',
+      },
+    },
+    {
+      name: 'relatedPosts',
+      type: 'relationship',
+      relationTo: 'blog-posts',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Select related blog posts to display',
       },
     },
   ],

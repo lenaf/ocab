@@ -6,7 +6,6 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'startDate', 'status', 'featured'],
-    group: 'Content',
   },
   access: {
     read: () => true,
@@ -154,6 +153,7 @@ export const Events: CollectionConfig = {
     {
       name: 'featuredImage',
       type: 'upload',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       relationTo: 'media' as any,
       label: 'Featured Image',
     },
@@ -182,6 +182,7 @@ export const Events: CollectionConfig = {
         { name: 'name', type: 'text', required: true },
         { name: 'title', type: 'text' },
         { name: 'bio', type: 'textarea' },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         { name: 'photo', type: 'upload', relationTo: 'media' as any },
       ],
     },
@@ -190,6 +191,7 @@ export const Events: CollectionConfig = {
       type: 'array',
       fields: [
         { name: 'name', type: 'text', required: true },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         { name: 'logo', type: 'upload', relationTo: 'media' as any },
         { name: 'url', type: 'text' },
         {

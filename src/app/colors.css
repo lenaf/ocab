@@ -1,32 +1,32 @@
 /* Auto-generated from /src/config/theme.ts - DO NOT EDIT */
 @theme {
-  --color-primary: oklch(0.51 0.03 159);        /* #556B5E */
+  --color-primary: oklch(0.44 0.13 136);        /* #2D6200 */
   --color-primary-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-secondary: oklch(0.50 0.06 305);      /* #6B5B7F */
+  --color-secondary: oklch(0.34 0.10 135);      /* #1E4200 */
   --color-secondary-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-accent: oklch(0.64 0.07 185);          /* #5B9A92 */
+  --color-accent: oklch(0.51 0.15 137);          /* #377A00 */
   --color-accent-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-neutral: oklch(0.28 0.04 249);        /* #1A2B3C */
+  --color-neutral: oklch(0.28 0.03 257);        /* #1F2937 */
   --color-neutral-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
   --color-base-100: oklch(1.00 0.00 0);       /* #FFFFFF */
-  --color-base-200: oklch(0.98 0.00 0);       /* #F7F7F7 */
-  --color-base-300: oklch(0.93 0.00 0);       /* #E8E8E8 */
-  --color-base-content: oklch(0.33 0.03 150);  /* #2A3B2D */
+  --color-base-200: oklch(0.98 0.00 248);       /* #F9FAFB */
+  --color-base-300: oklch(0.93 0.01 265);       /* #E5E7EB */
+  --color-base-content: oklch(0.28 0.03 257);  /* #1F2937 */
   
-  --color-info: oklch(0.69 0.10 239);          /* #5FA3D0 */
+  --color-info: oklch(0.28 0.03 257);          /* #1F2937 */
   --color-info-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-success: oklch(0.68 0.14 142);    /* #5FAD56 */
+  --color-success: oklch(0.44 0.13 136);    /* #2D6200 */
   --color-success-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-warning: oklch(0.80 0.13 81);    /* #E8B44F */
-  --color-warning-content: oklch(0.29 0.00 0);  /* #2A2A2A */
+  --color-warning: oklch(0.67 0.16 58);    /* #D97706 */
+  --color-warning-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
-  --color-error: oklch(0.63 0.15 22);        /* #D65D5D */
+  --color-error: oklch(0.58 0.22 27);        /* #DC2626 */
   --color-error-content: oklch(1.00 0.00 0);  /* #FFFFFF */
   
   --rounded-btn: 0.5rem;

@@ -44,6 +44,31 @@ export const Navigation: GlobalConfig = {
             { label: "Star", value: "star" },
           ],
         },
+        {
+          name: "subItems",
+          type: "array",
+          label: "Sub-navigation Items",
+          admin: {
+            description: "Add dropdown menu items under this navigation item",
+          },
+          fields: [
+            {
+              name: "page",
+              type: "relationship",
+              relationTo: "pages",
+              required: true,
+              label: "Page",
+            },
+            {
+              name: "label",
+              type: "text",
+              label: "Custom Label (optional)",
+              admin: {
+                description: "Leave blank to use page title",
+              },
+            },
+          ],
+        },
       ],
     },
     {

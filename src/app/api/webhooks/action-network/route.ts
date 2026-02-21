@@ -67,19 +67,15 @@ export async function POST(request: NextRequest) {
     })
     
     if (webhook.action === 'deleted') {
-      // Mark as cancelled instead of deleting
+      // Delete the event
       if (existing.docs.length > 0) {
-        await payload.update({
+        await payload.delete({
           collection: 'events',
           id: existing.docs[0].id,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          data: {
-            status: 'cancelled' as const,
-          } as any,
         })
-        console.log(`Event ${actionNetworkId} marked as cancelled`)
+        console.log(`Event ${actionNetworkId} deleted`)
       }
-      return NextResponse.json({ message: 'Event cancelled' }, { status: 200 })
+      return NextResponse.json({ message: 'Event deleted' }, { status: 200 })
     }
     
     // Map Action Network data to Payload format
@@ -121,19 +117,16 @@ export async function POST(request: NextRequest) {
       await payload.update({
         collection: 'events',
         id: existing.docs[0].id,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data: eventData as any,
+        // @ts-expect-error - Payload type inference doesn't match runtime structure
+        data: eventData,
       })
       console.log(`Event ${actionNetworkId} updated`)
     } else {
       // Create new event
       await payload.create({
         collection: 'events',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data: {
-          ...eventData,
-          status: 'published' as const,
-        } as any,
+        // @ts-expect-error - Payload type inference doesn't match runtime structure
+        data: eventData,
       })
       console.log(`Event ${actionNetworkId} created`)
     }

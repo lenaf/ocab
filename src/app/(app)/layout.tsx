@@ -1,53 +1,34 @@
 import "@/app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Poppins } from "next/font/google";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { Source_Sans_3, Nunito_Sans } from "next/font/google";
 
-const poppinsLight = Poppins({
-  weight: "300",
+const sourceSans = Source_Sans_3({
+  weight: ["300", "400", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-poppins-light",
+  variable: "--font-source-sans",
 });
 
-const poppinsRegular = Poppins({
-  weight: "400",
+const nunitoSans = Nunito_Sans({
+  weight: ["400", "600", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-poppins",
-});
-
-const poppinsSemiBold = Poppins({
-  weight: "600",
-  subsets: ["latin"],
-  variable: "--font-poppins-semibold",
-});
-
-const poppinsBold = Poppins({
-  weight: "700",
-  subsets: ["latin"],
-  variable: "--font-poppins-bold",
-});
-
-const poppinsExtraBold = Poppins({
-  weight: "800",
-  subsets: ["latin"],
-  variable: "--font-poppins-extrabold",
-});
-
-const poppinsBlack = Poppins({
-  weight: "900",
-  subsets: ["latin"],
-  variable: "--font-poppins-black",
+  variable: "--font-nunito-sans",
 });
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${poppinsLight.variable} ${poppinsRegular.variable} ${poppinsSemiBold.variable} ${poppinsBold.variable} ${poppinsExtraBold.variable} ${poppinsBlack.variable} font-sans`}
+        className={`${sourceSans.variable} ${nunitoSans.variable} font-sans`}
+        style={{
+          fontFamily: 'var(--font-source-sans), sans-serif',
+        }}
       >
         <Header />
         {children}
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
