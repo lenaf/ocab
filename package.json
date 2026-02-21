@@ -19,6 +19,7 @@
     "@payloadcms/db-mongodb": "^3.69.0",
     "@payloadcms/next": "^3.69.0",
     "@payloadcms/richtext-lexical": "^3.69.0",
+    "@payloadcms/ui": "^3.77.0",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
