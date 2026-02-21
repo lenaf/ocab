@@ -1104,6 +1104,12 @@ export interface SiteSetting {
   id: string;
   logo?: (string | null) | Media;
   siteName?: string | null;
+  tagline?: string | null;
+  socialMedia?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1153,6 +1159,14 @@ export interface Navigation {
 export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   siteName?: T;
+  tagline?: T;
+  socialMedia?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

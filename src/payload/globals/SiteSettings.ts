@@ -22,5 +22,32 @@ export const SiteSettings: GlobalConfig = {
       type: 'text',
       label: 'Site Name',
     },
+    {
+      name: 'tagline',
+      type: 'text',
+      label: 'Tagline',
+    },
+    {
+      name: 'socialMedia',
+      type: 'group',
+      label: 'Social Media',
+      fields: [
+        {
+          name: 'facebook',
+          type: 'text',
+          label: 'Facebook URL',
+        },
+        {
+          name: 'twitter',
+          type: 'text',
+          label: 'Twitter URL',
+        },
+        {
+          name: 'instagram',
+          type: 'text',
+          label: 'Instagram URL',
+        },
+      ],
+    },
   ],
 }
