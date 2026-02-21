@@ -27,7 +27,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { ColorSchemeField as ColorSchemeField_eaa434971ec6d637869ac48c60190ba3 } from '@/payload/components/ColorSchemeField'
 import { FloatingArrayField as FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3 } from '@/payload/components/FloatingArrayField'
 import { LogoutButton as LogoutButton_4fa0da4f39e65c0a260a976af575b7d4 } from '@/payload/components/LogoutButton'
-import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
+import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -59,5 +59,5 @@ export const importMap = {
   "@/payload/components/ColorSchemeField#ColorSchemeField": ColorSchemeField_eaa434971ec6d637869ac48c60190ba3,
   "@/payload/components/FloatingArrayField#FloatingArrayField": FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3,
   "@/payload/components/LogoutButton#LogoutButton": LogoutButton_4fa0da4f39e65c0a260a976af575b7d4,
-  "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

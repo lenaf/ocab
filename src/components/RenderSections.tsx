@@ -265,10 +265,16 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                                 <h3 className="text-2xl font-bold mb-3">
                                   {event.title}
                                 </h3>
-                                <p className="text-sm mb-2">{event.location}</p>
+                                <p className="text-sm mb-2">
+                                  {event.location && [
+                                    event.location.venue,
+                                    event.location.city,
+                                    event.location.state
+                                  ].filter(Boolean).join(', ')}
+                                </p>
                               </div>
                               <div className="text-sm">
-                                {new Date(event.date).toLocaleDateString()}
+                                {new Date(event.startDate).toLocaleDateString()}
                               </div>
                             </div>
                           </div>

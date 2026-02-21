@@ -104,9 +104,7 @@ export interface Config {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -154,6 +152,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -529,10 +528,11 @@ export interface BlogPost {
  */
 export interface Event {
   id: string;
+  /**
+   * Synced from Action Network
+   */
+  actionNetworkId?: string | null;
   title: string;
-  slug?: string | null;
-  date: string;
-  location?: string | null;
   description?: {
     root: {
       type: string;
@@ -548,9 +548,65 @@ export interface Event {
     };
     [k: string]: unknown;
   } | null;
-  image?: (string | null) | Media;
+  startDate: string;
+  endDate?: string | null;
+  location?: {
+    venue?: string | null;
+    address?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zip?: string | null;
+  };
+  /**
+   * RSVP link from Action Network
+   */
+  browserUrl?: string | null;
+  capacity?: number | null;
+  totalAccepted?: number | null;
+  slug?: string | null;
+  status?: ('draft' | 'published' | 'hidden' | 'cancelled') | null;
+  featured?: boolean | null;
+  featuredImage?: (string | null) | Media;
+  longDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  eventType?: ('conference' | 'workshop' | 'rally' | 'fundraiser' | 'training' | 'social' | 'networking') | null;
+  speakers?:
+    | {
+        name: string;
+        title?: string | null;
+        bio?: string | null;
+        photo?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  sponsors?:
+    | {
+        name: string;
+        logo?: (string | null) | Media;
+        url?: string | null;
+        tier?: ('platinum' | 'gold' | 'silver' | 'bronze') | null;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    keywords?: string | null;
+  };
   backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
-  actionNetworkUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -920,14 +976,55 @@ export interface BlogPostsSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
+  actionNetworkId?: T;
   title?: T;
-  slug?: T;
-  date?: T;
-  location?: T;
   description?: T;
-  image?: T;
+  startDate?: T;
+  endDate?: T;
+  location?:
+    | T
+    | {
+        venue?: T;
+        address?: T;
+        city?: T;
+        state?: T;
+        zip?: T;
+      };
+  browserUrl?: T;
+  capacity?: T;
+  totalAccepted?: T;
+  slug?: T;
+  status?: T;
+  featured?: T;
+  featuredImage?: T;
+  longDescription?: T;
+  eventType?: T;
+  speakers?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        bio?: T;
+        photo?: T;
+        id?: T;
+      };
+  sponsors?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        url?: T;
+        tier?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+      };
   backgroundColor?: T;
-  actionNetworkUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
