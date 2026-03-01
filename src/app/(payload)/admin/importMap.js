@@ -27,6 +27,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { ColorSchemeField as ColorSchemeField_eaa434971ec6d637869ac48c60190ba3 } from '@/payload/components/ColorSchemeField'
 import { FloatingArrayField as FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3 } from '@/payload/components/FloatingArrayField'
 import { LogoutButton as LogoutButton_4fa0da4f39e65c0a260a976af575b7d4 } from '@/payload/components/LogoutButton'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -59,5 +60,6 @@ export const importMap = {
   "@/payload/components/ColorSchemeField#ColorSchemeField": ColorSchemeField_eaa434971ec6d637869ac48c60190ba3,
   "@/payload/components/FloatingArrayField#FloatingArrayField": FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3,
   "@/payload/components/LogoutButton#LogoutButton": LogoutButton_4fa0da4f39e65c0a260a976af575b7d4,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -5,6 +5,7 @@ import {
   BlocksFeature,
   TextStateFeature,
 } from "@payloadcms/richtext-lexical";
+import { s3Storage } from "@payloadcms/storage-s3";
 import path from "path";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
@@ -36,6 +37,27 @@ export default buildConfig({
       titleSuffix: "- OurCity",
     },
   },
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          prefix: "media",
+          generateFileURL: ({ filename, prefix }: { filename: string; prefix: string }) => {
+            return `${process.env.S3_PUBLIC_URL}/${prefix}/${filename}`;
+          },
+        },
+      },
+      bucket: process.env.S3_BUCKET || "",
+      config: {
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION || "auto",
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+        },
+      },
+    }),
+  ],
   endpoints: [
     {
       path: "/pages",
