@@ -15,7 +15,7 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 1.5;
-    color: #1F2937;
+    color: var(--color-base-content);
   }
   b, strong {
     font-weight: 600;
@@ -25,7 +25,7 @@
     font-weight: 600;
     letter-spacing: normal;
     text-transform: none;
-    color: #1F2937;
+    /* Color removed - headings now inherit from parent/section for proper Payload control */
   }
 }
 
@@ -134,17 +134,7 @@
     letter-spacing: 0.025em;
   }
 
-  /* Force white text on colored backgrounds */
-  section[style*="background-color: #2D6200"] *,
-  section[style*="background-color: #1E4200"] *,
-  section[style*="background-color: #377A00"] *,
-  section[style*="background-color: #1F2937"] *,
-  div[style*="background-color: #2D6200"] *,
-  div[style*="background-color: #1E4200"] *,
-  div[style*="background-color: #377A00"] *,
-  div[style*="background-color: #1F2937"] * {
-    color: #FFFFFF !important;
-  }
+  /* Removed outdated forced white text rules - now handled by Payload's content color system */
 
   /* Smooth scroll behavior */
   html {

@@ -40,7 +40,20 @@ export function RenderSections({ sections }: { sections: Section[] }) {
 
   const getContentClass = (bgColor: string | null | undefined) => {
     if (!bgColor) return "";
-    return `var(--color-${bgColor}-content)`;
+    const contentColorMap: Record<string, string> = {
+      primary: themeConfig.colors.primaryContent,
+      secondary: themeConfig.colors.secondaryContent,
+      accent: themeConfig.colors.accentContent,
+      neutral: themeConfig.colors.neutralContent,
+      "base-100": themeConfig.colors.baseContent,
+      "base-200": themeConfig.colors.baseContent,
+      "base-300": themeConfig.colors.baseContent,
+      info: themeConfig.colors.infoContent,
+      success: themeConfig.colors.successContent,
+      warning: themeConfig.colors.warningContent,
+      error: themeConfig.colors.errorContent,
+    };
+    return contentColorMap[bgColor] || themeConfig.colors.baseContent;
   };
 
   const getMediaUrl = (media: string | Media | null | undefined): string => {

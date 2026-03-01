@@ -31,9 +31,9 @@ export function CarouselNav({
     }
   }
 
-  const borderColor = color === 'white' ? 'border-white' : 'border-gray-800'
-  const bgColor = color === 'white' ? 'bg-white/20 hover:bg-white/30' : 'bg-gray-800/20 hover:bg-gray-800/30'
-  const textColor = color === 'white' ? 'text-white' : 'text-gray-800'
+  const borderColor = color === 'white' ? 'border-white' : 'border-base-content'
+  const bgColor = color === 'white' ? 'bg-white/20 hover:bg-white/30' : 'bg-base-content/20 hover:bg-base-content/30'
+  const textColor = color === 'white' ? 'text-white' : 'text-base-content'
 
   return (
     <>

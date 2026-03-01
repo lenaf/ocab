@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import type { Media } from "@/payload-types";
+import { themeConfig } from "@/config/theme";
 
 function getImageUrl(image: string | Media | null | undefined) {
   if (!image) return null;
@@ -57,7 +58,12 @@ export function LexicalRenderer({
     }
     if (node.type === "link") {
       return (
-        <a key={i} href={node.url} className="text-[#3D9BE9] hover:underline">
+        <a
+          key={i}
+          href={node.url}
+          className="hover:underline underline font-semibold"
+          style={{ color: themeConfig.colors.primary }}
+        >
           {node.children?.map(renderNode)}
         </a>
       );
@@ -97,7 +103,8 @@ export function LexicalRenderer({
       return (
         <blockquote
           key={i}
-          className="border-l-4 border-[#3D9BE9] pl-6 italic my-6 text-base md:text-lg text-gray-700"
+          className="border-l-4 pl-6 italic my-6 text-base md:text-lg opacity-90"
+          style={{ borderColor: themeConfig.colors.primary }}
         >
           {node.children?.map(renderNode)}
         </blockquote>
@@ -138,24 +145,27 @@ export function LexicalRenderer({
         );
       if (node.format & 8)
         text = (
-          <mark key={i} className="bg-[#F7B32B] px-1 font-bold">
+          <mark
+            key={i}
+            className="px-1 font-bold"
+            style={{ backgroundColor: themeConfig.colors.warning }}
+          >
             {text}
           </mark>
         );
 
-      // Handle TextStateFeature color states - use brand colors with light/dark variants
+      // Handle TextStateFeature color states - use theme colors
       if (node.$?.color && node.$?.color !== "default") {
         const colorMap = {
-          primary: { light: "#3D9BE9", dark: "#3D9BE9" },
-          secondary: { light: "#FF6B35", dark: "#FF6B35" },
-          accent: { light: "#F7B32B", dark: "#F7B32B" },
-          success: { light: "#10B981", dark: "#10B981" },
-          warning: { light: "#EF4444", dark: "#EF4444" },
+          primary: themeConfig.colors.primary,
+          secondary: themeConfig.colors.secondary,
+          accent: themeConfig.colors.accent,
+          success: themeConfig.colors.success,
+          warning: themeConfig.colors.warning,
+          error: themeConfig.colors.error,
         };
         const colorName = node.$?.color as keyof typeof colorMap;
-        const color =
-          colorMap[colorName]?.[textColor === "light" ? "light" : "dark"] ||
-          colorMap[colorName]?.light;
+        const color = colorMap[colorName];
         if (color) {
           text = (
             <span key={i} className="font-bold" style={{ color }}>

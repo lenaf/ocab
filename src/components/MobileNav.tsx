@@ -55,13 +55,13 @@ export function MobileNav({ navigation }: MobileNavProps) {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="text-xl font-bold text-gray-900">Menu</h2>
+            <h2 className="text-xl font-bold text-base-content">Menu</h2>
             <button
               onClick={toggleMenu}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-base-200 rounded-lg transition-colors"
               aria-label="Close menu"
             >
-              <X className="w-6 h-6 text-gray-900" />
+              <X className="w-6 h-6 text-base-content" />
             </button>
           </div>
 
@@ -82,7 +82,7 @@ export function MobileNav({ navigation }: MobileNavProps) {
                     <li key={page.id}>
                       <button
                         onClick={() => toggleDropdown(page.id)}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-gray-900 hover:bg-gray-100 rounded-lg transition-colors font-medium ${
+                        className={`w-full flex items-center justify-between px-4 py-3 text-base-content hover:bg-base-200 rounded-lg transition-colors font-medium ${
                           active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
                         }`}
                       >
@@ -116,7 +116,7 @@ export function MobileNav({ navigation }: MobileNavProps) {
                                 <Link
                                   href={subHref}
                                   onClick={toggleMenu}
-                                  className={`block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors ${
+                                  className={`block px-4 py-2 text-base-content/80 hover:bg-base-200/50 rounded-lg transition-colors ${
                                     subActive ? "bg-primary/10 text-primary font-bold border-l-4 border-primary" : ""
                                   }`}
                                 >
@@ -137,7 +137,7 @@ export function MobileNav({ navigation }: MobileNavProps) {
                     <Link
                       href={href}
                       onClick={toggleMenu}
-                      className={`block px-4 py-3 text-gray-900 hover:bg-gray-100 rounded-lg transition-colors font-medium ${
+                      className={`block px-4 py-3 text-base-content hover:bg-base-200 rounded-lg transition-colors font-medium ${
                         active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
                       }`}
                     >
