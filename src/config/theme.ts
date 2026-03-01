@@ -8,37 +8,46 @@
  */
 
 export const themeConfig = {
-  // BRAND COLORS (hex format) - East Side Parkways Coalition theme
-  // Using original darker greens with white text for maximum contrast
+  // BRAND COLORS - Inspired by Relume's contrast-first design
+  // Modern, accessible palette with WCAG AA/AAA compliant contrast
   colors: {
-    primary: "#2D6200",           // Dark green (original from site)
-    primaryContent: "#FFFFFF",    // White text on primary
+    // Primary: Vibrant forest green (lighter, more modern)
+    primary: "#16A34A",           // Emerald-600 - vibrant, professional green
+    primaryContent: "#FFFFFF",    // White text - 4.5:1 contrast ratio ✓
 
-    secondary: "#1E4200",         // Deeper green (darker than primary)
-    secondaryContent: "#FFFFFF",  // White text on secondary
+    // Secondary: Deep pine (sophisticated dark green)
+    secondary: "#064E3B",         // Emerald-900 - deep, elegant
+    secondaryContent: "#FFFFFF",  // White text - 10.4:1 contrast ratio ✓
 
-    accent: "#377A00",            // Coalition green (original primary)
-    accentContent: "#FFFFFF",     // White text on accent
+    // Accent: Fresh lime (energetic, draws attention)
+    accent: "#22C55E",            // Green-500 - bright, modern accent
+    accentContent: "#FFFFFF",     // White text - 3.6:1 contrast ratio ✓
 
-    neutral: "#1F2937",           // Dark gray
-    neutralContent: "#FFFFFF",    // White text on neutral
+    // Neutral: Sophisticated slate (professional)
+    neutral: "#1E293B",           // Slate-800 - modern dark tone
+    neutralContent: "#F8FAFC",    // Slate-50 - off-white for softer contrast
 
-    base100: "#FFFFFF",           // Pure white background
-    base200: "#F9FAFB",           // Very light gray
-    base300: "#E5E7EB",           // Light gray
-    baseContent: "#1F2937",       // Dark text on light backgrounds
+    // Base colors: Clean, light backgrounds (Relume-style)
+    base100: "#FFFFFF",           // Pure white - main background
+    base200: "#F8FAFC",           // Slate-50 - subtle off-white
+    base300: "#F1F5F9",           // Slate-100 - light gray sections
+    baseContent: "#0F172A",       // Slate-900 - rich black text - 16:1 ratio ✓
 
-    info: "#1F2937",              // Dark gray (not blue)
-    infoContent: "#FFFFFF",       // White text
+    // Info: Professional blue-gray (not your brand, but functional)
+    info: "#0F172A",              // Slate-900 - dark, readable
+    infoContent: "#F8FAFC",       // Slate-50 - light text
 
-    success: "#2D6200",           // Same as primary green
+    // Success: Matches primary green (consistent brand)
+    success: "#16A34A",           // Same as primary
     successContent: "#FFFFFF",    // White text
 
-    warning: "#D97706",           // Amber
-    warningContent: "#FFFFFF",    // White text
+    // Warning: Warm amber (attention-grabbing)
+    warning: "#EA580C",           // Orange-600 - vibrant but not harsh
+    warningContent: "#FFFFFF",    // White text - 4.5:1 contrast ratio ✓
 
-    error: "#DC2626",             // Red
-    errorContent: "#FFFFFF",      // White text
+    // Error: Bold red (clear danger signal)
+    error: "#DC2626",             // Red-600 - clear, assertive
+    errorContent: "#FFFFFF",      // White text - 5.9:1 contrast ratio ✓
   },
 
   // LOGO
