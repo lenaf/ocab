@@ -136,6 +136,16 @@ const floatingImagesCollapsible: Field = {
   ],
 };
 
+const labelField: Field = {
+  name: "label",
+  type: "text",
+  label: "Section Label (admin only)",
+  admin: {
+    description: "Helps identify this section when collapsed in the admin",
+    placeholder: "e.g. Hero Banner, About Us, Events List",
+  },
+};
+
 const columnFields: Field[] = [contentField, designLayoutCollapsible()];
 
 const revalidatePage = async (slug: string) => {
@@ -209,6 +219,18 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: "seo",
+      type: "group",
+      label: "SEO",
+      admin: { position: "sidebar" },
+      fields: [
+        { name: "title", type: "text", label: "Page Title (overrides default)" },
+        { name: "description", type: "textarea", label: "Meta Description", maxLength: 160 },
+        { name: "ogImage", type: "upload", relationTo: "media" as never, label: "Social Share Image" },
+        { name: "noIndex", type: "checkbox", label: "Hide from search engines", defaultValue: false },
+      ],
+    },
+    {
       name: "sections",
       type: "blocks",
       admin: {
@@ -218,12 +240,15 @@ export const Pages: CollectionConfig = {
         {
           slug: "bannerSection",
           labels: { singular: "Banner Section", plural: "Banner Sections" },
-          fields: [contentField, designLayoutCollapsible()],
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [labelField, contentField, designLayoutCollapsible()],
         },
         {
           slug: "heroCarouselSection",
           labels: { singular: "Hero Carousel", plural: "Hero Carousels" },
+          admin: { custom: { useAsTitle: "label" } },
           fields: [
+            labelField,
             {
               name: "slides",
               type: "array",
@@ -235,20 +260,20 @@ export const Pages: CollectionConfig = {
         {
           slug: "blogPostsCarouselSection",
           labels: {
-            singular: "Blog Posts Carousel",
+            singular: "Blog Posts Carousel (deprecated)",
             plural: "Blog Posts Carousels",
           },
-          fields: carouselSectionFields("Posts"),
+          fields: [labelField, ...carouselSectionFields("Posts")],
         },
         {
           slug: "eventsCarouselSection",
-          labels: { singular: "Events Carousel", plural: "Events Carousels" },
-          fields: carouselSectionFields("Events"),
+          labels: { singular: "Events Carousel (deprecated)", plural: "Events Carousels" },
+          fields: [labelField, ...carouselSectionFields("Events")],
         },
         {
           slug: "pressCarouselSection",
-          labels: { singular: "Press Carousel", plural: "Press Carousels" },
-          fields: carouselSectionFields("Articles"),
+          labels: { singular: "Press Carousel (deprecated)", plural: "Press Carousels" },
+          fields: [labelField, ...carouselSectionFields("Articles")],
         },
         {
           slug: "fullWidthSection",
@@ -256,7 +281,9 @@ export const Pages: CollectionConfig = {
             singular: "Full Width Section",
             plural: "Full Width Sections",
           },
+          admin: { custom: { useAsTitle: "label" } },
           fields: [
+            labelField,
             contentField,
             designLayoutCollapsible(true),
             floatingImagesCollapsible,
@@ -268,7 +295,9 @@ export const Pages: CollectionConfig = {
             singular: "Two Column Section",
             plural: "Two Column Sections",
           },
+          admin: { custom: { useAsTitle: "label" } },
           fields: [
+            labelField,
             {
               name: "wrapOnMobile",
               type: "checkbox",
@@ -306,7 +335,9 @@ export const Pages: CollectionConfig = {
             singular: "Three Column Section",
             plural: "Three Column Sections",
           },
+          admin: { custom: { useAsTitle: "label" } },
           fields: [
+            labelField,
             {
               name: "wrapOnMobile",
               type: "checkbox",
@@ -331,6 +362,117 @@ export const Pages: CollectionConfig = {
               label: "Column 3",
               fields: columnFields,
             },
+          ],
+        },
+        {
+          slug: "contactSection",
+          labels: { singular: "Contact Section", plural: "Contact Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [
+            labelField,
+            { name: "title", type: "text", label: "Section Title", defaultValue: "Contact Us" },
+            { name: "body", type: "richText", label: "Intro Text" },
+            { name: "showAddress", type: "checkbox", label: "Show Address", defaultValue: true },
+            { name: "showEmail", type: "checkbox", label: "Show Email", defaultValue: true },
+            { name: "showSocialIcons", type: "checkbox", label: "Show Social Media Icons", defaultValue: true },
+            { name: "showForm", type: "checkbox", label: "Show Contact Form", defaultValue: true },
+            designLayoutCollapsible(),
+          ],
+        },
+        {
+          slug: "collectionListSection",
+          labels: { singular: "Collection List", plural: "Collection Lists" },
+          admin: {
+            custom: { useAsTitle: "label", description: "Display a dynamic list of items from any collection (events, press, books, merch, campaigns, etc.)" },
+          },
+          fields: [
+            labelField,
+            { name: "title", type: "text", label: "Section Title" },
+            { name: "subtitle", type: "textarea", label: "Section Subtitle / Description" },
+            {
+              name: "collection",
+              type: "select",
+              label: "Data Source",
+              required: true,
+              admin: { description: "Which collection to pull items from" },
+              options: [
+                { label: "Events", value: "events" },
+                { label: "Blog Posts", value: "blog-posts" },
+                { label: "Press Articles", value: "press-articles" },
+                { label: "Books (Bookshelf)", value: "books" },
+                { label: "Team Members", value: "team-members" },
+                { label: "Campaigns", value: "campaigns" },
+                { label: "Products / Merch", value: "products" },
+                { label: "Research & Reports", value: "research" },
+              ],
+            },
+            {
+              name: "layout",
+              type: "select",
+              label: "Layout",
+              defaultValue: "grid",
+              options: [
+                { label: "Grid", value: "grid" },
+                { label: "List (stacked rows)", value: "list" },
+                { label: "Carousel (horizontal scroll)", value: "carousel" },
+                { label: "Featured (large first + grid)", value: "featured" },
+              ],
+            },
+            {
+              name: "columns",
+              type: "select",
+              label: "Columns (Grid only)",
+              defaultValue: "3",
+              options: [
+                { label: "2 Columns", value: "2" },
+                { label: "3 Columns", value: "3" },
+                { label: "4 Columns", value: "4" },
+              ],
+              admin: { condition: (_, s) => s?.layout === "grid" || s?.layout === "featured" },
+            },
+            { name: "limit", type: "number", label: "Max Items to Show", defaultValue: 6, min: 1, max: 24 },
+            {
+              name: "sortField",
+              type: "select",
+              label: "Sort By",
+              defaultValue: "createdAt_desc",
+              options: [
+                { label: "Newest First", value: "createdAt_desc" },
+                { label: "Oldest First", value: "createdAt_asc" },
+                { label: "Alphabetical (A→Z)", value: "title_asc" },
+                { label: "Manual Order (use Order field)", value: "order_asc" },
+                { label: "Event Date (soonest first)", value: "startDate_asc" },
+              ],
+            },
+            { name: "filterFeatured", type: "checkbox", label: "Show Featured Items Only", defaultValue: false },
+            {
+              name: "upcomingOnly",
+              type: "checkbox",
+              label: "Future Events Only (Events collection)",
+              defaultValue: true,
+              admin: { condition: (_, s) => s?.collection === "events" },
+            },
+            { name: "viewAllLabel", type: "text", label: '"View All" Button Label', admin: { placeholder: "e.g. View More, See All Events" } },
+            { name: "viewAllUrl", type: "text", label: '"View All" Link URL', admin: { placeholder: "e.g. /events, /press" } },
+            { name: "emptyMessage", type: "text", label: "Empty State Message", defaultValue: "Nothing to show right now. Check back soon!" },
+            {
+              name: "pinnedItems",
+              type: "array",
+              label: "Pinned Items (always shown first)",
+              admin: {
+                description: "Manually select items to always appear at the top, regardless of sort order",
+                initCollapsed: true,
+              },
+              fields: [
+                {
+                  name: "item",
+                  type: "relationship",
+                  label: "Item",
+                  relationTo: ["events", "blog-posts", "press-articles", "books", "campaigns", "products", "team-members", "research"] as never,
+                },
+              ],
+            },
+            designLayoutCollapsible(),
           ],
         },
       ],

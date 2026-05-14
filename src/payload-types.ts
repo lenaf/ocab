@@ -151,9 +151,19 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    ogImage?: (string | null) | Media;
+    noIndex?: boolean | null;
+  };
   sections?:
     | (
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             content?: {
               root: {
                 type: string;
@@ -182,6 +192,10 @@ export interface Page {
             blockType: 'bannerSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             slides?:
               | {
                   content?: {
@@ -215,6 +229,10 @@ export interface Page {
             blockType: 'heroCarouselSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             title?: string | null;
             limit?: number | null;
             id?: string | null;
@@ -222,6 +240,10 @@ export interface Page {
             blockType: 'blogPostsCarouselSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             title?: string | null;
             limit?: number | null;
             id?: string | null;
@@ -229,6 +251,10 @@ export interface Page {
             blockType: 'eventsCarouselSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             title?: string | null;
             limit?: number | null;
             id?: string | null;
@@ -236,6 +262,10 @@ export interface Page {
             blockType: 'pressCarouselSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             content?: {
               root: {
                 type: string;
@@ -286,6 +316,10 @@ export interface Page {
             blockType: 'fullWidthSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             wrapOnMobile?: boolean | null;
             ratio?: ('1-1' | '3-2' | '2-3') | null;
             leftColumn?: {
@@ -343,6 +377,10 @@ export interface Page {
             blockType: 'twoColumnSection';
           }
         | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             wrapOnMobile?: boolean | null;
             column1?: {
               content?: {
@@ -423,6 +461,124 @@ export interface Page {
             blockName?: string | null;
             blockType: 'threeColumnSection';
           }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            showAddress?: boolean | null;
+            showEmail?: boolean | null;
+            showSocialIcons?: boolean | null;
+            showForm?: boolean | null;
+            backgroundColor?:
+              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+              | null;
+            backgroundImage?: (string | null) | Media;
+            /**
+             * Adds a dark semi-transparent overlay to improve text readability
+             */
+            darkScrim?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            subtitle?: string | null;
+            /**
+             * Which collection to pull items from
+             */
+            collection:
+              | 'events'
+              | 'blog-posts'
+              | 'press-articles'
+              | 'books'
+              | 'team-members'
+              | 'campaigns'
+              | 'products'
+              | 'research';
+            layout?: ('grid' | 'list' | 'carousel' | 'featured') | null;
+            columns?: ('2' | '3' | '4') | null;
+            limit?: number | null;
+            sortField?: ('createdAt_desc' | 'createdAt_asc' | 'title_asc' | 'order_asc' | 'startDate_asc') | null;
+            filterFeatured?: boolean | null;
+            upcomingOnly?: boolean | null;
+            viewAllLabel?: string | null;
+            viewAllUrl?: string | null;
+            emptyMessage?: string | null;
+            /**
+             * Manually select items to always appear at the top, regardless of sort order
+             */
+            pinnedItems?:
+              | {
+                  item?:
+                    | ({
+                        relationTo: 'events';
+                        value: string | Event;
+                      } | null)
+                    | ({
+                        relationTo: 'blog-posts';
+                        value: string | BlogPost;
+                      } | null)
+                    | ({
+                        relationTo: 'press-articles';
+                        value: string | PressArticle;
+                      } | null)
+                    | ({
+                        relationTo: 'books';
+                        value: string | Book;
+                      } | null)
+                    | ({
+                        relationTo: 'campaigns';
+                        value: string | Campaign;
+                      } | null)
+                    | ({
+                        relationTo: 'products';
+                        value: string | Product;
+                      } | null)
+                    | ({
+                        relationTo: 'team-members';
+                        value: string | TeamMember;
+                      } | null)
+                    | ({
+                        relationTo: 'research';
+                        value: string | Research;
+                      } | null);
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?:
+              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+              | null;
+            backgroundImage?: (string | null) | Media;
+            /**
+             * Adds a dark semi-transparent overlay to improve text readability
+             */
+            darkScrim?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'collectionListSection';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -474,75 +630,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-posts".
- */
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  image?: (string | null) | Media;
-  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
-  publishedAt: string;
-  author?: (string | null) | User;
-  category?: ('news' | 'campaign-update' | 'action' | 'victory' | 'analysis' | 'press-release' | 'community') | null;
-  featured?: boolean | null;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Select related blog posts to display
-   */
-  relatedPosts?: (string | BlogPost)[] | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -641,6 +728,116 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts".
+ */
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
+  publishedAt: string;
+  author?: (string | null) | User;
+  category?: ('news' | 'campaign-update' | 'action' | 'victory' | 'analysis' | 'press-release' | 'community') | null;
+  featured?: boolean | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Select related blog posts to display
+   */
+  relatedPosts?: (string | BlogPost)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "press-articles".
+ */
+export interface PressArticle {
+  id: string;
+  title: string;
+  publication?: string | null;
+  excerpt?: string | null;
+  url: string;
+  image?: (string | null) | Media;
+  featured?: boolean | null;
+  order?: number | null;
+  publishedAt: string;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Books on the OCAB bookshelf
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "books".
+ */
+export interface Book {
+  id: string;
+  title: string;
+  author?: string | null;
+  description?: string | null;
+  cover?: (string | null) | Media;
+  url?: string | null;
+  featured?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Issue-based campaigns OCAB is running or has run
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -684,25 +881,21 @@ export interface Campaign {
   createdAt: string;
 }
 /**
+ * OCAB merch and products
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "press-articles".
+ * via the `definition` "products".
  */
-export interface PressArticle {
+export interface Product {
   id: string;
-  title: string;
-  publication?: string | null;
-  excerpt?: string | null;
-  url: string;
-  image?: (string | null) | Media;
+  name: string;
+  price?: string | null;
+  outOfStock?: boolean | null;
   featured?: boolean | null;
   order?: number | null;
-  publishedAt: string;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  description?: string | null;
+  image?: (string | null) | Media;
+  url?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -739,43 +932,6 @@ export interface TeamMember {
   } | null;
   photo?: (string | null) | Media;
   email?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Books on the OCAB bookshelf
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "books".
- */
-export interface Book {
-  id: string;
-  title: string;
-  author?: string | null;
-  description?: string | null;
-  cover?: (string | null) | Media;
-  url?: string | null;
-  featured?: boolean | null;
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * OCAB merch and products
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  name: string;
-  price?: string | null;
-  outOfStock?: boolean | null;
-  featured?: boolean | null;
-  order?: number | null;
-  description?: string | null;
-  image?: (string | null) | Media;
-  url?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -959,12 +1115,21 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
   sections?:
     | T
     | {
         bannerSection?:
           | T
           | {
+              label?: T;
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
@@ -975,6 +1140,7 @@ export interface PagesSelect<T extends boolean = true> {
         heroCarouselSection?:
           | T
           | {
+              label?: T;
               slides?:
                 | T
                 | {
@@ -990,6 +1156,7 @@ export interface PagesSelect<T extends boolean = true> {
         blogPostsCarouselSection?:
           | T
           | {
+              label?: T;
               title?: T;
               limit?: T;
               id?: T;
@@ -998,6 +1165,7 @@ export interface PagesSelect<T extends boolean = true> {
         eventsCarouselSection?:
           | T
           | {
+              label?: T;
               title?: T;
               limit?: T;
               id?: T;
@@ -1006,6 +1174,7 @@ export interface PagesSelect<T extends boolean = true> {
         pressCarouselSection?:
           | T
           | {
+              label?: T;
               title?: T;
               limit?: T;
               id?: T;
@@ -1014,6 +1183,7 @@ export interface PagesSelect<T extends boolean = true> {
         fullWidthSection?:
           | T
           | {
+              label?: T;
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
@@ -1047,6 +1217,7 @@ export interface PagesSelect<T extends boolean = true> {
         twoColumnSection?:
           | T
           | {
+              label?: T;
               wrapOnMobile?: T;
               ratio?: T;
               leftColumn?:
@@ -1071,6 +1242,7 @@ export interface PagesSelect<T extends boolean = true> {
         threeColumnSection?:
           | T
           | {
+              label?: T;
               wrapOnMobile?: T;
               column1?:
                 | T
@@ -1096,6 +1268,50 @@ export interface PagesSelect<T extends boolean = true> {
                     backgroundImage?: T;
                     darkScrim?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        contactSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              body?: T;
+              showAddress?: T;
+              showEmail?: T;
+              showSocialIcons?: T;
+              showForm?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
+              darkScrim?: T;
+              id?: T;
+              blockName?: T;
+            };
+        collectionListSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              subtitle?: T;
+              collection?: T;
+              layout?: T;
+              columns?: T;
+              limit?: T;
+              sortField?: T;
+              filterFeatured?: T;
+              upcomingOnly?: T;
+              viewAllLabel?: T;
+              viewAllUrl?: T;
+              emptyMessage?: T;
+              pinnedItems?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              darkScrim?: T;
               id?: T;
               blockName?: T;
             };
@@ -1446,21 +1662,21 @@ export interface Navigation {
   id: string;
   navItems?:
     | {
-        page: string | Page;
+        linkType?: ('page' | 'url') | null;
+        page?: (string | null) | Page;
+        url?: string | null;
         /**
-         * Leave blank to use page title
+         * Required for external URLs; optional override for internal pages
          */
         label?: string | null;
-        icon?: ('' | 'home' | 'info' | 'calendar' | 'users' | 'mail' | 'phone' | 'map-pin' | 'heart' | 'star') | null;
         /**
-         * Add dropdown menu items under this navigation item
+         * Add dropdown items under this nav item
          */
         subItems?:
           | {
-              page: string | Page;
-              /**
-               * Leave blank to use page title
-               */
+              linkType?: ('page' | 'url') | null;
+              page?: (string | null) | Page;
+              url?: string | null;
               label?: string | null;
               id?: string | null;
             }[]
@@ -1468,12 +1684,20 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
-  ctaButton?: {
-    enabled?: boolean | null;
-    label?: string | null;
-    page?: (string | null) | Page;
-  };
-  style?: ('solid' | 'glass') | null;
+  /**
+   * Buttons shown at the top-right of the header (e.g. Donate Now, Take Action)
+   */
+  ctaButtons?:
+    | {
+        label: string;
+        linkType?: ('page' | 'url') | null;
+        page?: (string | null) | Page;
+        url?: string | null;
+        style?: ('primary' | 'accent' | 'success' | 'neutral' | 'outline') | null;
+        id?: string | null;
+      }[]
+    | null;
+  style?: ('solid' | 'white') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1486,10 +1710,25 @@ export interface SiteSetting {
   logo?: (string | null) | Media;
   siteName?: string | null;
   tagline?: string | null;
+  /**
+   * Link to Zeffy, ActBlue, etc.
+   */
+  donateUrl?: string | null;
+  contact?: {
+    email?: string | null;
+    phone?: string | null;
+    addressLine1?: string | null;
+    addressLine2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zip?: string | null;
+  };
   socialMedia?: {
+    instagram?: string | null;
     facebook?: string | null;
     twitter?: string | null;
-    instagram?: string | null;
+    tiktok?: string | null;
+    youtube?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1502,24 +1741,30 @@ export interface NavigationSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
+        linkType?: T;
         page?: T;
+        url?: T;
         label?: T;
-        icon?: T;
         subItems?:
           | T
           | {
+              linkType?: T;
               page?: T;
+              url?: T;
               label?: T;
               id?: T;
             };
         id?: T;
       };
-  ctaButton?:
+  ctaButtons?:
     | T
     | {
-        enabled?: T;
         label?: T;
+        linkType?: T;
         page?: T;
+        url?: T;
+        style?: T;
+        id?: T;
       };
   style?: T;
   updatedAt?: T;
@@ -1534,12 +1779,26 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   siteName?: T;
   tagline?: T;
+  donateUrl?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        addressLine1?: T;
+        addressLine2?: T;
+        city?: T;
+        state?: T;
+        zip?: T;
+      };
   socialMedia?:
     | T
     | {
+        instagram?: T;
         facebook?: T;
         twitter?: T;
-        instagram?: T;
+        tiktok?: T;
+        youtube?: T;
       };
   updatedAt?: T;
   createdAt?: T;
