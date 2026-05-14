@@ -529,7 +529,8 @@ export interface BlogPost {
   backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   publishedAt: string;
   author?: (string | null) | User;
-  category?: ('News' | 'Action' | 'Victory' | 'Analysis') | null;
+  category?: ('news' | 'campaign-update' | 'action' | 'victory' | 'analysis' | 'press-release' | 'community') | null;
+  featured?: boolean | null;
   tags?:
     | {
         tag?: string | null;
@@ -603,7 +604,15 @@ export interface Event {
     };
     [k: string]: unknown;
   } | null;
-  eventType?: ('conference' | 'workshop' | 'rally' | 'fundraiser' | 'training' | 'social' | 'networking') | null;
+  eventType?:
+    | ('town-hall' | 'rally' | 'fundraiser' | 'social' | 'workshop' | 'canvassing' | 'community-meeting' | 'press')
+    | null;
+  ticketed?: boolean | null;
+  ticketUrl?: string | null;
+  isFree?: boolean | null;
+  price?: string | null;
+  image?: (string | null) | Media;
+  order?: number | null;
   speakers?:
     | {
         name: string;
@@ -685,7 +694,8 @@ export interface PressArticle {
   excerpt?: string | null;
   url: string;
   image?: (string | null) | Media;
-  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
+  featured?: boolean | null;
+  order?: number | null;
   publishedAt: string;
   tags?:
     | {
@@ -1184,6 +1194,7 @@ export interface BlogPostsSelect<T extends boolean = true> {
   publishedAt?: T;
   author?: T;
   category?: T;
+  featured?: T;
   tags?:
     | T
     | {
@@ -1222,6 +1233,12 @@ export interface EventsSelect<T extends boolean = true> {
   featuredImage?: T;
   longDescription?: T;
   eventType?: T;
+  ticketed?: T;
+  ticketUrl?: T;
+  isFree?: T;
+  price?: T;
+  image?: T;
+  order?: T;
   speakers?:
     | T
     | {
@@ -1286,7 +1303,8 @@ export interface PressArticlesSelect<T extends boolean = true> {
   excerpt?: T;
   url?: T;
   image?: T;
-  backgroundColor?: T;
+  featured?: T;
+  order?: T;
   publishedAt?: T;
   tags?:
     | T

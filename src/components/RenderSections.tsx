@@ -329,12 +329,8 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
-                              backgroundColor: getBgClass(
-                                article.backgroundColor || "accent",
-                              ),
-                              color: getContentClass(
-                                article.backgroundColor || "accent",
-                              ),
+                              backgroundColor: getBgClass("accent"),
+                              color: getContentClass("accent"),
                             }}
                           >
                             <div className="p-6 h-full flex flex-col justify-between">

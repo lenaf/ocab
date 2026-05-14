@@ -70,14 +70,24 @@ export const BlogPosts: CollectionConfig = {
       name: 'category',
       type: 'select',
       options: [
-        { label: 'News', value: 'News' },
-        { label: 'Action', value: 'Action' },
-        { label: 'Victory', value: 'Victory' },
-        { label: 'Analysis', value: 'Analysis' },
+        { label: 'News', value: 'news' },
+        { label: 'Campaign Update', value: 'campaign-update' },
+        { label: 'Action Alert', value: 'action' },
+        { label: 'Victory', value: 'victory' },
+        { label: 'Analysis', value: 'analysis' },
+        { label: 'Press Release', value: 'press-release' },
+        { label: 'Community', value: 'community' },
       ],
       admin: {
         position: 'sidebar',
       },
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      label: 'Feature on Homepage',
+      defaultValue: false,
+      admin: { position: 'sidebar' },
     },
     {
       name: 'tags',
