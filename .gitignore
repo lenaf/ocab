@@ -51,3 +51,5 @@ MIGRATION_STATUS.md
 
 # public media (too large for git)
 /public/migrated-media/
+
+.claude
