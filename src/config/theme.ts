@@ -1,59 +1,47 @@
-/**
- * THEME CONFIGURATION
- *
- * This is the ONLY file you need to edit for theming.
- * Run `npm run build:colors` after editing to regenerate colors.css
- *
- * Current theme: East Side Parkways Coalition (WordPress migration)
- */
-
 export const themeConfig = {
-  // BRAND COLORS - Inspired by Relume's contrast-first design
-  // Modern, accessible palette with WCAG AA/AAA compliant contrast
   colors: {
-    // Primary: Vibrant forest green (lighter, more modern)
-    primary: "#16A34A",           // Emerald-600 - vibrant, professional green
-    primaryContent: "#FFFFFF",    // White text - 4.5:1 contrast ratio ✓
+    // Primary: OCAB blue (hero background, section highlights)
+    primary: "#1C86EE",
+    primaryContent: "#FFFFFF",
 
-    // Secondary: Deep pine (sophisticated dark green)
-    secondary: "#064E3B",         // Emerald-900 - deep, elegant
-    secondaryContent: "#FFFFFF",  // White text - 10.4:1 contrast ratio ✓
+    // Secondary: Deep navy/black (neutral text sections)
+    secondary: "#1A1A1A",
+    secondaryContent: "#FFFFFF",
 
-    // Accent: Fresh lime (energetic, draws attention)
-    accent: "#22C55E",            // Green-500 - bright, modern accent
-    accentContent: "#FFFFFF",     // White text - 3.6:1 contrast ratio ✓
+    // Accent: OCAB orange (Donate Now button color)
+    accent: "#E05B2B",
+    accentContent: "#FFFFFF",
 
-    // Neutral: Sophisticated slate (professional)
-    neutral: "#1E293B",           // Slate-800 - modern dark tone
-    neutralContent: "#F8FAFC",    // Slate-50 - off-white for softer contrast
+    // Neutral: Dark charcoal (nav, footers)
+    neutral: "#1A1A1A",
+    neutralContent: "#FFFFFF",
 
-    // Base colors: Clean, light backgrounds (Relume-style)
-    base100: "#FFFFFF",           // Pure white - main background
-    base200: "#F8FAFC",           // Slate-50 - subtle off-white
-    base300: "#F1F5F9",           // Slate-100 - light gray sections
-    baseContent: "#0F172A",       // Slate-900 - rich black text - 16:1 ratio ✓
+    // Base colors
+    base100: "#FFFFFF",
+    base200: "#F4F4F4",
+    base300: "#E8E8E8",
+    baseContent: "#1A1A1A",
 
-    // Info: Professional blue-gray (not your brand, but functional)
-    info: "#0F172A",              // Slate-900 - dark, readable
-    infoContent: "#F8FAFC",       // Slate-50 - light text
+    // Info: matches primary blue
+    info: "#1C86EE",
+    infoContent: "#FFFFFF",
 
-    // Success: Matches primary green (consistent brand)
-    success: "#16A34A",           // Same as primary
-    successContent: "#FFFFFF",    // White text
+    // Success: OCAB amber (Take Action button)
+    success: "#F0A500",
+    successContent: "#FFFFFF",
 
-    // Warning: Warm amber (attention-grabbing)
-    warning: "#EA580C",           // Orange-600 - vibrant but not harsh
-    warningContent: "#FFFFFF",    // White text - 4.5:1 contrast ratio ✓
+    // Warning: orange
+    warning: "#E05B2B",
+    warningContent: "#FFFFFF",
 
-    // Error: Bold red (clear danger signal)
-    error: "#DC2626",             // Red-600 - clear, assertive
-    errorContent: "#FFFFFF",      // White text - 5.9:1 contrast ratio ✓
+    // Error
+    error: "#DC2626",
+    errorContent: "#FFFFFF",
   },
 
-  // LOGO
   logo: {
     src: "/logo.png",
-    alt: "East Side Parkways Coalition",
+    alt: "Our City Action Buffalo",
     width: 249,
     height: 60,
   },
