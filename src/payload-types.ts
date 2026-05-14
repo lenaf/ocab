@@ -67,12 +67,17 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    pages: Page;
     users: User;
     media: Media;
-    pages: Page;
     'blog-posts': BlogPost;
     events: Event;
+    campaigns: Campaign;
     'press-articles': PressArticle;
+    'team-members': TeamMember;
+    books: Book;
+    products: Product;
+    research: Research;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,12 +85,17 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    pages: PagesSelect<false> | PagesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    campaigns: CampaignsSelect<false> | CampaignsSelect<true>;
     'press-articles': PressArticlesSelect<false> | PressArticlesSelect<true>;
+    'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
+    books: BooksSelect<false> | BooksSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    research: ResearchSelect<false> | ResearchSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -96,12 +106,12 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    'site-settings': SiteSetting;
     navigation: Navigation;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
-    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -132,78 +142,8 @@ export interface UserAuthOperations {
   };
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    tablet?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
-}
-/**
+ * All pages on the site. Build pages by adding sections below.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
@@ -491,6 +431,78 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-posts".
  */
 export interface BlogPost {
@@ -620,6 +632,49 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * Issue-based campaigns OCAB is running or has run
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns".
+ */
+export interface Campaign {
+  id: string;
+  title: string;
+  slug?: string | null;
+  status?: ('active' | 'past' | 'upcoming') | null;
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  summary?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  learnMoreUrl?: string | null;
+  callToAction?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    ogImage?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "press-articles".
  */
@@ -638,6 +693,142 @@ export interface PressArticle {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * OCAB staff, board members, and volunteer leaders
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members".
+ */
+export interface TeamMember {
+  id: string;
+  name: string;
+  role?: string | null;
+  type?: ('staff' | 'board' | 'volunteer') | null;
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  photo?: (string | null) | Media;
+  email?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Books on the OCAB bookshelf
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "books".
+ */
+export interface Book {
+  id: string;
+  title: string;
+  author?: string | null;
+  description?: string | null;
+  cover?: (string | null) | Media;
+  url?: string | null;
+  featured?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * OCAB merch and products
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  name: string;
+  price?: string | null;
+  outOfStock?: boolean | null;
+  featured?: boolean | null;
+  order?: number | null;
+  description?: string | null;
+  image?: (string | null) | Media;
+  url?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * OCAB's original research, reports, field guides, and publications
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research".
+ */
+export interface Research {
+  id: string;
+  title: string;
+  slug?: string | null;
+  type: 'report' | 'field-guide' | 'policy-brief' | 'white-paper' | 'toolkit' | 'survey';
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  publishedAt: string;
+  /**
+   * e.g. OCAB Research Team, Jane Smith
+   */
+  authors?: string | null;
+  summary?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  coverImage?: (string | null) | Media;
+  accessType?: ('pdf' | 'url' | 'onsite') | null;
+  pdf?: (string | null) | Media;
+  /**
+   * Link to external site where the report lives
+   */
+  externalUrl?: string | null;
+  /**
+   * Pull quotes from readers — shown on the homepage section and research detail page
+   */
+  quotes?:
+    | {
+        quote: string;
+        attribution?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLabel?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    ogImage?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -666,16 +857,16 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
     | ({
         relationTo: 'media';
         value: string | Media;
-      } | null)
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
       } | null)
     | ({
         relationTo: 'blog-posts';
@@ -686,8 +877,28 @@ export interface PayloadLockedDocument {
         value: string | Event;
       } | null)
     | ({
+        relationTo: 'campaigns';
+        value: string | Campaign;
+      } | null)
+    | ({
         relationTo: 'press-articles';
         value: string | PressArticle;
+      } | null)
+    | ({
+        relationTo: 'team-members';
+        value: string | TeamMember;
+      } | null)
+    | ({
+        relationTo: 'books';
+        value: string | Book;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'research';
+        value: string | Research;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -730,82 +941,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  prefix?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        card?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        tablet?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -961,6 +1096,82 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-posts_select".
  */
 export interface BlogPostsSelect<T extends boolean = true> {
@@ -1042,6 +1253,31 @@ export interface EventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns_select".
+ */
+export interface CampaignsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  status?: T;
+  featured?: T;
+  order?: T;
+  summary?: T;
+  content?: T;
+  image?: T;
+  learnMoreUrl?: T;
+  callToAction?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogImage?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "press-articles_select".
  */
 export interface PressArticlesSelect<T extends boolean = true> {
@@ -1057,6 +1293,89 @@ export interface PressArticlesSelect<T extends boolean = true> {
     | {
         tag?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members_select".
+ */
+export interface TeamMembersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  type?: T;
+  featured?: T;
+  order?: T;
+  bio?: T;
+  photo?: T;
+  email?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "books_select".
+ */
+export interface BooksSelect<T extends boolean = true> {
+  title?: T;
+  author?: T;
+  description?: T;
+  cover?: T;
+  url?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  price?: T;
+  outOfStock?: T;
+  featured?: T;
+  order?: T;
+  description?: T;
+  image?: T;
+  url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "research_select".
+ */
+export interface ResearchSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  type?: T;
+  featured?: T;
+  order?: T;
+  publishedAt?: T;
+  authors?: T;
+  summary?: T;
+  content?: T;
+  coverImage?: T;
+  accessType?: T;
+  pdf?: T;
+  externalUrl?: T;
+  quotes?:
+    | T
+    | {
+        quote?: T;
+        attribution?: T;
+        id?: T;
+      };
+  ctaLabel?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogImage?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1103,23 +1422,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings".
- */
-export interface SiteSetting {
-  id: string;
-  logo?: (string | null) | Media;
-  siteName?: string | null;
-  tagline?: string | null;
-  socialMedia?: {
-    facebook?: string | null;
-    twitter?: string | null;
-    instagram?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
@@ -1159,22 +1461,20 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings_select".
+ * via the `definition` "site-settings".
  */
-export interface SiteSettingsSelect<T extends boolean = true> {
-  logo?: T;
-  siteName?: T;
-  tagline?: T;
-  socialMedia?:
-    | T
-    | {
-        facebook?: T;
-        twitter?: T;
-        instagram?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+export interface SiteSetting {
+  id: string;
+  logo?: (string | null) | Media;
+  siteName?: string | null;
+  tagline?: string | null;
+  socialMedia?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1204,6 +1504,25 @@ export interface NavigationSelect<T extends boolean = true> {
         page?: T;
       };
   style?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  logo?: T;
+  siteName?: T;
+  tagline?: T;
+  socialMedia?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

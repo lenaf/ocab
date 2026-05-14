@@ -169,6 +169,10 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "slug", "updatedAt"],
+    description: "All pages on the site. Build pages by adding sections below.",
+    group: "🌐 Website",
+    listSearchableFields: ["title", "slug"],
+    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${doc.slug === "home" ? "" : doc.slug}`,
   },
   versions: {
     drafts: true,

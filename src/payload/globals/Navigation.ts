@@ -2,6 +2,7 @@ import type { GlobalConfig } from "payload";
 
 export const Navigation: GlobalConfig = {
   slug: "navigation",
+  admin: { group: "🌐 Website" },
   access: {
     read: () => true,
     update: ({ req: { user } }) => !!user,

@@ -6,6 +6,7 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'startDate', 'status', 'featured'],
+    group: '📚 Collections',
   },
   access: {
     read: () => true,

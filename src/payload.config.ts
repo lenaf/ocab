@@ -15,6 +15,11 @@ import { BlogPosts } from "./payload/collections/BlogPosts";
 import { Events } from "./payload/collections/Events";
 import { PressArticles } from "./payload/collections/PressArticles";
 import { Media } from "./payload/collections/Media";
+import { Campaigns } from "./payload/collections/Campaigns";
+import { TeamMembers } from "./payload/collections/TeamMembers";
+import { Books } from "./payload/collections/Books";
+import { Products } from "./payload/collections/Products";
+import { Research } from "./payload/collections/Research";
 import { SiteSettings } from "./payload/globals/SiteSettings";
 
 import { themeConfig } from "@/config/theme";
@@ -86,14 +91,12 @@ export default buildConfig({
   ].filter(Boolean),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000",
   collections: [
+    Pages,
     Users,
     Media,
-    Pages,
-    BlogPosts,
-    Events,
-    PressArticles,
+    BlogPosts, Events, Campaigns, PressArticles, TeamMembers, Books, Products, Research,
   ],
-  globals: [SiteSettings, Navigation],
+  globals: [Navigation, SiteSettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

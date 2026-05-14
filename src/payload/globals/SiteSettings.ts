@@ -7,7 +7,7 @@ export const SiteSettings: GlobalConfig = {
     update: ({ req: { user } }) => !!user,
   },
   admin: {
-    group: 'Settings',
+    group: '⚙️ Settings',
   },
   fields: [
     {
