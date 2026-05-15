@@ -380,6 +380,86 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
+          slug: "contentGridSection",
+          labels: { singular: "Content Grid", plural: "Content Grids" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [
+            labelField,
+            {
+              type: "row",
+              fields: [
+                {
+                  name: "alignment",
+                  type: "select",
+                  label: "Alignment",
+                  defaultValue: "left",
+                  options: [
+                    { label: "Left", value: "left" },
+                    { label: "Center", value: "center" },
+                    { label: "Right", value: "right" },
+                  ],
+                  admin: { width: "20%" },
+                },
+                {
+                  name: "verticalAlignment",
+                  type: "select",
+                  label: "Vertical Align",
+                  defaultValue: "top",
+                  options: [
+                    { label: "Top", value: "top" },
+                    { label: "Center", value: "center" },
+                    { label: "Bottom", value: "bottom" },
+                  ],
+                  admin: { width: "20%" },
+                },
+                {
+                  name: "padding",
+                  type: "select",
+                  label: "Item Padding",
+                  defaultValue: "md",
+                  options: [
+                    { label: "None", value: "none" },
+                    { label: "Small", value: "sm" },
+                    { label: "Medium", value: "md" },
+                    { label: "Large", value: "lg" },
+                  ],
+                  admin: { width: "20%" },
+                },
+                {
+                  name: "gap",
+                  type: "select",
+                  label: "Gap",
+                  defaultValue: "md",
+                  options: [
+                    { label: "None", value: "none" },
+                    { label: "Small", value: "sm" },
+                    { label: "Medium", value: "md" },
+                    { label: "Large", value: "lg" },
+                  ],
+                  admin: { width: "20%" },
+                },
+                {
+                  name: "wrapOnMobile",
+                  type: "checkbox",
+                  label: "Stack on Mobile",
+                  defaultValue: true,
+                  admin: { width: "20%" },
+                },
+              ],
+            },
+            {
+              name: "items",
+              type: "array",
+              label: "Content Items",
+              minRows: 1,
+              fields: [
+                contentField,
+                designLayoutCollapsible(),
+              ],
+            },
+          ],
+        },
+        {
           slug: "collectionListSection",
           labels: { singular: "Collection List", plural: "Collection Lists" },
           admin: {

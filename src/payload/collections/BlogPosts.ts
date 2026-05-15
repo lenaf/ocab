@@ -35,20 +35,11 @@ export const BlogPosts: CollectionConfig = {
       type: 'upload',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       relationTo: 'media' as any,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'select',
-      label: 'Background Color',
-      options: [
-        { label: 'Primary', value: 'primary' },
-        { label: 'Secondary', value: 'secondary' },
-        { label: 'Accent', value: 'accent' },
-        { label: 'Neutral', value: 'neutral' },
-        { label: 'Base 100', value: 'base-100' },
-        { label: 'Base 200', value: 'base-200' },
-        { label: 'Base 300', value: 'base-300' },
-      ],
+      label: 'Hero / Preview Image',
+      admin: {
+        position: 'sidebar',
+        description: 'Shown as hero on the post page and as thumbnail in lists',
+      },
     },
     {
       name: 'publishedAt',
@@ -70,11 +61,11 @@ export const BlogPosts: CollectionConfig = {
       name: 'category',
       type: 'select',
       options: [
-        { label: 'News', value: 'news' },
+        { label: 'News', value: 'News' },
         { label: 'Campaign Update', value: 'campaign-update' },
-        { label: 'Action Alert', value: 'action' },
-        { label: 'Victory', value: 'victory' },
-        { label: 'Analysis', value: 'analysis' },
+        { label: 'Action Alert', value: 'Action' },
+        { label: 'Victory', value: 'Victory' },
+        { label: 'Analysis', value: 'Analysis' },
         { label: 'Press Release', value: 'press-release' },
         { label: 'Community', value: 'community' },
       ],

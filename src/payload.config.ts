@@ -133,8 +133,26 @@ export default buildConfig({
             slug: "button",
             labels: { singular: "Button", plural: "Buttons" },
             fields: [
-              { name: "text", type: "text", required: true, label: "Button Text" },
-              { name: "url", type: "text", required: true, label: "Link URL" },
+              {
+                type: "row",
+                fields: [
+                  { name: "text", type: "text", required: true, label: "Button Text", admin: { width: "40%" } },
+                  { name: "url", type: "text", required: true, label: "Link URL", admin: { width: "40%" } },
+                  {
+                    name: "size",
+                    type: "select",
+                    label: "Size",
+                    defaultValue: "md",
+                    options: [
+                      { label: "XS", value: "xs" },
+                      { label: "SM", value: "sm" },
+                      { label: "MD", value: "md" },
+                      { label: "LG", value: "lg" },
+                    ],
+                    admin: { width: "20%" },
+                  },
+                ],
+              },
               {
                 name: "style",
                 type: "text",
@@ -146,18 +164,6 @@ export default buildConfig({
                     Field: "@/payload/components/ButtonStylePreviewField#ButtonStylePreviewField",
                   },
                 },
-              },
-              {
-                name: "size",
-                type: "select",
-                label: "Button Size",
-                defaultValue: "md",
-                options: [
-                  { label: "Extra Small", value: "xs" },
-                  { label: "Small", value: "sm" },
-                  { label: "Medium", value: "md" },
-                  { label: "Large", value: "lg" },
-                ],
               },
             ],
           },

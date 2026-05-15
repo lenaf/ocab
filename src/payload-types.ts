@@ -503,6 +503,48 @@ export interface Page {
              * Helps identify this section when collapsed in the admin
              */
             label?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            verticalAlignment?: ('top' | 'center' | 'bottom') | null;
+            padding?: ('none' | 'sm' | 'md' | 'lg') | null;
+            gap?: ('none' | 'sm' | 'md' | 'lg') | null;
+            wrapOnMobile?: boolean | null;
+            items?:
+              | {
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  backgroundColor?:
+                    | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
+                    | null;
+                  backgroundImage?: (string | null) | Media;
+                  /**
+                   * Adds a dark semi-transparent overlay to improve text readability
+                   */
+                  darkScrim?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contentGridSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
             title?: string | null;
             subtitle?: string | null;
             /**
@@ -751,11 +793,13 @@ export interface BlogPost {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Shown as hero on the post page and as thumbnail in lists
+   */
   image?: (string | null) | Media;
-  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   publishedAt: string;
   author?: (string | null) | User;
-  category?: ('news' | 'campaign-update' | 'action' | 'victory' | 'analysis' | 'press-release' | 'community') | null;
+  category?: ('News' | 'campaign-update' | 'Action' | 'Victory' | 'Analysis' | 'press-release' | 'community') | null;
   featured?: boolean | null;
   tags?:
     | {
@@ -1287,6 +1331,27 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        contentGridSection?:
+          | T
+          | {
+              label?: T;
+              alignment?: T;
+              verticalAlignment?: T;
+              padding?: T;
+              gap?: T;
+              wrapOnMobile?: T;
+              items?:
+                | T
+                | {
+                    content?: T;
+                    backgroundColor?: T;
+                    backgroundImage?: T;
+                    darkScrim?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         collectionListSection?:
           | T
           | {
@@ -1406,7 +1471,6 @@ export interface BlogPostsSelect<T extends boolean = true> {
   excerpt?: T;
   content?: T;
   image?: T;
-  backgroundColor?: T;
   publishedAt?: T;
   author?: T;
   category?: T;

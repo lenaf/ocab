@@ -202,12 +202,8 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <div
                             className="h-[350px] rounded-lg overflow-hidden shadow-lg"
                             style={{
-                              backgroundColor: getBgClass(
-                                post.backgroundColor || "primary",
-                              ),
-                              color: getContentClass(
-                                post.backgroundColor || "primary",
-                              ),
+                              backgroundColor: getBgClass("primary"),
+                              color: getContentClass("primary"),
                             }}
                           >
                             <div className="p-6 h-full flex flex-col justify-between">
@@ -361,6 +357,58 @@ export function RenderSections({ sections }: { sections: Section[] }) {
             );
           };
           return <PressCarousel key={index} />;
+        }
+
+        if (section.blockType === "contentGridSection") {
+          const gapMap: Record<string, string> = {
+            none: "0",
+            sm: "0.5rem",
+            md: "1.5rem",
+            lg: "3rem",
+          };
+          const paddingMap: Record<string, string> = {
+            none: "0",
+            sm: "1rem",
+            md: "2rem",
+            lg: "3rem",
+          };
+          const alignMap: Record<string, string> = {
+            left: "flex-start",
+            center: "center",
+            right: "flex-end",
+          };
+          const vAlignMap: Record<string, string> = {
+            top: "flex-start",
+            center: "center",
+            bottom: "flex-end",
+          };
+          const items = section.items || [];
+          return (
+            <section key={index}>
+              <div
+                className={`grid ${section.wrapOnMobile !== false ? `md:grid-cols-${items.length}` : `grid-cols-${items.length}`}`}
+                style={{ gap: gapMap[section.gap || "md"] }}
+              >
+                {items.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: paddingMap[section.padding || "md"],
+                      backgroundColor: getBgClass(item.backgroundColor),
+                      color: getContentClass(item.backgroundColor),
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: alignMap[section.alignment || "left"],
+                      justifyContent: vAlignMap[section.verticalAlignment || "top"],
+                      textAlign: (section.alignment || "left") as "left" | "center" | "right",
+                    }}
+                  >
+                    <LexicalRenderer content={item.content} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
         }
 
         if (section.blockType === "twoColumnSection") {
