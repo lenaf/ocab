@@ -1666,12 +1666,9 @@ export interface Navigation {
         page?: (string | null) | Page;
         url?: string | null;
         /**
-         * Required for external URLs; optional override for internal pages
+         * Required for external URLs; optional for internal pages
          */
         label?: string | null;
-        /**
-         * Add dropdown items under this nav item
-         */
         subItems?:
           | {
               linkType?: ('page' | 'url') | null;
@@ -1684,16 +1681,13 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Buttons shown at the top-right of the header (e.g. Donate Now, Take Action)
-   */
   ctaButtons?:
     | {
         label: string;
+        style?: ('primary' | 'accent' | 'success' | 'neutral' | 'outline') | null;
         linkType?: ('page' | 'url') | null;
         page?: (string | null) | Page;
         url?: string | null;
-        style?: ('primary' | 'accent' | 'success' | 'neutral' | 'outline') | null;
         id?: string | null;
       }[]
     | null;
@@ -1707,9 +1701,9 @@ export interface Navigation {
  */
 export interface SiteSetting {
   id: string;
-  logo?: (string | null) | Media;
   siteName?: string | null;
   tagline?: string | null;
+  logo?: (string | null) | Media;
   /**
    * Link to Zeffy, ActBlue, etc.
    */
@@ -1760,10 +1754,10 @@ export interface NavigationSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        style?: T;
         linkType?: T;
         page?: T;
         url?: T;
-        style?: T;
         id?: T;
       };
   style?: T;
@@ -1776,9 +1770,9 @@ export interface NavigationSelect<T extends boolean = true> {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
-  logo?: T;
   siteName?: T;
   tagline?: T;
+  logo?: T;
   donateUrl?: T;
   contact?:
     | T
