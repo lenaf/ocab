@@ -4,7 +4,7 @@ export const Books: CollectionConfig = {
   slug: "books",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "author", "order"],
+    defaultColumns: ["title", "author", "year", "featured", "order"],
     description: "Books on the OCAB bookshelf",
     group: "📚 Collections",
     listSearchableFields: ["title", "author"],
@@ -18,6 +18,8 @@ export const Books: CollectionConfig = {
   fields: [
     { name: "title", type: "text", required: true },
     { name: "author", type: "text" },
+    { name: "year", type: "number", label: "Publication Year", admin: { position: "sidebar" } },
+    { name: "isbn", type: "text", label: "ISBN (optional)", admin: { position: "sidebar" } },
     { name: "description", type: "textarea" },
     { name: "cover", type: "upload", relationTo: "media" as never },
     { name: "url", type: "text", label: "Purchase / Info Link" },

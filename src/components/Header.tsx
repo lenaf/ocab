@@ -77,7 +77,7 @@ export async function Header() {
                 : typeof btn.page === "object" && btn.page
                   ? `/${btn.page.slug === "home" ? "" : btn.page.slug}`
                   : "#";
-              const isExternal = btn.linkType === "url";
+              const isExternal = href.startsWith("http://") || href.startsWith("https://");
               const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
 
               return isExternal ? (

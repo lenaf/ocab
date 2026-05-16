@@ -6,7 +6,9 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'startDate', 'status', 'featured'],
+    description: 'Community events, rallies, fundraisers, and meetings. Some fields are synced from Action Network and cannot be edited.',
     group: '📚 Collections',
+    listSearchableFields: ['title', 'description'],
   },
   access: {
     read: () => true,
@@ -25,7 +27,6 @@ export const Events: CollectionConfig = {
     ],
   },
   fields: [
-    // Action Network synced fields (read-only in admin)
     {
       name: 'actionNetworkId',
       type: 'text',
@@ -34,7 +35,7 @@ export const Events: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
-        description: 'Synced from Action Network',
+        description: 'Synced from Action Network — do not edit manually',
       },
     },
     {
@@ -98,7 +99,17 @@ export const Events: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
-        description: 'RSVP link from Action Network',
+        description: 'RSVP link from Action Network — do not edit manually',
+      },
+    },
+    {
+      name: 'registrationUrl',
+      type: 'text',
+      label: 'Registration / RSVP URL',
+      admin: {
+        position: 'sidebar',
+        description: 'For manually-created events not from Action Network',
+        condition: (_, s) => !s?.actionNetworkId,
       },
     },
     {
@@ -107,6 +118,7 @@ export const Events: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
+        description: 'Synced from Action Network',
       },
     },
     {
@@ -116,10 +128,10 @@ export const Events: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
+        description: 'Synced from Action Network',
       },
     },
-    
-    // Payload-only enhanced fields
+
     {
       name: 'slug',
       type: 'text',
@@ -247,27 +259,27 @@ export const Events: CollectionConfig = {
       ],
     },
     {
-      name: 'seo',
-      type: 'group',
+      type: 'collapsible',
       label: 'SEO',
+      admin: { initCollapsed: true },
       fields: [
-        { name: 'title', type: 'text' },
-        { name: 'description', type: 'textarea', maxLength: 160 },
-        { name: 'keywords', type: 'text' },
+        { name: 'seoTitle', type: 'text', label: 'SEO Title' },
+        { name: 'seoDescription', type: 'textarea', label: 'Meta Description', maxLength: 160 },
+        { name: 'seoKeywords', type: 'text', label: 'Keywords' },
       ],
     },
     {
       name: 'backgroundColor',
       type: 'select',
-      label: 'Background Color',
+      label: 'Card Color',
       options: [
         { label: 'Primary', value: 'primary' },
         { label: 'Secondary', value: 'secondary' },
         { label: 'Accent', value: 'accent' },
         { label: 'Neutral', value: 'neutral' },
-        { label: 'Base 100', value: 'base-100' },
-        { label: 'Base 200', value: 'base-200' },
-        { label: 'Base 300', value: 'base-300' },
+        { label: 'White', value: 'base-100' },
+        { label: 'Light Gray', value: 'base-200' },
+        { label: 'Medium Gray', value: 'base-300' },
       ],
     },
   ],

@@ -25,9 +25,9 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
             { label: "Secondary", value: "secondary" },
             { label: "Accent", value: "accent" },
             { label: "Neutral", value: "neutral" },
-            { label: "Base 100", value: "base-100" },
-            { label: "Base 200", value: "base-200" },
-            { label: "Base 300", value: "base-300" },
+            { label: "White", value: "base-100" },
+            { label: "Light Gray", value: "base-200" },
+            { label: "Medium Gray", value: "base-300" },
           ],
           admin: {
             width: "50%",
@@ -178,7 +178,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "slug", "updatedAt"],
+    defaultColumns: ["title", "slug", "_status", "updatedAt"],
     description: "All pages on the site. Build pages by adding sections below.",
     group: "🌐 Website",
     listSearchableFields: ["title", "slug"],
@@ -241,7 +241,7 @@ export const Pages: CollectionConfig = {
           slug: "bannerSection",
           labels: { singular: "Banner Section", plural: "Banner Sections" },
           admin: { custom: { useAsTitle: "label" } },
-          fields: [labelField, contentField, designLayoutCollapsible()],
+          fields: [labelField, contentField, designLayoutCollapsible(true)],
         },
         {
           slug: "heroCarouselSection",
@@ -274,6 +274,70 @@ export const Pages: CollectionConfig = {
           slug: "pressCarouselSection",
           labels: { singular: "Press Carousel (deprecated)", plural: "Press Carousels" },
           fields: [labelField, ...carouselSectionFields("Articles")],
+        },
+        {
+          slug: "campaignsSection",
+          labels: { singular: "Campaigns Section", plural: "Campaigns Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [
+            labelField,
+            { name: "title", type: "text", label: "Section Title" },
+            { name: "limit", type: "number", label: "Max Items", defaultValue: 6, min: 1, max: 20 },
+            {
+              name: "filter",
+              type: "select",
+              label: "Filter by Status",
+              defaultValue: "all",
+              options: [
+                { label: "All", value: "all" },
+                { label: "Active Only", value: "active" },
+                { label: "Past Only", value: "past" },
+              ],
+            },
+          ],
+        },
+        {
+          slug: "teamMembersSection",
+          labels: { singular: "Team Members Section", plural: "Team Members Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [
+            labelField,
+            { name: "title", type: "text", label: "Section Title" },
+            {
+              name: "filter",
+              type: "select",
+              label: "Filter by Type",
+              defaultValue: "all",
+              options: [
+                { label: "All", value: "all" },
+                { label: "Staff Only", value: "staff" },
+                { label: "Board Only", value: "board" },
+              ],
+            },
+          ],
+        },
+        {
+          slug: "researchSection",
+          labels: { singular: "Research Section", plural: "Research Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [labelField, ...carouselSectionFields("Publications")],
+        },
+        {
+          slug: "booksSection",
+          labels: { singular: "Bookshelf Section", plural: "Bookshelf Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [labelField, ...carouselSectionFields("Books")],
+        },
+        {
+          slug: "productsGridSection",
+          labels: { singular: "Products / Shop Section", plural: "Products Sections" },
+          admin: { custom: { useAsTitle: "label" } },
+          fields: [
+            labelField,
+            { name: "title", type: "text", label: "Section Title" },
+            { name: "limit", type: "number", label: "Max Items", defaultValue: 12, min: 1, max: 24 },
+            { name: "shopUrl", type: "text", label: "External Shop URL", admin: { description: "Link to full external store (shown as View All)" } },
+          ],
         },
         {
           slug: "fullWidthSection",

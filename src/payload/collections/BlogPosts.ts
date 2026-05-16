@@ -1,11 +1,24 @@
 import type { CollectionConfig } from 'payload'
+import { slugify } from '../utils/slugify'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts' as const,
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'publishedAt'],
+    defaultColumns: ['title', 'category', 'featured', 'publishedAt'],
     group: '📚 Collections',
+    listSearchableFields: ['title', 'excerpt'],
+    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL}/news/${doc.slug}`,
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (data?.title && !data?.slug) {
+          data.slug = slugify(data.title)
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -23,14 +36,6 @@ export const BlogPosts: CollectionConfig = {
       },
     },
     {
-      name: 'excerpt',
-      type: 'textarea',
-    },
-    {
-      name: 'content',
-      type: 'richText',
-    },
-    {
       name: 'image',
       type: 'upload',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,6 +45,14 @@ export const BlogPosts: CollectionConfig = {
         position: 'sidebar',
         description: 'Shown as hero on the post page and as thumbnail in lists',
       },
+    },
+    {
+      name: 'excerpt',
+      type: 'textarea',
+    },
+    {
+      name: 'content',
+      type: 'richText',
     },
     {
       name: 'publishedAt',
@@ -52,9 +65,19 @@ export const BlogPosts: CollectionConfig = {
     {
       name: 'author',
       type: 'relationship',
-      relationTo: 'users',
+      relationTo: 'team-members' as never,
       admin: {
         position: 'sidebar',
+        description: 'Select a team member as author',
+      },
+    },
+    {
+      name: 'authorName',
+      type: 'text',
+      label: 'Author Name (override)',
+      admin: {
+        position: 'sidebar',
+        description: 'Use if author is not a team member',
       },
     },
     {

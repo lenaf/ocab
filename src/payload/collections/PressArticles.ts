@@ -4,8 +4,10 @@ export const PressArticles: CollectionConfig = {
   slug: 'press-articles' as const,
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'publication', 'publishedAt'],
+    defaultColumns: ['title', 'publication', 'type', 'featured', 'order', 'publishedAt'],
+    description: 'News coverage of OCAB from external publications',
     group: '📚 Collections',
+    listSearchableFields: ['title', 'publication'],
   },
   fields: [
     {
@@ -16,6 +18,18 @@ export const PressArticles: CollectionConfig = {
     {
       name: 'publication',
       type: 'text',
+    },
+    {
+      name: 'type',
+      type: 'select',
+      label: 'Article Type',
+      options: [
+        { label: 'News Coverage', value: 'news' },
+        { label: 'Op-Ed / Another Voice', value: 'op-ed' },
+        { label: 'Interview', value: 'interview' },
+        { label: 'Photo Essay', value: 'photo-essay' },
+      ],
+      admin: { position: 'sidebar' },
     },
     {
       name: 'excerpt',
@@ -37,13 +51,16 @@ export const PressArticles: CollectionConfig = {
       type: 'checkbox',
       label: 'Feature on Homepage',
       defaultValue: true,
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        description: 'Featured articles appear in the press section on the homepage',
+      },
     },
     {
       name: 'order',
       type: 'number',
       label: 'Display Order',
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', description: 'Lower numbers appear first' },
     },
     {
       name: 'publishedAt',

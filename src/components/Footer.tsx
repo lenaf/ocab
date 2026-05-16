@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import type { SiteSetting } from "@/payload-types";
+import type { SiteSetting, Media } from "@/payload-types";
 
 export async function Footer() {
   const payload = await getPayload({ config });
@@ -28,6 +29,8 @@ export async function Footer() {
 
   const contact = siteSettings.contact;
   const social = siteSettings.socialMedia;
+  const logoMedia = siteSettings.logo && typeof siteSettings.logo === "object" ? (siteSettings.logo as Media) : null;
+  const logoUrl = logoMedia?.url || "";
 
   return (
     <footer className="bg-neutral text-neutral-content py-12">
@@ -35,7 +38,17 @@ export async function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="font-bold text-lg mb-4 font-heading">{orgName}</h3>
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={orgName}
+                width={200}
+                height={60}
+                className="h-14 w-auto object-contain mb-4"
+              />
+            ) : (
+              <h3 className="font-bold text-lg mb-4 font-heading">{orgName}</h3>
+            )}
             <p className="opacity-80">{tagline}</p>
           </div>
 

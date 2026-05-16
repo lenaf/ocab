@@ -4,7 +4,7 @@ export const Products: CollectionConfig = {
   slug: "products",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["name", "price", "outOfStock", "order"],
+    defaultColumns: ["name", "category", "price", "featured", "outOfStock", "order"],
     description: "OCAB merch and products",
     group: "📚 Collections",
     listSearchableFields: ["name"],
@@ -17,6 +17,18 @@ export const Products: CollectionConfig = {
   },
   fields: [
     { name: "name", type: "text", required: true },
+    {
+      name: "category",
+      type: "select",
+      label: "Category",
+      options: [
+        { label: "Apparel", value: "apparel" },
+        { label: "Publication", value: "publication" },
+        { label: "Accessory", value: "accessory" },
+        { label: "Other", value: "other" },
+      ],
+      admin: { position: "sidebar" },
+    },
     { name: "price", type: "text", label: "Price (e.g. $25.00)" },
     { name: "outOfStock", type: "checkbox", label: "Out of Stock", defaultValue: false, admin: { position: "sidebar" } },
     { name: "featured", type: "checkbox", label: "Feature on Homepage", defaultValue: true, admin: { position: "sidebar" } },

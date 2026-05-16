@@ -5,7 +5,7 @@ export const Campaigns: CollectionConfig = {
   slug: "campaigns",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "status", "featured"],
+    defaultColumns: ["title", "status", "year", "featured"],
     description: "Issue-based campaigns OCAB is running or has run",
     group: "📚 Collections",
     listSearchableFields: ["title", "slug"],
@@ -38,6 +38,18 @@ export const Campaigns: CollectionConfig = {
       ],
       defaultValue: "active",
       admin: { position: "sidebar" },
+    },
+    {
+      name: "year",
+      type: "number",
+      label: "Campaign Year",
+      admin: { position: "sidebar", description: "Primary year (e.g. 2021)" },
+    },
+    {
+      name: "endYear",
+      type: "number",
+      label: "End Year (if multi-year)",
+      admin: { position: "sidebar", condition: (_, s) => !!s?.year },
     },
     {
       name: "featured",

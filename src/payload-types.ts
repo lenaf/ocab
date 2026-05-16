@@ -187,6 +187,7 @@ export interface Page {
              * Adds a dark semi-transparent overlay to improve text readability
              */
             darkScrim?: boolean | null;
+            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'bannerSection';
@@ -260,6 +261,66 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'pressCarouselSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            limit?: number | null;
+            filter?: ('all' | 'active' | 'past') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campaignsSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            filter?: ('all' | 'staff' | 'board') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamMembersSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'researchSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'booksSection';
+          }
+        | {
+            /**
+             * Helps identify this section when collapsed in the admin
+             */
+            label?: string | null;
+            title?: string | null;
+            limit?: number | null;
+            /**
+             * Link to full external store (shown as View All)
+             */
+            shopUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productsGridSection';
           }
         | {
             /**
@@ -674,13 +735,15 @@ export interface Media {
   };
 }
 /**
+ * Community events, rallies, fundraisers, and meetings. Some fields are synced from Action Network and cannot be edited.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
   id: string;
   /**
-   * Synced from Action Network
+   * Synced from Action Network — do not edit manually
    */
   actionNetworkId?: string | null;
   title: string;
@@ -709,10 +772,20 @@ export interface Event {
     zip?: string | null;
   };
   /**
-   * RSVP link from Action Network
+   * RSVP link from Action Network — do not edit manually
    */
   browserUrl?: string | null;
+  /**
+   * For manually-created events not from Action Network
+   */
+  registrationUrl?: string | null;
+  /**
+   * Synced from Action Network
+   */
   capacity?: number | null;
+  /**
+   * Synced from Action Network
+   */
   totalAccepted?: number | null;
   slug?: string | null;
   status?: ('draft' | 'published' | 'hidden' | 'cancelled') | null;
@@ -760,11 +833,9 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
-  };
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  seoKeywords?: string | null;
   backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
   updatedAt: string;
   createdAt: string;
@@ -777,6 +848,10 @@ export interface BlogPost {
   id: string;
   title: string;
   slug: string;
+  /**
+   * Shown as hero on the post page and as thumbnail in lists
+   */
+  image?: (string | null) | Media;
   excerpt?: string | null;
   content?: {
     root: {
@@ -793,12 +868,15 @@ export interface BlogPost {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * Shown as hero on the post page and as thumbnail in lists
-   */
-  image?: (string | null) | Media;
   publishedAt: string;
-  author?: (string | null) | User;
+  /**
+   * Select a team member as author
+   */
+  author?: (string | null) | TeamMember;
+  /**
+   * Use if author is not a team member
+   */
+  authorName?: string | null;
   category?: ('News' | 'campaign-update' | 'Action' | 'Victory' | 'Analysis' | 'press-release' | 'community') | null;
   featured?: boolean | null;
   tags?:
@@ -815,32 +893,45 @@ export interface BlogPost {
   createdAt: string;
 }
 /**
+ * OCAB staff, board members, and volunteer leaders
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "team-members".
  */
-export interface User {
+export interface TeamMember {
   id: string;
-  name?: string | null;
+  name: string;
+  role?: string | null;
+  pronouns?: string | null;
+  type?: ('staff' | 'board' | 'volunteer') | null;
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  photo?: (string | null) | Media;
+  email?: string | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
 }
 /**
+ * News coverage of OCAB from external publications
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "press-articles".
  */
@@ -848,10 +939,17 @@ export interface PressArticle {
   id: string;
   title: string;
   publication?: string | null;
+  type?: ('news' | 'op-ed' | 'interview' | 'photo-essay') | null;
   excerpt?: string | null;
   url: string;
   image?: (string | null) | Media;
+  /**
+   * Featured articles appear in the press section on the homepage
+   */
   featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
   order?: number | null;
   publishedAt: string;
   tags?:
@@ -873,6 +971,8 @@ export interface Book {
   id: string;
   title: string;
   author?: string | null;
+  year?: number | null;
+  isbn?: string | null;
   description?: string | null;
   cover?: (string | null) | Media;
   url?: string | null;
@@ -892,6 +992,11 @@ export interface Campaign {
   title: string;
   slug?: string | null;
   status?: ('active' | 'past' | 'upcoming') | null;
+  /**
+   * Primary year (e.g. 2021)
+   */
+  year?: number | null;
+  endYear?: number | null;
   featured?: boolean | null;
   /**
    * Lower numbers appear first
@@ -933,6 +1038,7 @@ export interface Campaign {
 export interface Product {
   id: string;
   name: string;
+  category?: ('apparel' | 'publication' | 'accessory' | 'other') | null;
   price?: string | null;
   outOfStock?: boolean | null;
   featured?: boolean | null;
@@ -940,42 +1046,6 @@ export interface Product {
   description?: string | null;
   image?: (string | null) | Media;
   url?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * OCAB staff, board members, and volunteer leaders
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-members".
- */
-export interface TeamMember {
-  id: string;
-  name: string;
-  role?: string | null;
-  type?: ('staff' | 'board' | 'volunteer') | null;
-  featured?: boolean | null;
-  /**
-   * Lower numbers appear first
-   */
-  order?: number | null;
-  bio?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  photo?: (string | null) | Media;
-  email?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -996,6 +1066,7 @@ export interface Research {
    */
   order?: number | null;
   publishedAt: string;
+  accessType?: ('pdf' | 'url' | 'onsite') | null;
   /**
    * e.g. OCAB Research Team, Jane Smith
    */
@@ -1017,7 +1088,6 @@ export interface Research {
     [k: string]: unknown;
   } | null;
   coverImage?: (string | null) | Media;
-  accessType?: ('pdf' | 'url' | 'onsite') | null;
   pdf?: (string | null) | Media;
   /**
    * Link to external site where the report lives
@@ -1034,13 +1104,37 @@ export interface Research {
       }[]
     | null;
   ctaLabel?: string | null;
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-    ogImage?: (string | null) | Media;
-  };
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  ogImage?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1178,6 +1272,7 @@ export interface PagesSelect<T extends boolean = true> {
               backgroundColor?: T;
               backgroundImage?: T;
               darkScrim?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1221,6 +1316,53 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               title?: T;
               limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        campaignsSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              limit?: T;
+              filter?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamMembersSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              filter?: T;
+              id?: T;
+              blockName?: T;
+            };
+        researchSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        booksSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productsGridSection?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              limit?: T;
+              shopUrl?: T;
               id?: T;
               blockName?: T;
             };
@@ -1468,11 +1610,12 @@ export interface MediaSelect<T extends boolean = true> {
 export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  image?: T;
   excerpt?: T;
   content?: T;
-  image?: T;
   publishedAt?: T;
   author?: T;
+  authorName?: T;
   category?: T;
   featured?: T;
   tags?:
@@ -1505,6 +1648,7 @@ export interface EventsSelect<T extends boolean = true> {
         zip?: T;
       };
   browserUrl?: T;
+  registrationUrl?: T;
   capacity?: T;
   totalAccepted?: T;
   slug?: T;
@@ -1537,13 +1681,9 @@ export interface EventsSelect<T extends boolean = true> {
         tier?: T;
         id?: T;
       };
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-      };
+  seoTitle?: T;
+  seoDescription?: T;
+  seoKeywords?: T;
   backgroundColor?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1556,6 +1696,8 @@ export interface CampaignsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   status?: T;
+  year?: T;
+  endYear?: T;
   featured?: T;
   order?: T;
   summary?: T;
@@ -1580,6 +1722,7 @@ export interface CampaignsSelect<T extends boolean = true> {
 export interface PressArticlesSelect<T extends boolean = true> {
   title?: T;
   publication?: T;
+  type?: T;
   excerpt?: T;
   url?: T;
   image?: T;
@@ -1602,6 +1745,7 @@ export interface PressArticlesSelect<T extends boolean = true> {
 export interface TeamMembersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  pronouns?: T;
   type?: T;
   featured?: T;
   order?: T;
@@ -1618,6 +1762,8 @@ export interface TeamMembersSelect<T extends boolean = true> {
 export interface BooksSelect<T extends boolean = true> {
   title?: T;
   author?: T;
+  year?: T;
+  isbn?: T;
   description?: T;
   cover?: T;
   url?: T;
@@ -1632,6 +1778,7 @@ export interface BooksSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   name?: T;
+  category?: T;
   price?: T;
   outOfStock?: T;
   featured?: T;
@@ -1653,11 +1800,11 @@ export interface ResearchSelect<T extends boolean = true> {
   featured?: T;
   order?: T;
   publishedAt?: T;
+  accessType?: T;
   authors?: T;
   summary?: T;
   content?: T;
   coverImage?: T;
-  accessType?: T;
   pdf?: T;
   externalUrl?: T;
   quotes?:
@@ -1668,13 +1815,9 @@ export interface ResearchSelect<T extends boolean = true> {
         id?: T;
       };
   ctaLabel?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        ogImage?: T;
-      };
+  seoTitle?: T;
+  seoDescription?: T;
+  ogImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1728,9 +1871,12 @@ export interface Navigation {
     | {
         linkType?: ('page' | 'url') | null;
         page?: (string | null) | Page;
+        /**
+         * Must start with https://. Opens in a new tab.
+         */
         url?: string | null;
         /**
-         * Required for external URLs; optional for internal pages
+         * What shows in the nav bar. If blank, uses the page title.
          */
         label?: string | null;
         subItems?:
