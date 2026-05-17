@@ -6,7 +6,7 @@ export const Tags: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "slug"],
-    group: "⚙️ Settings",
+    group: "📚 Collections",
   },
   access: {
     read: () => true,

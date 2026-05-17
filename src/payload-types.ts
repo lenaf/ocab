@@ -77,6 +77,7 @@ export interface Config {
     'team-members': TeamMember;
     books: Book;
     products: Product;
+    tags: Tag;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     books: BooksSelect<false> | BooksSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -716,7 +718,7 @@ export interface Event {
   isFree?: boolean | null;
   price?: string | null;
   image?: (string | null) | Media;
-  order?: number | null;
+  tags?: (string | Tag)[] | null;
   speakers?:
     | {
         name: string;
@@ -739,6 +741,17 @@ export interface Event {
   seoDescription?: string | null;
   seoKeywords?: string | null;
   backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  name: string;
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -849,17 +862,8 @@ export interface PressArticle {
    * Featured articles appear in the press section on the homepage
    */
   featured?: boolean | null;
-  /**
-   * Lower numbers appear first
-   */
-  order?: number | null;
   publishedAt: string;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  tags?: (string | Tag)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -893,17 +897,11 @@ export interface Campaign {
   id: string;
   title: string;
   slug?: string | null;
-  category: 'campaign' | 'report' | 'field-guide' | 'policy-brief' | 'white-paper' | 'toolkit' | 'survey';
   status?: ('active' | 'past' | 'upcoming') | null;
   year?: number | null;
   endYear?: number | null;
   featured?: boolean | null;
-  /**
-   * Lower numbers appear first
-   */
-  order?: number | null;
-  publishedAt?: string | null;
-  authors?: string | null;
+  tags?: (string | Tag)[] | null;
   summary?: string | null;
   content?: {
     root: {
@@ -921,17 +919,6 @@ export interface Campaign {
     [k: string]: unknown;
   } | null;
   image?: (string | null) | Media;
-  accessType?: ('pdf' | 'url' | 'onsite') | null;
-  pdf?: (string | null) | Media;
-  externalUrl?: string | null;
-  callToAction?: string | null;
-  quotes?:
-    | {
-        quote: string;
-        attribution?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -1049,6 +1036,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1436,7 +1427,7 @@ export interface EventsSelect<T extends boolean = true> {
   isFree?: T;
   price?: T;
   image?: T;
-  order?: T;
+  tags?: T;
   speakers?:
     | T
     | {
@@ -1469,28 +1460,14 @@ export interface EventsSelect<T extends boolean = true> {
 export interface CampaignsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  category?: T;
   status?: T;
   year?: T;
   endYear?: T;
   featured?: T;
-  order?: T;
-  publishedAt?: T;
-  authors?: T;
+  tags?: T;
   summary?: T;
   content?: T;
   image?: T;
-  accessType?: T;
-  pdf?: T;
-  externalUrl?: T;
-  callToAction?: T;
-  quotes?:
-    | T
-    | {
-        quote?: T;
-        attribution?: T;
-        id?: T;
-      };
   seo?:
     | T
     | {
@@ -1513,14 +1490,8 @@ export interface PressArticlesSelect<T extends boolean = true> {
   url?: T;
   image?: T;
   featured?: T;
-  order?: T;
   publishedAt?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
+  tags?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1572,6 +1543,16 @@ export interface ProductsSelect<T extends boolean = true> {
   description?: T;
   image?: T;
   url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

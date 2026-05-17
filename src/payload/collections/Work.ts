@@ -3,6 +3,7 @@ import { slugify } from "../utils/slugify";
 
 export const Work: CollectionConfig = {
   slug: "campaigns",
+  labels: { singular: "Work", plural: "Work" },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "status", "featured"],
@@ -77,7 +78,7 @@ export const Work: CollectionConfig = {
       fields: [
         { name: "title", type: "text" },
         { name: "description", type: "textarea", maxLength: 160 },
-        { name: "ogImage", type: "upload", relationTo: "media" as never },
+        { name: "ogImage", type: "upload", relationTo: "media" as never, label: "Social Share Image" },
       ],
     },
   ],
