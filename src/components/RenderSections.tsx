@@ -233,8 +233,6 @@ export function RenderSections({ sections }: { sections: Section[] }) {
             const sortField = (sectionData.sortField as string) || "createdAt_desc";
             const filterFeatured = sectionData.filterFeatured as boolean;
             const upcomingOnly = sectionData.upcomingOnly as boolean;
-            const title = sectionData.title as string | undefined;
-            const subtitle = sectionData.subtitle as string | undefined;
             const emptyMessage = (sectionData.emptyMessage as string) || "Nothing to show right now. Check back soon!";
 
             useEffect(() => {
@@ -475,8 +473,6 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               return (
                 <section className="py-12 md:py-16">
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
-                    {subtitle && <p className="text-lg opacity-75 mb-8">{subtitle}</p>}
                     <p className="text-center opacity-60 py-8">{emptyMessage}</p>
                   </div>
                 </section>
@@ -486,8 +482,6 @@ export function RenderSections({ sections }: { sections: Section[] }) {
             return (
               <section className="py-12 md:py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
-                  {subtitle && <p className="text-lg opacity-75 mb-8">{subtitle}</p>}
 
                   {layout === "grid" && (
                     <div className={`grid gap-6 ${colsClass[columns] || colsClass["3"]}`}>
@@ -715,7 +709,8 @@ export function RenderSections({ sections }: { sections: Section[] }) {
           );
         }
 
-        if (section.blockType === "contactSection") {
+        if (section.blockType === "formSection") {
+          const formType = section.formType as string;
           return (
             <section
               key={index}
@@ -731,16 +726,25 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   {section.darkScrim && <div className="absolute inset-0 bg-black/50" />}
                 </>
               )}
-              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid md:grid-cols-2 gap-12">
-                  <div>
-                    {section.title && <h2 className="text-3xl font-bold mb-4">{section.title}</h2>}
-                    <LexicalRenderer content={section.body} />
-                  </div>
-                  <div>
-                    <p className="text-sm opacity-60 italic">Contact form coming soon.</p>
-                  </div>
-                </div>
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <LexicalRenderer content={section.content} />
+                {formType === "embed" && section.embedCode && (
+                  <div className="mt-8" dangerouslySetInnerHTML={{ __html: section.embedCode as string }} />
+                )}
+                {formType === "contact" && (
+                  <form className="mt-8 space-y-4">
+                    <input type="text" placeholder="Name" className="w-full p-3 border border-current/20 bg-transparent" />
+                    <input type="email" placeholder="Email" className="w-full p-3 border border-current/20 bg-transparent" />
+                    <textarea placeholder="Message" rows={4} className="w-full p-3 border border-current/20 bg-transparent" />
+                    <button type="submit" className="btn btn-primary">Send</button>
+                  </form>
+                )}
+                {formType === "newsletter" && (
+                  <form className="mt-8 flex gap-3">
+                    <input type="email" placeholder="Your email" className="flex-1 p-3 border border-current/20 bg-transparent" />
+                    <button type="submit" className="btn btn-primary">Subscribe</button>
+                  </form>
+                )}
               </div>
             </section>
           );

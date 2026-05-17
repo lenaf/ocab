@@ -61,10 +61,10 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
           type: "select",
           label: "Color Scheme",
           options: [
-            { label: "Primary", value: "primary" },
-            { label: "Secondary", value: "secondary" },
-            { label: "Accent", value: "accent" },
-            { label: "Neutral", value: "neutral" },
+            { label: "Primary (blue bg, white text)", value: "primary" },
+            { label: "Secondary (dark blue bg, white text)", value: "secondary" },
+            { label: "Accent (orange bg, dark text)", value: "accent" },
+            { label: "Neutral (charcoal bg, white text)", value: "neutral" },
             { label: "White", value: "base-100" },
             { label: "Light Gray", value: "base-200" },
             { label: "Medium Gray", value: "base-300" },
@@ -143,7 +143,7 @@ const floatingImagesCollapsible: Field = {
       label: "Floating Images",
       admin: {
         description:
-          "Drag and resize images in the preview box, then configure details below.",
+          "Add PNG images that overlay the section background. Position and resize them after adding.",
         components: {
           Field: "@/payload/components/FloatingArrayField#FloatingArrayField",
         },
@@ -164,15 +164,6 @@ const floatingImagesCollapsible: Field = {
   ],
 };
 
-const labelField: Field = {
-  name: "label",
-  type: "text",
-  label: "Section Label (admin only)",
-  admin: {
-    description: "Helps identify this section when collapsed in the admin",
-    placeholder: "e.g. Hero Banner, About Us, Events List",
-  },
-};
 
 const columnFields: Field[] = [contentField, designLayoutCollapsible()];
 
@@ -297,9 +288,9 @@ export const Pages: CollectionConfig = {
       label: "SEO",
       admin: { position: "sidebar" },
       fields: [
-        { name: "title", type: "text", label: "Page Title (overrides default)" },
-        { name: "description", type: "textarea", label: "Meta Description", maxLength: 160 },
-        { name: "ogImage", type: "upload", relationTo: "media" as never, label: "Social Share Image" },
+        { name: "title", type: "text", label: "Page Title (overrides default)", admin: { description: "50–60 characters recommended" } },
+        { name: "description", type: "textarea", label: "Meta Description", maxLength: 160, admin: { description: "150–160 characters. Shown in search results." } },
+        { name: "ogImage", type: "upload", relationTo: "media" as never, label: "Social Share Image", admin: { description: "Recommended: 1200×630px" } },
         { name: "noIndex", type: "checkbox", label: "Hide from search engines", defaultValue: false },
       ],
     },
@@ -312,16 +303,20 @@ export const Pages: CollectionConfig = {
       blocks: [
         {
           slug: "bannerSection",
-          labels: { singular: "Banner Section", plural: "Banner Sections" },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
-          fields: [labelField, contentField, designLayoutCollapsible(true)],
+          labels: { singular: "Announcement Bar", plural: "Announcement Bars" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%231e293b'/%3E%3Crect x='15' y='20' width='60' height='5' rx='2' fill='%23f8fafc'/%3E%3Crect x='80' y='19' width='18' height='7' rx='3' fill='%233b82f6'/%3E%3Crect x='83' y='21' width='12' height='3' rx='1' fill='%23fff'/%3E%3Ctext x='60' y='55' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EShort alert or promo strip%3C/text%3E%3C/svg%3E",
+          imageAltText: "Announcement bar",
+
+          fields: [contentField, designLayoutCollapsible(true)],
         },
         {
           slug: "heroCarouselSection",
-          labels: { singular: "Hero Carousel", plural: "Hero Carousels" },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          labels: { singular: "Hero Slideshow", plural: "Hero Slideshows" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%2364748b'/%3E%3Crect x='30' y='14' width='60' height='5' rx='2' fill='%23fff'/%3E%3Crect x='38' y='24' width='44' height='3' rx='1' fill='%23fff' opacity='.6'/%3E%3Crect x='44' y='32' width='32' height='7' rx='3' fill='%233b82f6'/%3E%3Ccircle cx='54' cy='48' r='2.5' fill='%23fff'/%3E%3Ccircle cx='60' cy='48' r='2.5' fill='%23fff' opacity='.4'/%3E%3Ccircle cx='66' cy='48' r='2.5' fill='%23fff' opacity='.4'/%3E%3Cpath d='M12 30l-5 4 5 4' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M108 30l5 4-5 4' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ctext x='60' y='68' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EFull-screen rotating slides%3C/text%3E%3C/svg%3E",
+          imageAltText: "Full-screen rotating slides with text overlays",
+
           fields: [
-            labelField,
+
             {
               name: "slides",
               type: "array",
@@ -332,13 +327,12 @@ export const Pages: CollectionConfig = {
         },
         {
           slug: "fullWidthSection",
-          labels: {
-            singular: "Full Width Section",
-            plural: "Full Width Sections",
-          },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          labels: { singular: "Full Width", plural: "Full Width Sections" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='15' y='12' width='50' height='5' rx='2' fill='%231e293b'/%3E%3Crect x='15' y='22' width='90' height='3' rx='1' fill='%2394a3b8'/%3E%3Crect x='15' y='28' width='80' height='3' rx='1' fill='%2394a3b8'/%3E%3Crect x='15' y='34' width='70' height='3' rx='1' fill='%2394a3b8'/%3E%3Crect x='15' y='44' width='24' height='7' rx='3' fill='%233b82f6'/%3E%3Ctext x='60' y='68' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3ERich text, images, and CTA buttons%3C/text%3E%3C/svg%3E",
+          imageAltText: "Single content block spanning the full page width with optional background",
+
           fields: [
-            labelField,
+
             contentField,
             designLayoutCollapsible(true),
             floatingImagesCollapsible,
@@ -346,13 +340,12 @@ export const Pages: CollectionConfig = {
         },
         {
           slug: "twoColumnSection",
-          labels: {
-            singular: "Two Column Section",
-            plural: "Two Column Sections",
-          },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          labels: { singular: "Two Columns", plural: "Two Column Sections" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='8' y='10' width='48' height='40' rx='2' fill='%23e2e8f0'/%3E%3Crect x='14' y='16' width='26' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='14' y='22' width='36' height='2' rx='1' fill='%2394a3b8'/%3E%3Crect x='14' y='26' width='30' height='2' rx='1' fill='%2394a3b8'/%3E%3Crect x='64' y='10' width='48' height='40' rx='2' fill='%23e2e8f0'/%3E%3Crect x='70' y='16' width='26' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='70' y='22' width='36' height='2' rx='1' fill='%2394a3b8'/%3E%3Crect x='70' y='26' width='30' height='2' rx='1' fill='%2394a3b8'/%3E%3Ctext x='60' y='68' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3ESide-by-side text, image, or mixed%3C/text%3E%3C/svg%3E",
+          imageAltText: "Side-by-side layout — great for text + image or text + text",
+
           fields: [
-            labelField,
+
             {
               name: "wrapOnMobile",
               type: "checkbox",
@@ -386,13 +379,12 @@ export const Pages: CollectionConfig = {
         },
         {
           slug: "threeColumnSection",
-          labels: {
-            singular: "Three Column Section",
-            plural: "Three Column Sections",
-          },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          labels: { singular: "Three Columns", plural: "Three Column Sections" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='6' y='10' width='33' height='38' rx='2' fill='%23e2e8f0'/%3E%3Crect x='11' y='16' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='11' y='22' width='24' height='2' rx='1' fill='%2394a3b8'/%3E%3Crect x='43' y='10' width='33' height='38' rx='2' fill='%23e2e8f0'/%3E%3Crect x='48' y='16' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='48' y='22' width='24' height='2' rx='1' fill='%2394a3b8'/%3E%3Crect x='80' y='10' width='33' height='38' rx='2' fill='%23e2e8f0'/%3E%3Crect x='85' y='16' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='85' y='22' width='24' height='2' rx='1' fill='%2394a3b8'/%3E%3Ctext x='60' y='68' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EThree equal areas for highlights%3C/text%3E%3C/svg%3E",
+          imageAltText: "Three equal content areas — good for feature highlights or stats",
+
           fields: [
-            labelField,
+
             {
               name: "wrapOnMobile",
               type: "checkbox",
@@ -420,26 +412,52 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
-          slug: "contactSection",
-          labels: { singular: "Contact Section", plural: "Contact Sections" },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          slug: "formSection",
+          labels: { singular: "Form", plural: "Forms" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='25' y='8' width='70' height='9' rx='2' fill='%23e2e8f0' stroke='%23cbd5e1'/%3E%3Crect x='25' y='21' width='70' height='9' rx='2' fill='%23e2e8f0' stroke='%23cbd5e1'/%3E%3Crect x='25' y='34' width='70' height='14' rx='2' fill='%23e2e8f0' stroke='%23cbd5e1'/%3E%3Crect x='25' y='52' width='24' height='7' rx='3' fill='%233b82f6'/%3E%3Ctext x='60' y='72' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EContact, signup, or embed%3C/text%3E%3C/svg%3E",
+          imageAltText: "Embeddable form — contact, signup, RSVP, etc.",
+
           fields: [
-            labelField,
-            { name: "title", type: "text", label: "Section Title", defaultValue: "Contact Us" },
-            { name: "body", type: "richText", label: "Intro Text" },
-            { name: "showAddress", type: "checkbox", label: "Show Address", defaultValue: true },
-            { name: "showEmail", type: "checkbox", label: "Show Email", defaultValue: true },
-            { name: "showSocialIcons", type: "checkbox", label: "Show Social Media Icons", defaultValue: true },
-            { name: "showForm", type: "checkbox", label: "Show Contact Form", defaultValue: true },
+
+            contentField,
+            {
+              name: "formType",
+              type: "select",
+              label: "Form Type",
+              required: true,
+              options: [
+                { label: "Contact Form", value: "contact" },
+                { label: "Newsletter Signup", value: "newsletter" },
+                { label: "Custom Embed", value: "embed" },
+              ],
+              defaultValue: "contact",
+            },
+            {
+              name: "embedCode",
+              type: "textarea",
+              label: "Embed Code (HTML)",
+              admin: {
+                condition: (_, s) => s?.formType === "embed",
+                description: "Paste embed code from Action Network, Mailchimp, Google Forms, etc.",
+              },
+            },
+            {
+              name: "successMessage",
+              type: "text",
+              label: "Success Message",
+              defaultValue: "Thanks! We'll be in touch.",
+            },
             designLayoutCollapsible(),
           ],
         },
         {
           slug: "contentGridSection",
           labels: { singular: "Content Grid", plural: "Content Grids" },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='6' y='6' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Crect x='10' y='10' width='24' height='12' rx='1' fill='%23cbd5e1'/%3E%3Crect x='10' y='25' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='43' y='6' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Crect x='47' y='10' width='24' height='12' rx='1' fill='%23cbd5e1'/%3E%3Crect x='47' y='25' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='80' y='6' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Crect x='84' y='10' width='24' height='12' rx='1' fill='%23cbd5e1'/%3E%3Crect x='84' y='25' width='18' height='3' rx='1' fill='%2364748b'/%3E%3Crect x='6' y='36' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Crect x='43' y='36' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Crect x='80' y='36' width='33' height='26' rx='2' fill='%23e2e8f0'/%3E%3Ctext x='60' y='74' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EManual cards you write yourself%3C/text%3E%3C/svg%3E",
+          imageAltText: "Manually-curated grid of cards — you write each one",
+
           fields: [
-            labelField,
+
             {
               type: "row",
               fields: [
@@ -516,12 +534,11 @@ export const Pages: CollectionConfig = {
         },
         {
           slug: "collectionListSection",
-          labels: { singular: "Collection List", plural: "Collection Lists" },
-          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
+          labels: { singular: "Dynamic List", plural: "Dynamic Lists" },
+          imageURL: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Crect width='120' height='80' fill='%23f1f5f9'/%3E%3Crect x='18' y='8' width='26' height='36' rx='2' fill='%233b82f6' opacity='.15'/%3E%3Crect x='22' y='12' width='18' height='14' rx='1' fill='%233b82f6' opacity='.3'/%3E%3Crect x='22' y='30' width='14' height='3' rx='1' fill='%233b82f6'/%3E%3Crect x='48' y='8' width='26' height='36' rx='2' fill='%233b82f6' opacity='.15'/%3E%3Crect x='52' y='12' width='18' height='14' rx='1' fill='%233b82f6' opacity='.3'/%3E%3Crect x='52' y='30' width='14' height='3' rx='1' fill='%233b82f6'/%3E%3Crect x='78' y='8' width='26' height='36' rx='2' fill='%233b82f6' opacity='.15'/%3E%3Crect x='82' y='12' width='18' height='14' rx='1' fill='%233b82f6' opacity='.3'/%3E%3Crect x='82' y='30' width='14' height='3' rx='1' fill='%233b82f6'/%3E%3Cpath d='M8 24l-4 4 4 4' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M112 24l4 4-4 4' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ctext x='60' y='60' text-anchor='middle' font-size='7' fill='%2394a3b8' font-family='sans-serif'%3EAuto-pulls from Events, Blog, etc.%3C/text%3E%3C/svg%3E",
+          imageAltText: "Auto-populated from a data source like Events, Blog, Work, etc.",
+          admin: { components: { Label: "@/payload/components/RowLabel#BlockLabel" } },
           fields: [
-            labelField,
-            { name: "title", type: "text", label: "Section Title" },
-            { name: "subtitle", type: "textarea", label: "Section Subtitle / Description" },
             {
               name: "dataSource",
               type: "select",

@@ -25,8 +25,8 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ColorSchemeField as ColorSchemeField_eaa434971ec6d637869ac48c60190ba3 } from '@/payload/components/ColorSchemeField'
-import { SectionRowLabel as SectionRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { FloatingArrayField as FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3 } from '@/payload/components/FloatingArrayField'
+import { BlockLabel as BlockLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { NavItemRowLabel as NavItemRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { CtaButtonRowLabel as CtaButtonRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { LogoutButton as LogoutButton_4fa0da4f39e65c0a260a976af575b7d4 } from '@/payload/components/LogoutButton'
@@ -61,8 +61,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/payload/components/ColorSchemeField#ColorSchemeField": ColorSchemeField_eaa434971ec6d637869ac48c60190ba3,
-  "@/payload/components/RowLabel#SectionRowLabel": SectionRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/FloatingArrayField#FloatingArrayField": FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3,
+  "@/payload/components/RowLabel#BlockLabel": BlockLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/RowLabel#NavItemRowLabel": NavItemRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/RowLabel#CtaButtonRowLabel": CtaButtonRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/LogoutButton#LogoutButton": LogoutButton_4fa0da4f39e65c0a260a976af575b7d4,

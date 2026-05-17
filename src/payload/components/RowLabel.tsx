@@ -2,10 +2,32 @@
 
 import { useRowLabel } from "@payloadcms/ui";
 
-export function SectionRowLabel() {
-  const { data } = useRowLabel<{ label?: string; title?: string }>();
-  const label = data?.label || data?.title;
-  if (label) return <span>{label}</span>;
+const DATA_SOURCE_LABELS: Record<string, string> = {
+  events: "Events",
+  "blog-posts": "Blog",
+  "press-articles": "Press",
+  books: "Books",
+  "team-members": "Team",
+  campaigns: "Work",
+  products: "Products",
+};
+
+const LAYOUT_LABELS: Record<string, string> = {
+  grid: "Grid",
+  list: "List",
+  carousel: "Carousel",
+  featured: "Featured",
+};
+
+export function BlockLabel() {
+  const { data } = useRowLabel<{ label?: string; title?: string; dataSource?: string; layout?: string }>();
+  if (data?.label) return <span>{data.label}</span>;
+  if (data?.title) return <span>{data.title}</span>;
+  if (data?.dataSource) {
+    const source = DATA_SOURCE_LABELS[data.dataSource] || data.dataSource;
+    const layout = data.layout ? LAYOUT_LABELS[data.layout] || data.layout : "";
+    return <span>{layout ? `${source} — ${layout}` : source}</span>;
+  }
   return null;
 }
 

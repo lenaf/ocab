@@ -152,18 +152,23 @@ export interface Page {
   title: string;
   slug: string;
   seo?: {
+    /**
+     * 50–60 characters recommended
+     */
     title?: string | null;
+    /**
+     * 150–160 characters. Shown in search results.
+     */
     description?: string | null;
+    /**
+     * Recommended: 1200×630px
+     */
     ogImage?: (string | null) | Media;
     noIndex?: boolean | null;
   };
   sections?:
     | (
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             content?: {
               root: {
                 type: string;
@@ -193,10 +198,6 @@ export interface Page {
             blockType: 'bannerSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             slides?:
               | {
                   content?: {
@@ -230,10 +231,6 @@ export interface Page {
             blockType: 'heroCarouselSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             content?: {
               root: {
                 type: string;
@@ -259,7 +256,7 @@ export interface Page {
             darkScrim?: boolean | null;
             padding?: ('none' | 'small' | 'standard' | 'large') | null;
             /**
-             * Drag and resize images in the preview box, then configure details below.
+             * Add PNG images that overlay the section background. Position and resize them after adding.
              */
             floatingItems?:
               | {
@@ -284,10 +281,6 @@ export interface Page {
             blockType: 'fullWidthSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             wrapOnMobile?: boolean | null;
             ratio?: ('1-1' | '3-2' | '2-3') | null;
             leftColumn?: {
@@ -345,10 +338,6 @@ export interface Page {
             blockType: 'twoColumnSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             wrapOnMobile?: boolean | null;
             column1?: {
               content?: {
@@ -430,12 +419,7 @@ export interface Page {
             blockType: 'threeColumnSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
-            title?: string | null;
-            body?: {
+            content?: {
               root: {
                 type: string;
                 children: {
@@ -450,10 +434,12 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            showAddress?: boolean | null;
-            showEmail?: boolean | null;
-            showSocialIcons?: boolean | null;
-            showForm?: boolean | null;
+            formType: 'contact' | 'newsletter' | 'embed';
+            /**
+             * Paste embed code from Action Network, Mailchimp, Google Forms, etc.
+             */
+            embedCode?: string | null;
+            successMessage?: string | null;
             backgroundColor?:
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
@@ -464,13 +450,9 @@ export interface Page {
             darkScrim?: boolean | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'contactSection';
+            blockType: 'formSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
             alignment?: ('left' | 'center' | 'right') | null;
             verticalAlignment?: ('top' | 'center' | 'bottom') | null;
             padding?: ('none' | 'sm' | 'md' | 'lg') | null;
@@ -509,12 +491,6 @@ export interface Page {
             blockType: 'contentGridSection';
           }
         | {
-            /**
-             * Helps identify this section when collapsed in the admin
-             */
-            label?: string | null;
-            title?: string | null;
-            subtitle?: string | null;
             /**
              * Which collection to pull items from
              */
@@ -1104,7 +1080,6 @@ export interface PagesSelect<T extends boolean = true> {
         bannerSection?:
           | T
           | {
-              label?: T;
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
@@ -1116,7 +1091,6 @@ export interface PagesSelect<T extends boolean = true> {
         heroCarouselSection?:
           | T
           | {
-              label?: T;
               slides?:
                 | T
                 | {
@@ -1132,7 +1106,6 @@ export interface PagesSelect<T extends boolean = true> {
         fullWidthSection?:
           | T
           | {
-              label?: T;
               content?: T;
               backgroundColor?: T;
               backgroundImage?: T;
@@ -1166,7 +1139,6 @@ export interface PagesSelect<T extends boolean = true> {
         twoColumnSection?:
           | T
           | {
-              label?: T;
               wrapOnMobile?: T;
               ratio?: T;
               leftColumn?:
@@ -1191,7 +1163,6 @@ export interface PagesSelect<T extends boolean = true> {
         threeColumnSection?:
           | T
           | {
-              label?: T;
               wrapOnMobile?: T;
               column1?:
                 | T
@@ -1220,16 +1191,13 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        contactSection?:
+        formSection?:
           | T
           | {
-              label?: T;
-              title?: T;
-              body?: T;
-              showAddress?: T;
-              showEmail?: T;
-              showSocialIcons?: T;
-              showForm?: T;
+              content?: T;
+              formType?: T;
+              embedCode?: T;
+              successMessage?: T;
               backgroundColor?: T;
               backgroundImage?: T;
               darkScrim?: T;
@@ -1239,7 +1207,6 @@ export interface PagesSelect<T extends boolean = true> {
         contentGridSection?:
           | T
           | {
-              label?: T;
               alignment?: T;
               verticalAlignment?: T;
               padding?: T;
@@ -1260,9 +1227,6 @@ export interface PagesSelect<T extends boolean = true> {
         collectionListSection?:
           | T
           | {
-              label?: T;
-              title?: T;
-              subtitle?: T;
               dataSource?: T;
               layout?: T;
               columns?: T;
