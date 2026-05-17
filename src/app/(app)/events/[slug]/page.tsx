@@ -35,7 +35,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const rsvpUrl = event.browserUrl || event.registrationUrl || event.ticketUrl
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-16 lg:pt-16">
       {imageUrl && (
         <div className="relative h-64 md:h-96">
           <img src={imageUrl} alt={event.title} className="absolute inset-0 w-full h-full object-cover" />

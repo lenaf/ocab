@@ -33,7 +33,7 @@ export default async function Home() {
 
   return (
     // add padding top for nav
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-16 lg:pt-16">
       <RenderSections sections={sections} />
     </main>
   );

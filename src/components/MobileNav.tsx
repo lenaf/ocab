@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
 import type { Navigation, Page } from "@/payload-types";
 
 const BUTTON_STYLES: Record<string, string> = {
@@ -28,12 +27,30 @@ function getNavLabel(item: { label?: string | null; linkType?: string | null; pa
   return "";
 }
 
-export function MobileNav({ navigation }: { navigation: Navigation }) {
+type CtaButton = NonNullable<Navigation["ctaButtons"]>[number];
+
+interface MobileNavProps {
+  navigation: Navigation;
+  ctaButtons: CtaButton[];
+}
+
+export function MobileNav({ navigation, ctaButtons }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const pathname = usePathname();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const isActive = (href: string) => {
     return pathname === href || (href !== "/" && pathname.startsWith(href));
@@ -42,130 +59,133 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
   return (
     <>
       <button
-        onClick={toggleMenu}
-        className="lg:hidden p-2 hover:bg-white/10  transition-colors"
-        aria-label="Toggle menu"
+        onClick={() => setIsOpen(!isOpen)}
+        className="lg:hidden p-2 text-neutral-content"
+        aria-expanded={isOpen}
+        aria-controls="mobile-nav-overlay"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {isOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={toggleMenu} />
-      )}
-
-      <div
-        className={`
-          fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50
-          transform transition-transform duration-300 ease-in-out lg:hidden
-          ${isOpen ? "translate-x-0" : "translate-x-full"}
-        `}
-      >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="text-xl font-bold text-base-content">Menu</h2>
-            <button onClick={toggleMenu} className="p-2 hover:bg-base-200  transition-colors" aria-label="Close menu">
-              <X className="w-6 h-6 text-base-content" />
+        <div
+          id="mobile-nav-overlay"
+          className="fixed inset-0 z-[100] bg-white flex flex-col lg:hidden"
+        >
+          {/* Top bar with close */}
+          <div className="flex items-center justify-end px-6" style={{ height: "64px" }}>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-[#1A1A1A]"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
 
-          <nav className="flex-1 overflow-y-auto p-6">
-            <ul className="space-y-2">
-              {navigation.navItems?.map((item, i) => {
-                const href = getNavHref(item);
-                const label = getNavLabel(item);
-                const active = isActive(href);
-                const isExternal = item.linkType === "url";
+          {/* Nav links */}
+          <nav className="flex-1 overflow-y-auto">
+            {navigation.navItems?.map((item, i) => {
+              const href = getNavHref(item);
+              const label = getNavLabel(item);
+              const active = isActive(href);
+              const isExternal = item.linkType === "url";
+              const hasDropdown = item.subItems && item.subItems.length > 0;
 
-                if (item.subItems && item.subItems.length > 0) {
-                  return (
-                    <li key={i}>
+              return (
+                <div key={i} className="border-b border-[#E5E5E5]">
+                  {hasDropdown ? (
+                    <>
                       <button
                         onClick={() => setOpenDropdown(openDropdown === i ? null : i)}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium ${
-                          active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
+                        className={`w-full flex items-center justify-between px-6 py-4 text-[18px] font-semibold uppercase text-[#1A1A1A] ${
+                          active ? "text-primary" : ""
                         }`}
                       >
-                        <span>{label}</span>
+                        {label}
                         <svg
                           className={`w-5 h-5 transition-transform ${openDropdown === i ? "rotate-180" : ""}`}
-                          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
                       {openDropdown === i && (
-                        <ul className="mt-2 ml-4 space-y-1">
-                          {item.subItems.map((subItem, j) => {
+                        <div className="bg-[#FAF9F5]">
+                          {item.subItems!.map((subItem, j) => {
                             const subHref = getNavHref(subItem);
                             const subLabel = getNavLabel(subItem);
-                            const subActive = isActive(subHref);
                             const subExternal = subItem.linkType === "url";
 
-                            return (
-                              <li key={j}>
-                                {subExternal ? (
-                                  <a
-                                    href={subHref}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={toggleMenu}
-                                    className="block px-4 py-2 text-base-content/80 hover:bg-base-200/50  transition-colors"
-                                  >
-                                    {subLabel}
-                                  </a>
-                                ) : (
-                                  <Link
-                                    href={subHref}
-                                    onClick={toggleMenu}
-                                    className={`block px-4 py-2 text-base-content/80 hover:bg-base-200/50  transition-colors ${
-                                      subActive ? "bg-primary/10 text-primary font-bold border-l-4 border-primary" : ""
-                                    }`}
-                                  >
-                                    {subLabel}
-                                  </Link>
-                                )}
-                              </li>
+                            return subExternal ? (
+                              <a
+                                key={j}
+                                href={subHref}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setIsOpen(false)}
+                                className="block px-10 py-3 text-[16px] font-medium text-[#1A1A1A]"
+                              >
+                                {subLabel}
+                              </a>
+                            ) : (
+                              <Link
+                                key={j}
+                                href={subHref}
+                                onClick={() => setIsOpen(false)}
+                                className="block px-10 py-3 text-[16px] font-medium text-[#1A1A1A]"
+                              >
+                                {subLabel}
+                              </Link>
                             );
                           })}
-                        </ul>
+                        </div>
                       )}
-                    </li>
-                  );
-                }
-
-                return (
-                  <li key={i}>
-                    {isExternal ? (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleMenu}
-                        className="block px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium"
-                      >
-                        {label}
-                      </a>
-                    ) : (
-                      <Link
-                        href={href}
-                        onClick={toggleMenu}
-                        className={`block px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium ${
-                          active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
-                        }`}
-                      >
-                        {label}
-                      </Link>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+                    </>
+                  ) : isExternal ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsOpen(false)}
+                      className={`block px-6 py-4 text-[18px] font-semibold uppercase text-[#1A1A1A] ${
+                        active ? "text-primary" : ""
+                      }`}
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block px-6 py-4 text-[18px] font-semibold uppercase text-[#1A1A1A] ${
+                        active ? "text-primary" : ""
+                      }`}
+                      {...(active ? { "aria-current": "page" as const } : {})}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
-          {/* CTA Buttons */}
-          {navigation.ctaButtons && navigation.ctaButtons.length > 0 && (
-            <div className="p-6 border-t space-y-3">
-              {navigation.ctaButtons.map((btn, i) => {
+          {/* Bottom CTA */}
+          {ctaButtons.length > 0 && (
+            <div className="p-6 border-t border-[#E5E5E5] space-y-3">
+              {ctaButtons.map((btn, i) => {
                 const href = btn.linkType === "url"
                   ? btn.url || "#"
                   : typeof btn.page === "object" && btn.page
@@ -174,24 +194,15 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                 const isExternal = btn.linkType === "url";
                 const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
 
+                const className = `block w-full text-center ${style} font-bold text-[15px] transition-opacity hover:opacity-90`;
+                const inlineStyle = { padding: "14px 24px" };
+
                 return isExternal ? (
-                  <a
-                    key={i}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={toggleMenu}
-                    className={`block w-full text-center ${style} px-6 py-3  font-bold hover:opacity-90 transition-opacity`}
-                  >
+                  <a key={i} href={href} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className={className} style={inlineStyle}>
                     {btn.label}
                   </a>
                 ) : (
-                  <Link
-                    key={i}
-                    href={href}
-                    onClick={toggleMenu}
-                    className={`block w-full text-center ${style} px-6 py-3  font-bold hover:opacity-90 transition-opacity`}
-                  >
+                  <Link key={i} href={href} onClick={() => setIsOpen(false)} className={className} style={inlineStyle}>
                     {btn.label}
                   </Link>
                 );
@@ -199,7 +210,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
             </div>
           )}
         </div>
-      </div>
+      )}
     </>
   );
 }

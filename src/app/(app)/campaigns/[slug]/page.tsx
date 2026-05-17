@@ -36,7 +36,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ slug:
   const imageUrl = campaign.image && typeof campaign.image === 'object' ? (campaign.image as Media).url : ''
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-16 lg:pt-16">
       {imageUrl && (
         <div className="relative h-64 md:h-96">
           <img src={imageUrl} alt={campaign.title} className="absolute inset-0 w-full h-full object-cover" />

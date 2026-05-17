@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { themeConfig } from "@/config/theme";
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import { MobileNav } from "./MobileNav";
 import { DesktopNav } from "./DesktopNav";
-import type { Media, Navigation, SiteSetting } from "@/payload-types";
+import { MobileNav } from "./MobileNav";
+import type { Media, Navigation, Page, SiteSetting } from "@/payload-types";
 
 const BUTTON_STYLES: Record<string, string> = {
   primary: "bg-primary text-primary-content",
@@ -15,6 +14,14 @@ const BUTTON_STYLES: Record<string, string> = {
   outline: "border-2 border-current bg-transparent",
 };
 
+function getButtonHref(btn: { linkType?: string | null; page?: string | Page | null; url?: string | null }): string {
+  if (btn.linkType === "url") return btn.url || "#";
+  if (typeof btn.page === "object" && btn.page) {
+    return `/${btn.page.slug === "home" ? "" : btn.page.slug}`;
+  }
+  return "#";
+}
+
 export async function Header() {
   const payload = await getPayload({ config });
 
@@ -23,90 +30,121 @@ export async function Header() {
     slug: "navigation",
     depth: 2,
   })) as Navigation;
+
   const siteSettings = (await payload.findGlobal({
     // @ts-expect-error - Payload global types are overly strict
     slug: "site-settings",
     depth: 2,
   })) as SiteSetting;
 
-  const getMediaUrl = (media: string | Media | null | undefined): string => {
-    if (!media) return "";
-    if (typeof media === "string") return "";
-    return media.url || (media.filename ? `/media/${media.filename}` : "");
-  };
+  const logoMedia =
+    siteSettings.logo && typeof siteSettings.logo === "object"
+      ? (siteSettings.logo as Media)
+      : null;
 
-  const isWhite = navigation.style === "white";
-  const logoUrl = getMediaUrl(siteSettings.logo) || themeConfig.logo.src;
-  const logoAlt = siteSettings.siteName || themeConfig.logo.alt;
+  const logoUrl = logoMedia?.url || "";
+  const logoAlt = logoMedia?.alt || siteSettings.siteName || "Our City Action Buffalo";
+  const logoWidth = logoMedia?.width || 320;
+  const logoHeight = logoMedia?.height || 80;
+
+  const logo = logoUrl
+    ? { url: logoUrl, alt: logoAlt, width: logoWidth, height: logoHeight }
+    : null;
+
+  const siteName = siteSettings.siteName || "OUR CITY ACTION BUFFALO";
+  const ctaButtons = navigation.ctaButtons;
 
   return (
-    <header
-      className={`
-        ${isWhite ? "fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl text-base-content shadow-md" : "relative bg-neutral text-neutral-content shadow-sm"}
-        border-b border-gray-200/20 transition-all duration-300
-      `}
-    >
-      <div className="container mx-auto px-6 md:px-12 py-4 flex items-center justify-between gap-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          {logoUrl && logoUrl !== "/logo.png" ? (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-neutral">
+      {/* Desktop */}
+      <div className="hidden lg:flex items-center pl-8 pr-0" style={{ height: "76px" }}>
+        {/* Left: Logo */}
+        <Link href="/" aria-label="Our City Action Buffalo home" className="shrink-0">
+          {logo ? (
             <Image
-              src={logoUrl}
-              alt={logoAlt}
-              width={180}
-              height={60}
+              src={logo.url}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
               priority
-              className="drop-shadow-lg h-12 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           ) : (
-            <span style={{ fontFamily: 'var(--font-heading), Poppins, sans-serif', fontSize: '17px', fontWeight: 400 }}>
-              {siteSettings.siteName || "OUR CITY ACTION BUFFALO"}
+            <span className="text-neutral-content" style={{ fontFamily: 'var(--font-heading), Poppins, sans-serif', fontSize: '17px', fontWeight: 700 }}>
+              {siteName}
             </span>
           )}
         </Link>
 
-        {/* Desktop Navigation */}
-        <DesktopNav navigation={navigation} />
+        {/* Center: Nav links */}
+        <div className="flex-1 flex items-center justify-center h-full">
+          <DesktopNav navigation={navigation} variant="dark" />
+        </div>
 
-        {/* CTA Buttons */}
-        {navigation.ctaButtons && navigation.ctaButtons.length > 0 && (
-          <div className="hidden lg:flex items-center gap-3">
-            {navigation.ctaButtons.map((btn, i) => {
-              const href = btn.linkType === "url"
-                ? btn.url || "#"
-                : typeof btn.page === "object" && btn.page
-                  ? `/${btn.page.slug === "home" ? "" : btn.page.slug}`
-                  : "#";
-              const isExternal = href.startsWith("http://") || href.startsWith("https://");
-              const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
+        {/* Right: CTA buttons */}
+        <div className="flex items-stretch h-full shrink-0">
+          {ctaButtons?.map((btn, i) => {
+            const href = getButtonHref(btn);
+            const isExternal = btn.linkType === "url";
+            const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
 
-              return isExternal ? (
-                <a
-                  key={i}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${style} font-extrabold text-sm hover:opacity-90 transition-opacity`}
-                  style={{ padding: '28px 24px', fontSize: '14px' }}
-                >
-                  {btn.label}
-                </a>
-              ) : (
-                <Link
-                  key={i}
-                  href={href}
-                  className={`${style} font-extrabold text-sm hover:opacity-90 transition-opacity`}
-                  style={{ padding: '28px 24px', fontSize: '14px' }}
-                >
-                  {btn.label}
-                </Link>
-              );
-            })}
-          </div>
-        )}
+            const className = `${style} font-bold text-sm uppercase transition-opacity hover:opacity-90 flex items-center px-6`;
 
-        {/* Mobile Navigation */}
-        <MobileNav navigation={navigation} />
+            return isExternal ? (
+              <a key={i} href={href} target="_blank" rel="noopener noreferrer" className={className}>
+                {btn.label}
+              </a>
+            ) : (
+              <Link key={i} href={href} className={className}>
+                {btn.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile */}
+      <div className="lg:hidden flex items-center justify-between px-6" style={{ height: "64px" }}>
+        {/* Left: Logo */}
+        <Link href="/" aria-label="Our City Action Buffalo home" className="shrink-0">
+          {logo ? (
+            <Image
+              src={logo.url}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
+              priority
+              className="h-9 w-auto object-contain"
+            />
+          ) : (
+            <span className="text-neutral-content" style={{ fontFamily: 'var(--font-heading), Poppins, sans-serif', fontSize: '15px', fontWeight: 700 }}>
+              {siteName}
+            </span>
+          )}
+        </Link>
+
+        {/* Right: Donate + Hamburger */}
+        <div className="flex items-center gap-3">
+          {ctaButtons && ctaButtons.length > 0 && (() => {
+            const btn = ctaButtons[0];
+            const href = getButtonHref(btn);
+            const isExternal = btn.linkType === "url";
+            const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
+            const className = `${style} font-bold text-xs transition-opacity hover:opacity-90`;
+            const inlineStyle = { padding: "10px 16px" };
+
+            return isExternal ? (
+              <a href={href} target="_blank" rel="noopener noreferrer" className={className} style={inlineStyle}>
+                {btn.label}
+              </a>
+            ) : (
+              <Link href={href} className={className} style={inlineStyle}>
+                {btn.label}
+              </Link>
+            );
+          })()}
+          <MobileNav navigation={navigation} ctaButtons={ctaButtons || []} />
+        </div>
       </div>
     </header>
   );

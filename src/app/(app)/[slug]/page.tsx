@@ -67,7 +67,7 @@ export default async function PageComponent({ params }: { params: Promise<{ slug
   const sections = page.sections || []
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-16 lg:pt-16">
       <RenderSections sections={sections} />
     </main>
   )
