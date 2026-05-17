@@ -222,9 +222,11 @@ export const Events: CollectionConfig = {
       label: 'Event Image',
     },
     {
-      name: 'order',
-      type: 'number',
-      label: 'Display Order',
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags' as never,
+      hasMany: true,
+      label: 'Tags',
       admin: { position: 'sidebar' },
     },
     {

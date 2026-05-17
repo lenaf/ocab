@@ -15,11 +15,11 @@ import { BlogPosts } from "./payload/collections/BlogPosts";
 import { Events } from "./payload/collections/Events";
 import { PressArticles } from "./payload/collections/PressArticles";
 import { Media } from "./payload/collections/Media";
-import { Campaigns } from "./payload/collections/Campaigns";
+import { Work } from "./payload/collections/Work";
+import { Tags } from "./payload/collections/Tags";
 import { TeamMembers } from "./payload/collections/TeamMembers";
 import { Books } from "./payload/collections/Books";
 import { Products } from "./payload/collections/Products";
-import { Research } from "./payload/collections/Research";
 import { SiteSettings } from "./payload/globals/SiteSettings";
 
 import { themeConfig } from "@/config/theme";
@@ -94,7 +94,7 @@ export default buildConfig({
     Pages,
     Users,
     Media,
-    BlogPosts, Events, Campaigns, PressArticles, TeamMembers, Books, Products, Research,
+    BlogPosts, Events, Work, PressArticles, TeamMembers, Books, Products, Tags,
   ],
   globals: [Navigation, SiteSettings],
   editor: lexicalEditor({

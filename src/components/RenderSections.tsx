@@ -272,8 +272,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   "blog-posts": "/blog",
                   "press-articles": "/press",
                   events: "/events",
-                  campaigns: "/campaigns",
-                  research: "/research",
+                  campaigns: "/work",
                 };
                 const base = pathMap[dataSource];
                 if (base) return `${base}/${item.slug}`;
@@ -451,21 +450,6 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   );
                 }
 
-                case "research": {
-                  const coverUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {coverUrl && <img src={coverUrl} alt={item.title as string} className="w-full h-40 object-cover" />}
-                      <div className="p-5 flex-1 flex flex-col">
-                        {item.type && <span className="text-xs font-bold uppercase text-primary mb-1">{(item.type as string).replace("-", " ")}</span>}
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
-                        {item.summary && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.summary as string}</p>}
-                        <span className="inline-block mt-3 text-sm font-bold text-primary">{(item.ctaLabel as string) || "Read More"} →</span>
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
 
                 default: {
                   const imageUrl = getItemImage(item);

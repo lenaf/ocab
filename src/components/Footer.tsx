@@ -19,7 +19,7 @@ export async function Footer() {
   const footerLinks = [
     { title: "Home", slug: "" },
     { title: "About", slug: "about" },
-    { title: "Campaigns", slug: "campaigns" },
+    { title: "Our Work", slug: "work" },
     { title: "Get Involved", slug: "get-involved" },
     { title: "Events", slug: "events" },
     { title: "Blog", slug: "blog" },

@@ -1,15 +1,15 @@
 import type { CollectionConfig } from "payload";
 import { slugify } from "../utils/slugify";
 
-export const Campaigns: CollectionConfig = {
+export const Work: CollectionConfig = {
   slug: "campaigns",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "status", "year", "featured"],
-    description: "Issue-based campaigns OCAB is running or has run",
+    defaultColumns: ["title", "status", "featured"],
+    description: "Campaigns, research, reports, and other OCAB work",
     group: "📚 Collections",
-    listSearchableFields: ["title", "slug"],
-    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL}/campaigns/${doc.slug}`,
+    listSearchableFields: ["title", "slug", "summary"],
+    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL}/work/${doc.slug}`,
   },
   access: {
     read: () => true,
@@ -42,8 +42,8 @@ export const Campaigns: CollectionConfig = {
     {
       name: "year",
       type: "number",
-      label: "Campaign Year",
-      admin: { position: "sidebar", description: "Primary year (e.g. 2021)" },
+      label: "Year",
+      admin: { position: "sidebar" },
     },
     {
       name: "endYear",
@@ -54,21 +54,21 @@ export const Campaigns: CollectionConfig = {
     {
       name: "featured",
       type: "checkbox",
-      label: "Feature on Homepage",
+      label: "Featured",
       defaultValue: false,
       admin: { position: "sidebar" },
     },
     {
-      name: "order",
-      type: "number",
-      label: "Display Order",
-      admin: { position: "sidebar", description: "Lower numbers appear first" },
+      name: "tags",
+      type: "relationship",
+      relationTo: "tags" as never,
+      hasMany: true,
+      label: "Tags",
+      admin: { position: "sidebar" },
     },
     { name: "summary", type: "textarea", label: "Short Summary (for cards)" },
-    { name: "content", type: "richText", label: "Full Description" },
-    { name: "image", type: "upload", relationTo: "media" as never },
-    { name: "learnMoreUrl", type: "text", label: "Learn More URL" },
-    { name: "callToAction", type: "text", label: "CTA Button Label", defaultValue: "Learn More" },
+    { name: "content", type: "richText", label: "Content" },
+    { name: "image", type: "upload", relationTo: "media" as never, label: "Cover Image" },
     {
       name: "seo",
       type: "group",

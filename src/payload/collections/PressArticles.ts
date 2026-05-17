@@ -4,7 +4,7 @@ export const PressArticles: CollectionConfig = {
   slug: 'press-articles' as const,
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'publication', 'type', 'featured', 'order', 'publishedAt'],
+    defaultColumns: ['title', 'publication', 'type', 'featured', 'publishedAt'],
     description: 'News coverage of OCAB from external publications',
     group: '📚 Collections',
     listSearchableFields: ['title', 'publication'],
@@ -57,12 +57,6 @@ export const PressArticles: CollectionConfig = {
       },
     },
     {
-      name: 'order',
-      type: 'number',
-      label: 'Display Order',
-      admin: { position: 'sidebar', description: 'Lower numbers appear first' },
-    },
-    {
       name: 'publishedAt',
       type: 'date',
       required: true,
@@ -72,16 +66,11 @@ export const PressArticles: CollectionConfig = {
     },
     {
       name: 'tags',
-      type: 'array',
-      fields: [
-        {
-          name: 'tag',
-          type: 'text',
-        },
-      ],
-      admin: {
-        position: 'sidebar',
-      },
+      type: 'relationship',
+      relationTo: 'tags' as never,
+      hasMany: true,
+      label: 'Tags',
+      admin: { position: 'sidebar' },
     },
   ],
 }

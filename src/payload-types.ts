@@ -77,7 +77,6 @@ export interface Config {
     'team-members': TeamMember;
     books: Book;
     products: Product;
-    research: Research;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -95,7 +94,6 @@ export interface Config {
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     books: BooksSelect<false> | BooksSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
-    research: ResearchSelect<false> | ResearchSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -525,8 +523,7 @@ export interface Page {
               | 'books'
               | 'team-members'
               | 'campaigns'
-              | 'products'
-              | 'research';
+              | 'products';
             layout?: ('grid' | 'list' | 'carousel' | 'featured') | null;
             columns?: ('2' | '3' | '4') | null;
             limit?: number | null;
@@ -571,10 +568,6 @@ export interface Page {
                     | ({
                         relationTo: 'team-members';
                         value: string | TeamMember;
-                      } | null)
-                    | ({
-                        relationTo: 'research';
-                        value: string | Research;
                       } | null);
                   id?: string | null;
                 }[]
@@ -891,7 +884,7 @@ export interface Book {
   createdAt: string;
 }
 /**
- * Issue-based campaigns OCAB is running or has run
+ * Campaigns, research, reports, and other OCAB work
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "campaigns".
@@ -900,10 +893,8 @@ export interface Campaign {
   id: string;
   title: string;
   slug?: string | null;
+  category: 'campaign' | 'report' | 'field-guide' | 'policy-brief' | 'white-paper' | 'toolkit' | 'survey';
   status?: ('active' | 'past' | 'upcoming') | null;
-  /**
-   * Primary year (e.g. 2021)
-   */
   year?: number | null;
   endYear?: number | null;
   featured?: boolean | null;
@@ -911,6 +902,8 @@ export interface Campaign {
    * Lower numbers appear first
    */
   order?: number | null;
+  publishedAt?: string | null;
+  authors?: string | null;
   summary?: string | null;
   content?: {
     root: {
@@ -928,8 +921,17 @@ export interface Campaign {
     [k: string]: unknown;
   } | null;
   image?: (string | null) | Media;
-  learnMoreUrl?: string | null;
+  accessType?: ('pdf' | 'url' | 'onsite') | null;
+  pdf?: (string | null) | Media;
+  externalUrl?: string | null;
   callToAction?: string | null;
+  quotes?:
+    | {
+        quote: string;
+        attribution?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -955,67 +957,6 @@ export interface Product {
   description?: string | null;
   image?: (string | null) | Media;
   url?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * OCAB's original research, reports, field guides, and publications
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "research".
- */
-export interface Research {
-  id: string;
-  title: string;
-  slug?: string | null;
-  type: 'report' | 'field-guide' | 'policy-brief' | 'white-paper' | 'toolkit' | 'survey';
-  featured?: boolean | null;
-  /**
-   * Lower numbers appear first
-   */
-  order?: number | null;
-  publishedAt: string;
-  accessType?: ('pdf' | 'url' | 'onsite') | null;
-  /**
-   * e.g. OCAB Research Team, Jane Smith
-   */
-  authors?: string | null;
-  summary?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  coverImage?: (string | null) | Media;
-  pdf?: (string | null) | Media;
-  /**
-   * Link to external site where the report lives
-   */
-  externalUrl?: string | null;
-  /**
-   * Pull quotes from readers — shown on the homepage section and research detail page
-   */
-  quotes?:
-    | {
-        quote: string;
-        attribution?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  ctaLabel?: string | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  ogImage?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -1108,10 +1049,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: string | Product;
-      } | null)
-    | ({
-        relationTo: 'research';
-        value: string | Research;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1532,16 +1469,28 @@ export interface EventsSelect<T extends boolean = true> {
 export interface CampaignsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   status?: T;
   year?: T;
   endYear?: T;
   featured?: T;
   order?: T;
+  publishedAt?: T;
+  authors?: T;
   summary?: T;
   content?: T;
   image?: T;
-  learnMoreUrl?: T;
+  accessType?: T;
+  pdf?: T;
+  externalUrl?: T;
   callToAction?: T;
+  quotes?:
+    | T
+    | {
+        quote?: T;
+        attribution?: T;
+        id?: T;
+      };
   seo?:
     | T
     | {
@@ -1623,38 +1572,6 @@ export interface ProductsSelect<T extends boolean = true> {
   description?: T;
   image?: T;
   url?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "research_select".
- */
-export interface ResearchSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  type?: T;
-  featured?: T;
-  order?: T;
-  publishedAt?: T;
-  accessType?: T;
-  authors?: T;
-  summary?: T;
-  content?: T;
-  coverImage?: T;
-  pdf?: T;
-  externalUrl?: T;
-  quotes?:
-    | T
-    | {
-        quote?: T;
-        attribution?: T;
-        id?: T;
-      };
-  ctaLabel?: T;
-  seoTitle?: T;
-  seoDescription?: T;
-  ogImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
