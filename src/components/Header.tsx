@@ -104,9 +104,9 @@ export async function Header() {
       </div>
 
       {/* Mobile */}
-      <div className="lg:hidden flex items-center justify-between px-6" style={{ height: "64px" }}>
+      <div className="lg:hidden flex items-stretch h-[64px]">
         {/* Left: Logo */}
-        <Link href="/" aria-label="Our City Action Buffalo home" className="shrink-0">
+        <Link href="/" aria-label="Our City Action Buffalo home" className="shrink-0 flex items-center pl-4">
           {logo ? (
             <Image
               src={logo.url}
@@ -123,27 +123,29 @@ export async function Header() {
           )}
         </Link>
 
-        {/* Right: Donate + Hamburger */}
-        <div className="flex items-center gap-3">
-          {ctaButtons && ctaButtons.length > 0 && (() => {
-            const btn = ctaButtons[0];
+        <div className="flex-1" />
+
+        {/* Right: CTA buttons + Hamburger */}
+        <div className="flex items-stretch shrink-0">
+          {ctaButtons?.map((btn, i) => {
             const href = getButtonHref(btn);
             const isExternal = btn.linkType === "url";
             const style = BUTTON_STYLES[btn.style || "primary"] || BUTTON_STYLES.primary;
-            const className = `${style} font-bold text-xs transition-opacity hover:opacity-90`;
-            const inlineStyle = { padding: "10px 16px" };
+            const className = `${style} font-bold text-xs uppercase transition-opacity hover:opacity-90 flex items-center px-4`;
 
             return isExternal ? (
-              <a href={href} target="_blank" rel="noopener noreferrer" className={className} style={inlineStyle}>
+              <a key={i} href={href} target="_blank" rel="noopener noreferrer" className={className}>
                 {btn.label}
               </a>
             ) : (
-              <Link href={href} className={className} style={inlineStyle}>
+              <Link key={i} href={href} className={className}>
                 {btn.label}
               </Link>
             );
-          })()}
-          <MobileNav navigation={navigation} ctaButtons={ctaButtons || []} />
+          })}
+          <div className="flex items-center px-4">
+            <MobileNav navigation={navigation} />
+          </div>
         </div>
       </div>
     </header>
