@@ -534,7 +534,7 @@ export const Pages: CollectionConfig = {
             { name: "title", type: "text", label: "Section Title" },
             { name: "subtitle", type: "textarea", label: "Section Subtitle / Description" },
             {
-              name: "collection",
+              name: "dataSource",
               type: "select",
               label: "Data Source",
               required: true,

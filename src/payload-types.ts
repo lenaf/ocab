@@ -611,7 +611,7 @@ export interface Page {
             /**
              * Which collection to pull items from
              */
-            collection:
+            dataSource:
               | 'events'
               | 'blog-posts'
               | 'press-articles'
@@ -1500,7 +1500,7 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               title?: T;
               subtitle?: T;
-              collection?: T;
+              dataSource?: T;
               layout?: T;
               columns?: T;
               limit?: T;

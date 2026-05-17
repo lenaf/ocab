@@ -43,7 +43,7 @@ export function LexicalRenderer({
             alt={media?.alt || ""}
             width={media?.width || 800}
             height={media?.height || 600}
-            className="max-w-full h-auto rounded"
+            className="max-w-full h-auto"
           />
         </div>
       );

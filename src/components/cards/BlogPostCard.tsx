@@ -8,7 +8,7 @@ export function BlogPostCard({ item }: { item: BlogPost }) {
 
   return (
     <a href={`/blog/${item.slug}`} className="block group h-full">
-      <div className="rounded-lg overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
+      <div className="overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
         {imageUrl && <img src={imageUrl} alt={item.title} className="w-full aspect-video object-cover" />}
         <div className="p-4 flex-1 flex flex-col">
           {item.category && <span className="text-xs font-bold uppercase text-accent mb-1 block">{item.category.replace("-", " ")}</span>}

@@ -59,8 +59,8 @@ export async function Header() {
               className="drop-shadow-lg h-12 w-auto object-contain"
             />
           ) : (
-            <span className="font-extrabold text-lg uppercase tracking-tight">
-              {siteSettings.siteName || "Our City Action Buffalo"}
+            <span style={{ fontFamily: 'var(--font-heading), Poppins, sans-serif', fontSize: '17px', fontWeight: 400 }}>
+              {siteSettings.siteName || "OUR CITY ACTION BUFFALO"}
             </span>
           )}
         </Link>
@@ -86,7 +86,8 @@ export async function Header() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${style} px-5 py-3 font-bold text-sm uppercase hover:opacity-90 transition-opacity`}
+                  className={`${style} font-extrabold text-sm hover:opacity-90 transition-opacity`}
+                  style={{ padding: '28px 24px', fontSize: '14px' }}
                 >
                   {btn.label}
                 </a>
@@ -94,7 +95,8 @@ export async function Header() {
                 <Link
                   key={i}
                   href={href}
-                  className={`${style} px-5 py-3 font-bold text-sm uppercase hover:opacity-90 transition-opacity`}
+                  className={`${style} font-extrabold text-sm hover:opacity-90 transition-opacity`}
+                  style={{ padding: '28px 24px', fontSize: '14px' }}
                 >
                   {btn.label}
                 </Link>

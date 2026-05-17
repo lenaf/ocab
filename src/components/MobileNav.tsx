@@ -43,7 +43,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
     <>
       <button
         onClick={toggleMenu}
-        className="lg:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+        className="lg:hidden p-2 hover:bg-white/10  transition-colors"
         aria-label="Toggle menu"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -63,7 +63,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b">
             <h2 className="text-xl font-bold text-base-content">Menu</h2>
-            <button onClick={toggleMenu} className="p-2 hover:bg-base-200 rounded-lg transition-colors" aria-label="Close menu">
+            <button onClick={toggleMenu} className="p-2 hover:bg-base-200  transition-colors" aria-label="Close menu">
               <X className="w-6 h-6 text-base-content" />
             </button>
           </div>
@@ -81,7 +81,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                     <li key={i}>
                       <button
                         onClick={() => setOpenDropdown(openDropdown === i ? null : i)}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-base-content hover:bg-base-200 rounded-lg transition-colors font-medium ${
+                        className={`w-full flex items-center justify-between px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium ${
                           active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
                         }`}
                       >
@@ -109,7 +109,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={toggleMenu}
-                                    className="block px-4 py-2 text-base-content/80 hover:bg-base-200/50 rounded-lg transition-colors"
+                                    className="block px-4 py-2 text-base-content/80 hover:bg-base-200/50  transition-colors"
                                   >
                                     {subLabel}
                                   </a>
@@ -117,7 +117,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                                   <Link
                                     href={subHref}
                                     onClick={toggleMenu}
-                                    className={`block px-4 py-2 text-base-content/80 hover:bg-base-200/50 rounded-lg transition-colors ${
+                                    className={`block px-4 py-2 text-base-content/80 hover:bg-base-200/50  transition-colors ${
                                       subActive ? "bg-primary/10 text-primary font-bold border-l-4 border-primary" : ""
                                     }`}
                                   >
@@ -141,7 +141,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={toggleMenu}
-                        className="block px-4 py-3 text-base-content hover:bg-base-200 rounded-lg transition-colors font-medium"
+                        className="block px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium"
                       >
                         {label}
                       </a>
@@ -149,7 +149,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                       <Link
                         href={href}
                         onClick={toggleMenu}
-                        className={`block px-4 py-3 text-base-content hover:bg-base-200 rounded-lg transition-colors font-medium ${
+                        className={`block px-4 py-3 text-base-content hover:bg-base-200  transition-colors font-medium ${
                           active ? "bg-primary/10 text-primary border-l-4 border-primary" : ""
                         }`}
                       >
@@ -181,7 +181,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={toggleMenu}
-                    className={`block w-full text-center ${style} px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity`}
+                    className={`block w-full text-center ${style} px-6 py-3  font-bold hover:opacity-90 transition-opacity`}
                   >
                     {btn.label}
                   </a>
@@ -190,7 +190,7 @@ export function MobileNav({ navigation }: { navigation: Navigation }) {
                     key={i}
                     href={href}
                     onClick={toggleMenu}
-                    className={`block w-full text-center ${style} px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity`}
+                    className={`block w-full text-center ${style} px-6 py-3  font-bold hover:opacity-90 transition-opacity`}
                   >
                     {btn.label}
                   </Link>

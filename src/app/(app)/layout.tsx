@@ -2,27 +2,27 @@ import "@/app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { Source_Sans_3, Barlow_Condensed } from "next/font/google";
+import { Poppins, Nunito_Sans } from "next/font/google";
 
-const sourceSans = Source_Sans_3({
-  weight: ["300", "400", "600", "700"],
+const poppins = Poppins({
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-source-sans",
+  variable: "--font-heading",
 });
 
-const barlowCondensed = Barlow_Condensed({
-  weight: ["700", "800", "900"],
+const nunitoSans = Nunito_Sans({
+  weight: ["300", "400", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-barlow-condensed",
+  variable: "--font-sans",
 });
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${sourceSans.variable} ${barlowCondensed.variable} font-sans`}
+        className={`${poppins.variable} ${nunitoSans.variable}`}
         style={{
-          fontFamily: 'var(--font-source-sans), sans-serif',
+          fontFamily: 'var(--font-sans), "Nunito Sans", sans-serif',
         }}
       >
         <Header />

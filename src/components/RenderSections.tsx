@@ -88,16 +88,10 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 color: getContentClass(section.backgroundColor),
               }}
             >
-              {section.backgroundImage && (
+              {getMediaUrl(section.backgroundImage) && (
                 <>
-                  <img
-                    src={getMediaUrl(section.backgroundImage)}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  {section.darkScrim && (
-                    <div className="absolute inset-0 bg-black/50" />
-                  )}
+                  <img src={getMediaUrl(section.backgroundImage)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                  {section.darkScrim && <div className="absolute inset-0 bg-black/50" />}
                 </>
               )}
               <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,11 +119,11 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 color: getContentClass(section.backgroundColor),
               }}
             >
-              {section.backgroundImage && (
+              {getMediaUrl(section.backgroundImage) && (
                 <>
                   <img
                     src={getMediaUrl(section.backgroundImage)}
-                    alt="Background"
+                    alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   {section.darkScrim && (
@@ -142,10 +136,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   typeof item.image === "object" && item.image?.alt
                     ? item.image.alt
                     : "";
+                const itemUrl = getMediaUrl(item.image);
+                if (!itemUrl) return null;
                 return (
                   <div key={i}>
                     <img
-                      src={getMediaUrl(item.image)}
+                      src={itemUrl}
                       alt={mediaAlt}
                       className="absolute hidden md:block"
                       style={{
@@ -157,7 +153,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       }}
                     />
                     <img
-                      src={getMediaUrl(item.image)}
+                      src={itemUrl}
                       alt={mediaAlt}
                       className="absolute md:hidden"
                       style={{
@@ -191,7 +187,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                     color: getContentClass(slide.backgroundColor),
                   }}
                 >
-                  {slide.backgroundImage && (
+                  {getMediaUrl(slide.backgroundImage) && (
                     <>
                       <img
                         src={getMediaUrl(slide.backgroundImage)}
@@ -237,7 +233,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           className="block h-full"
                         >
                           <div
-                            className="h-[350px] rounded-lg overflow-hidden shadow-lg"
+                            className="h-[350px] overflow-hidden shadow-lg"
                             style={{
                               backgroundColor: getBgClass("primary"),
                               color: getContentClass("primary"),
@@ -296,7 +292,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           className="block h-full"
                         >
                           <div
-                            className="h-[350px] rounded-lg overflow-hidden shadow-lg"
+                            className="h-[350px] overflow-hidden shadow-lg"
                             style={{
                               backgroundColor: getBgClass(
                                 event.backgroundColor || "secondary",
@@ -360,7 +356,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           className="block h-full"
                         >
                           <div
-                            className="h-[350px] rounded-lg overflow-hidden shadow-lg"
+                            className="h-[350px] overflow-hidden shadow-lg"
                             style={{
                               backgroundColor: getBgClass("accent"),
                               color: getContentClass("accent"),
@@ -418,14 +414,14 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                     {campaigns.map((campaign, i) => (
                       <Link key={i} href={`/campaigns/${campaign.slug}`} className="block">
                         <div
-                          className="h-full rounded-lg overflow-hidden shadow-lg p-6"
+                          className="h-full overflow-hidden shadow-lg p-6"
                           style={{
                             backgroundColor: getBgClass("accent"),
                             color: getContentClass("accent"),
                           }}
                         >
                           <div className="flex items-center gap-2 mb-3">
-                            <span className={`inline-block px-2 py-0.5 text-xs font-bold rounded ${
+                            <span className={`inline-block px-2 py-0.5 text-xs font-bold ${
                               campaign.status === "active" ? "bg-green-500 text-white" : "bg-gray-500 text-white"
                             }`}>
                               {campaign.status}
@@ -483,7 +479,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                           <h3 className="font-bold text-lg">{member.name}</h3>
                           {member.role && <p className="text-sm opacity-75">{member.role}</p>}
                           {member.pronouns && <p className="text-xs opacity-50">{member.pronouns}</p>}
-                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs rounded ${
+                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs ${
                             member.type === "staff" ? "bg-primary/10 text-primary" :
                             member.type === "board" ? "bg-accent/10 text-accent" :
                             "bg-base-200 text-base-content"
@@ -524,7 +520,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                         : `/research/${item.slug}`;
                       return (
                         <a key={i} href={href} target={item.accessType === "url" ? "_blank" : undefined} rel="noopener noreferrer" className="flex-shrink-0 w-72 block">
-                          <div className="h-[380px] rounded-lg overflow-hidden shadow-lg bg-white border border-gray-100">
+                          <div className="h-[380px] overflow-hidden shadow-lg bg-white border border-gray-100">
                             {coverUrl && (
                               <img src={coverUrl} alt={item.title} className="w-full h-40 object-cover" />
                             )}
@@ -566,7 +562,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       const coverUrl = book.cover && typeof book.cover === "object" ? (book.cover as Media).url : "";
                       return (
                         <a key={i} href={book.url || "#"} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 w-56 block">
-                          <div className="h-[360px] rounded-lg overflow-hidden shadow-lg bg-white border border-gray-100">
+                          <div className="h-[360px] overflow-hidden shadow-lg bg-white border border-gray-100">
                             {coverUrl ? (
                               <img src={coverUrl} alt={book.title} className="w-full h-52 object-cover" />
                             ) : (
@@ -609,7 +605,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       const imageUrl = product.image && typeof product.image === "object" ? (product.image as Media).url : "";
                       return (
                         <a key={i} href={product.url || section.shopUrl || "#"} target="_blank" rel="noopener noreferrer" className="block group">
-                          <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow group-hover:shadow-lg">
+                          <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow group-hover:shadow-lg">
                             {imageUrl ? (
                               <img src={imageUrl} alt={product.name} className="w-full h-48 object-cover" />
                             ) : (
@@ -620,7 +616,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                               <div className="flex items-center gap-2">
                                 {product.price && <span className="font-bold text-primary">{product.price}</span>}
                                 {product.outOfStock && (
-                                  <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">Out of Stock</span>
+                                  <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5">Out of Stock</span>
                                 )}
                               </div>
                             </div>
@@ -631,7 +627,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   </div>
                   {section.shopUrl && (
                     <div className="mt-8 text-center">
-                      <a href={section.shopUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold rounded-lg hover:opacity-90 transition-opacity">
+                      <a href={section.shopUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
                         View All Products
                       </a>
                     </div>
@@ -795,7 +791,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 color: getContentClass(section.backgroundColor),
               }}
             >
-              {section.backgroundImage && (
+              {getMediaUrl(section.backgroundImage) && (
                 <>
                   <img src={getMediaUrl(section.backgroundImage)} alt="" className="absolute inset-0 w-full h-full object-cover" />
                   {section.darkScrim && <div className="absolute inset-0 bg-black/50" />}

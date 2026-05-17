@@ -26,7 +26,7 @@ export function DesktopNav({ navigation }: { navigation: Navigation }) {
   };
 
   return (
-    <nav className="hidden lg:flex gap-8 text-sm font-bold uppercase tracking-wide items-center">
+    <nav className="hidden lg:flex gap-8 items-center" style={{ fontSize: '15px', fontWeight: 400, color: '#1A1A1A' }}>
       {navigation.navItems?.map((item, i) => {
         const href = getNavHref(item);
         const label = getNavLabel(item);
@@ -63,7 +63,7 @@ export function DesktopNav({ navigation }: { navigation: Navigation }) {
                   </svg>
                 </Link>
               )}
-              <div className="absolute left-0 top-full mt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-white text-base-content shadow-2xl rounded-xl overflow-hidden border border-gray-100 transform scale-95 group-hover:scale-100">
+              <div className="absolute left-0 top-full mt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-white text-base-content shadow-2xl overflow-hidden border border-gray-100 transform scale-95 group-hover:scale-100">
                 <div className="py-2">
                   {item.subItems.map((subItem, j) => {
                     const subHref = getNavHref(subItem);

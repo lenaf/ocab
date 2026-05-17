@@ -5,7 +5,7 @@ export function ProductCard({ item }: { item: Product }) {
 
   return (
     <a href={item.url || "#"} className={`block group ${item.outOfStock ? "opacity-60" : ""}`}>
-      <div className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+      <div className="overflow-hidden hover:shadow-lg transition-shadow">
         {imageUrl && (
           <img src={imageUrl} alt={item.name}
             className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300" />

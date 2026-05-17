@@ -8,7 +8,7 @@ export function EventCard({ item }: { item: Event }) {
 
   return (
     <a href={`/events/${item.slug}`} className="block group h-full">
-      <div className="rounded-lg overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
+      <div className="overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
         {imageUrl && <img src={imageUrl} alt={item.title} className="w-full aspect-video object-cover" />}
         <div className="p-4 flex-1 flex flex-col">
           {date && <p className="text-sm font-semibold text-accent mb-1">{date}</p>}

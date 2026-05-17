@@ -45,12 +45,12 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-3 mb-4">
           {event.eventType && (
-            <span className="inline-block px-3 py-1 text-sm font-bold rounded bg-primary/10 text-primary">
+            <span className="inline-block px-3 py-1 text-sm font-bold bg-primary/10 text-primary">
               {event.eventType.replace('-', ' ')}
             </span>
           )}
           {event.status === 'cancelled' && (
-            <span className="inline-block px-3 py-1 text-sm font-bold rounded bg-red-500 text-white">Cancelled</span>
+            <span className="inline-block px-3 py-1 text-sm font-bold bg-red-500 text-white">Cancelled</span>
           )}
         </div>
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{event.title}</h1>
@@ -70,7 +70,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </div>
 
         {event.location && (event.location.venue || event.location.address) && (
-          <div className="mb-8 p-4 bg-base-200 rounded-lg">
+          <div className="mb-8 p-4 bg-base-200">
             <p className="font-bold">{event.location.venue}</p>
             {event.location.address && <p>{event.location.address}</p>}
             <p>{[event.location.city, event.location.state, event.location.zip].filter(Boolean).join(', ')}</p>
@@ -94,7 +94,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             href={rsvpUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-4 bg-accent text-white font-bold text-lg rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-block px-8 py-4 bg-accent text-white font-bold text-lg hover:opacity-90 transition-opacity"
           >
             {event.ticketed ? 'Get Tickets' : 'RSVP Now'}
           </a>

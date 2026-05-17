@@ -28,7 +28,7 @@ export function ResearchCard({ item }: { item: Research }) {
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="block group h-full"
     >
-      <div className="rounded-lg overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
+      <div className="overflow-hidden border border-base-300 hover:shadow-lg transition-shadow h-full flex flex-col">
         {coverUrl
           ? <img src={coverUrl} alt={item.title} className="w-full aspect-[3/4] object-cover" />
           : (

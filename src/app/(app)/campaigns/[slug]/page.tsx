@@ -45,7 +45,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ slug:
       )}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-3 mb-4">
-          <span className={`inline-block px-3 py-1 text-sm font-bold rounded ${
+          <span className={`inline-block px-3 py-1 text-sm font-bold ${
             campaign.status === 'active' ? 'bg-green-500 text-white' :
             campaign.status === 'upcoming' ? 'bg-blue-500 text-white' :
             'bg-gray-500 text-white'
@@ -72,7 +72,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ slug:
             href={campaign.learnMoreUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-8 px-6 py-3 bg-accent text-white font-bold rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-block mt-8 px-6 py-3 bg-accent text-white font-bold hover:opacity-90 transition-opacity"
           >
             {campaign.callToAction || 'Learn More'}
           </a>

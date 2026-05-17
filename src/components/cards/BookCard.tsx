@@ -7,7 +7,7 @@ export function BookCard({ item }: { item: Book }) {
     <a href={item.url || "#"} className="block group">
       {coverUrl && (
         <img src={coverUrl} alt={item.title}
-          className="w-full aspect-[2/3] object-cover rounded shadow-lg group-hover:shadow-xl transition-shadow" />
+          className="w-full aspect-[2/3] object-cover shadow-lg group-hover:shadow-xl transition-shadow" />
       )}
       <div className="mt-3">
         <h3 className="font-bold text-sm leading-tight">{item.title}</h3>

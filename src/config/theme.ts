@@ -1,40 +1,31 @@
 export const themeConfig = {
   colors: {
-    // Primary: OCAB blue (hero background, section highlights)
-    primary: "#1C86EE",
+    primary: "#3CA0DB",
     primaryContent: "#FFFFFF",
 
-    // Secondary: Deep navy/black (neutral text sections)
     secondary: "#1A1A1A",
     secondaryContent: "#FFFFFF",
 
-    // Accent: OCAB orange (Donate Now button color)
-    accent: "#E05B2B",
+    accent: "#F1562A",
     accentContent: "#FFFFFF",
 
-    // Neutral: Dark charcoal (nav, footers)
     neutral: "#1A1A1A",
     neutralContent: "#FFFFFF",
 
-    // Base colors
     base100: "#FFFFFF",
-    base200: "#F4F4F4",
+    base200: "#FAF9F5",
     base300: "#E8E8E8",
     baseContent: "#1A1A1A",
 
-    // Info: matches primary blue
-    info: "#1C86EE",
+    info: "#3CA0DB",
     infoContent: "#FFFFFF",
 
-    // Success: OCAB amber (Take Action button)
-    success: "#F0A500",
+    success: "#F89825",
     successContent: "#FFFFFF",
 
-    // Warning: orange
-    warning: "#E05B2B",
+    warning: "#F1562A",
     warningContent: "#FFFFFF",
 
-    // Error
     error: "#DC2626",
     errorContent: "#FFFFFF",
   },
