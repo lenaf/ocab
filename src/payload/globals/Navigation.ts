@@ -17,8 +17,14 @@ export const Navigation: GlobalConfig = {
             {
               name: "navItems",
               type: "array",
+              labels: { singular: "Nav Item", plural: "Nav Items" },
               label: false,
-              admin: { initCollapsed: true },
+              admin: {
+                initCollapsed: true,
+                components: {
+                  RowLabel: "@/payload/components/RowLabel#NavItemRowLabel",
+                },
+              },
               fields: [
                 {
                   type: "row",
@@ -72,6 +78,7 @@ export const Navigation: GlobalConfig = {
                     {
                       name: "subItems",
                       type: "array",
+                      labels: { singular: "Sub Item", plural: "Sub Items" },
                       label: false,
                       fields: [
                         {
@@ -126,8 +133,14 @@ export const Navigation: GlobalConfig = {
             {
               name: "ctaButtons",
               type: "array",
+              labels: { singular: "Button", plural: "Buttons" },
               label: false,
               maxRows: 3,
+              admin: {
+                components: {
+                  RowLabel: "@/payload/components/RowLabel#CtaButtonRowLabel",
+                },
+              },
               fields: [
                 {
                   type: "row",

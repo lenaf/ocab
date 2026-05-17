@@ -387,9 +387,6 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       <div className="p-5 flex-1 flex flex-col">
                         <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
                         {item.summary && <p className="text-sm opacity-80 line-clamp-3 flex-1">{item.summary as string}</p>}
-                        <span className="inline-block mt-3 text-sm font-bold underline">
-                          {(item.callToAction as string) || "Learn More"}
-                        </span>
                       </div>
                     </div>,
                     item, i

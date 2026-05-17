@@ -313,13 +313,13 @@ export const Pages: CollectionConfig = {
         {
           slug: "bannerSection",
           labels: { singular: "Banner Section", plural: "Banner Sections" },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [labelField, contentField, designLayoutCollapsible(true)],
         },
         {
           slug: "heroCarouselSection",
           labels: { singular: "Hero Carousel", plural: "Hero Carousels" },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             {
@@ -336,7 +336,7 @@ export const Pages: CollectionConfig = {
             singular: "Full Width Section",
             plural: "Full Width Sections",
           },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             contentField,
@@ -350,7 +350,7 @@ export const Pages: CollectionConfig = {
             singular: "Two Column Section",
             plural: "Two Column Sections",
           },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             {
@@ -390,7 +390,7 @@ export const Pages: CollectionConfig = {
             singular: "Three Column Section",
             plural: "Three Column Sections",
           },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             {
@@ -422,7 +422,7 @@ export const Pages: CollectionConfig = {
         {
           slug: "contactSection",
           labels: { singular: "Contact Section", plural: "Contact Sections" },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             { name: "title", type: "text", label: "Section Title", defaultValue: "Contact Us" },
@@ -437,7 +437,7 @@ export const Pages: CollectionConfig = {
         {
           slug: "contentGridSection",
           labels: { singular: "Content Grid", plural: "Content Grids" },
-          admin: { custom: { useAsTitle: "label" } },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             {
@@ -517,9 +517,7 @@ export const Pages: CollectionConfig = {
         {
           slug: "collectionListSection",
           labels: { singular: "Collection List", plural: "Collection Lists" },
-          admin: {
-            custom: { useAsTitle: "label", description: "Display a dynamic list of items from any collection (events, press, books, merch, campaigns, etc.)" },
-          },
+          admin: { components: { Label: "@/payload/components/RowLabel#SectionRowLabel" } },
           fields: [
             labelField,
             { name: "title", type: "text", label: "Section Title" },
