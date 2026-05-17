@@ -187,12 +187,12 @@ export interface Page {
             backgroundColor?:
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
+            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             backgroundImage?: (string | null) | Media;
             /**
-             * Adds a dark semi-transparent overlay to improve text readability
+             * Semi-transparent overlay to improve text readability over the image
              */
             darkScrim?: boolean | null;
-            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'bannerSection';
@@ -220,7 +220,7 @@ export interface Page {
                     | null;
                   backgroundImage?: (string | null) | Media;
                   /**
-                   * Adds a dark semi-transparent overlay to improve text readability
+                   * Semi-transparent overlay to improve text readability over the image
                    */
                   darkScrim?: boolean | null;
                   id?: string | null;
@@ -249,12 +249,12 @@ export interface Page {
             backgroundColor?:
               | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
               | null;
+            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             backgroundImage?: (string | null) | Media;
             /**
-             * Adds a dark semi-transparent overlay to improve text readability
+             * Semi-transparent overlay to improve text readability over the image
              */
             darkScrim?: boolean | null;
-            padding?: ('none' | 'small' | 'standard' | 'large') | null;
             /**
              * Add PNG images that overlay the section background. Position and resize them after adding.
              */
@@ -304,7 +304,7 @@ export interface Page {
                 | null;
               backgroundImage?: (string | null) | Media;
               /**
-               * Adds a dark semi-transparent overlay to improve text readability
+               * Semi-transparent overlay to improve text readability over the image
                */
               darkScrim?: boolean | null;
             };
@@ -329,7 +329,7 @@ export interface Page {
                 | null;
               backgroundImage?: (string | null) | Media;
               /**
-               * Adds a dark semi-transparent overlay to improve text readability
+               * Semi-transparent overlay to improve text readability over the image
                */
               darkScrim?: boolean | null;
             };
@@ -360,7 +360,7 @@ export interface Page {
                 | null;
               backgroundImage?: (string | null) | Media;
               /**
-               * Adds a dark semi-transparent overlay to improve text readability
+               * Semi-transparent overlay to improve text readability over the image
                */
               darkScrim?: boolean | null;
             };
@@ -385,7 +385,7 @@ export interface Page {
                 | null;
               backgroundImage?: (string | null) | Media;
               /**
-               * Adds a dark semi-transparent overlay to improve text readability
+               * Semi-transparent overlay to improve text readability over the image
                */
               darkScrim?: boolean | null;
             };
@@ -410,7 +410,7 @@ export interface Page {
                 | null;
               backgroundImage?: (string | null) | Media;
               /**
-               * Adds a dark semi-transparent overlay to improve text readability
+               * Semi-transparent overlay to improve text readability over the image
                */
               darkScrim?: boolean | null;
             };
@@ -445,7 +445,7 @@ export interface Page {
               | null;
             backgroundImage?: (string | null) | Media;
             /**
-             * Adds a dark semi-transparent overlay to improve text readability
+             * Semi-transparent overlay to improve text readability over the image
              */
             darkScrim?: boolean | null;
             id?: string | null;
@@ -480,7 +480,7 @@ export interface Page {
                     | null;
                   backgroundImage?: (string | null) | Media;
                   /**
-                   * Adds a dark semi-transparent overlay to improve text readability
+                   * Semi-transparent overlay to improve text readability over the image
                    */
                   darkScrim?: boolean | null;
                   id?: string | null;
@@ -555,7 +555,7 @@ export interface Page {
               | null;
             backgroundImage?: (string | null) | Media;
             /**
-             * Adds a dark semi-transparent overlay to improve text readability
+             * Semi-transparent overlay to improve text readability over the image
              */
             darkScrim?: boolean | null;
             id?: string | null;
@@ -1082,9 +1082,9 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               content?: T;
               backgroundColor?: T;
+              padding?: T;
               backgroundImage?: T;
               darkScrim?: T;
-              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1108,9 +1108,9 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               content?: T;
               backgroundColor?: T;
+              padding?: T;
               backgroundImage?: T;
               darkScrim?: T;
-              padding?: T;
               floatingItems?:
                 | T
                 | {

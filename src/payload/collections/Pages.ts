@@ -76,42 +76,49 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
             },
           },
         },
+        ...(includeMaxWidth
+          ? [
+              {
+                name: "padding",
+                type: "select" as const,
+                label: "Padding",
+                options: [
+                  { label: "None", value: "none" },
+                  { label: "Small", value: "small" },
+                  { label: "Standard", value: "standard" },
+                  { label: "Large", value: "large" },
+                ],
+                defaultValue: "standard",
+                admin: { width: "50%" },
+              },
+            ]
+          : []),
+      ],
+    },
+    {
+      type: "collapsible",
+      label: "Background Image",
+      admin: { initCollapsed: true },
+      fields: [
         {
           name: "backgroundImage",
           type: "upload",
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           relationTo: "media" as any,
-          label: "Background Image",
-          admin: { width: "50%" },
+          label: false,
+        },
+        {
+          name: "darkScrim",
+          type: "checkbox",
+          label: "Dark Overlay",
+          defaultValue: false,
+          admin: {
+            description: "Semi-transparent overlay to improve text readability over the image",
+            condition: (_, s) => !!s?.backgroundImage,
+          },
         },
       ],
     },
-    {
-      name: "darkScrim",
-      type: "checkbox",
-      label: "Dark Overlay on Background Image",
-      defaultValue: false,
-      admin: {
-        description: "Adds a dark semi-transparent overlay to improve text readability",
-      },
-    },
-    ...(includeMaxWidth
-      ? [
-          {
-            name: "padding",
-            type: "select" as const,
-            label: "Padding",
-            options: [
-              { label: "None", value: "none" },
-              { label: "Small", value: "small" },
-              { label: "Standard", value: "standard" },
-              { label: "Large", value: "large" },
-            ],
-            defaultValue: "standard",
-            admin: { width: "50%" },
-          },
-        ]
-      : []),
   ],
 });
 
