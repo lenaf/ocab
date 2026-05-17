@@ -69,7 +69,7 @@ export function DesktopNav({ navigation, variant = "light" }: { navigation: Navi
           return (
             <div
               key={i}
-              className="relative"
+              className="relative h-full"
               onMouseEnter={() => openMenu(i)}
               onMouseLeave={closeMenu}
             >
@@ -114,7 +114,7 @@ export function DesktopNav({ navigation, variant = "light" }: { navigation: Navi
 
               {isOpen && (
                 <div
-                  className="absolute left-0 top-full mt-2 w-64 bg-neutral border border-white/10 shadow-[0_8px_16px_rgba(0,0,0,0.3)]"
+                  className="absolute left-0 top-full w-64 bg-neutral border border-white/10 shadow-[0_8px_16px_rgba(0,0,0,0.3)]"
                   onMouseEnter={() => openMenu(i)}
                   onMouseLeave={closeMenu}
                 >
