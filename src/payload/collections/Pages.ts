@@ -1,5 +1,45 @@
 import type { CollectionConfig, Field } from "payload";
 
+const linkFields = (prefix: string, label: string): Field[] => [
+  {
+    name: `${prefix}Label`,
+    type: "text",
+    label: `${label} Text`,
+    admin: { width: "30%" },
+  },
+  {
+    name: `${prefix}LinkType`,
+    type: "select",
+    label: "Links to",
+    options: [
+      { label: "A page on this site", value: "page" },
+      { label: "An external URL", value: "url" },
+    ],
+    defaultValue: "url",
+    admin: { width: "25%" },
+  },
+  {
+    name: `${prefix}Page`,
+    type: "relationship",
+    relationTo: "pages" as never,
+    label: "Page",
+    admin: {
+      width: "45%",
+      condition: (_, s) => s?.[`${prefix}LinkType`] === "page",
+    },
+  },
+  {
+    name: `${prefix}Url`,
+    type: "text",
+    label: "URL",
+    admin: {
+      width: "45%",
+      condition: (_, s) => s?.[`${prefix}LinkType`] !== "page",
+      placeholder: "https://...",
+    },
+  },
+];
+
 const contentField: Field = {
   name: "content",
   type: "richText",
@@ -188,6 +228,51 @@ export const Pages: CollectionConfig = {
     drafts: true,
   },
   hooks: {
+    beforeDelete: [
+      async ({ id, req }) => {
+        const pageId = typeof id === "string" ? id : String(id);
+        const reasons: string[] = [];
+
+        // Check navigation global (nav items, sub-items, CTA buttons)
+        const navigation = await req.payload.findGlobal({ slug: "navigation" as never, depth: 0 }) as { navItems?: Record<string, unknown>[]; ctaButtons?: Record<string, unknown>[] };
+        const inNav = navigation.navItems?.some(
+          (item: Record<string, unknown>) =>
+            item.page === pageId ||
+            (item.subItems as Record<string, unknown>[] | undefined)?.some(
+              (sub: Record<string, unknown>) => sub.page === pageId,
+            ),
+        );
+        if (inNav) reasons.push("Navigation links");
+
+        const inCta = navigation.ctaButtons?.some(
+          (btn: Record<string, unknown>) => btn.page === pageId,
+        );
+        if (inCta) reasons.push("CTA buttons");
+
+        // Check other pages that reference this page via link fields in sections
+        const allPages = await req.payload.find({
+          collection: "pages" as never,
+          depth: 0,
+          limit: 0,
+          where: { id: { not_equals: pageId } },
+        });
+        const linkedFromPages = allPages.docs.some((p: Record<string, unknown>) => {
+          const sections = p.sections as Record<string, unknown>[] | undefined;
+          if (!sections) return false;
+          return sections.some((s) => {
+            const vals = Object.values(s);
+            return vals.includes(pageId);
+          });
+        });
+        if (linkedFromPages) reasons.push("links in other page sections");
+
+        if (reasons.length > 0) {
+          throw new Error(
+            `Cannot delete: this page is referenced in ${reasons.join(", ")}. Remove those references first.`,
+          );
+        }
+      },
+    ],
     afterChange: [
       async ({ doc }) => {
         if (doc.slug) {
@@ -336,7 +421,10 @@ export const Pages: CollectionConfig = {
             labelField,
             { name: "title", type: "text", label: "Section Title" },
             { name: "limit", type: "number", label: "Max Items", defaultValue: 12, min: 1, max: 24 },
-            { name: "shopUrl", type: "text", label: "External Shop URL", admin: { description: "Link to full external store (shown as View All)" } },
+            {
+              type: "row",
+              fields: linkFields("shop", "Shop Link"),
+            },
           ],
         },
         {
@@ -596,8 +684,10 @@ export const Pages: CollectionConfig = {
               defaultValue: true,
               admin: { condition: (_, s) => s?.collection === "events" },
             },
-            { name: "viewAllLabel", type: "text", label: '"View All" Button Label', admin: { placeholder: "e.g. View More, See All Events" } },
-            { name: "viewAllUrl", type: "text", label: '"View All" Link URL', admin: { placeholder: "e.g. /events, /press" } },
+            {
+              type: "row",
+              fields: linkFields("viewAll", "View All"),
+            },
             { name: "emptyMessage", type: "text", label: "Empty State Message", defaultValue: "Nothing to show right now. Check back soon!" },
             {
               name: "pinnedItems",

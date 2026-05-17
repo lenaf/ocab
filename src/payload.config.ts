@@ -136,8 +136,31 @@ export default buildConfig({
               {
                 type: "row",
                 fields: [
-                  { name: "text", type: "text", required: true, label: "Button Text", admin: { width: "40%" } },
-                  { name: "url", type: "text", required: true, label: "Link URL", admin: { width: "40%" } },
+                  { name: "text", type: "text", required: true, label: "Button Text", admin: { width: "30%" } },
+                  {
+                    name: "linkType",
+                    type: "select",
+                    label: "Links to",
+                    defaultValue: "url",
+                    options: [
+                      { label: "A page on this site", value: "page" },
+                      { label: "An external URL", value: "url" },
+                    ],
+                    admin: { width: "20%" },
+                  },
+                  {
+                    name: "page",
+                    type: "relationship",
+                    relationTo: "pages" as never,
+                    label: "Page",
+                    admin: { width: "30%", condition: (_, s) => s?.linkType === "page" },
+                  },
+                  {
+                    name: "url",
+                    type: "text",
+                    label: "URL",
+                    admin: { width: "30%", condition: (_, s) => s?.linkType !== "page", placeholder: "https://..." },
+                  },
                   {
                     name: "size",
                     type: "select",

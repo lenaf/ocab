@@ -20,6 +20,24 @@ import type {
 
 type Section = NonNullable<Page["sections"]>[number];
 
+function resolveLinkHref(section: Record<string, unknown>, prefix: string): string | null {
+  const linkType = section[`${prefix}LinkType`];
+  if (linkType === "page") {
+    const page = section[`${prefix}Page`];
+    if (typeof page === "object" && page && (page as Record<string, unknown>).slug) {
+      const slug = (page as Record<string, unknown>).slug as string;
+      return `/${slug === "home" ? "" : slug}`;
+    }
+    return null;
+  }
+  const url = section[`${prefix}Url`] as string | undefined;
+  return url || null;
+}
+
+function isExternalLink(section: Record<string, unknown>, prefix: string): boolean {
+  return section[`${prefix}LinkType`] !== "page";
+}
+
 export function RenderSections({ sections }: { sections: Section[] }) {
   if (!sections || sections.length === 0) {
     return <div>No sections to display</div>;
@@ -604,7 +622,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                     {products.map((product, i) => {
                       const imageUrl = product.image && typeof product.image === "object" ? (product.image as Media).url : "";
                       return (
-                        <a key={i} href={product.url || section.shopUrl || "#"} target="_blank" rel="noopener noreferrer" className="block group">
+                        <a key={i} href={product.url || resolveLinkHref(section as unknown as Record<string, unknown>, "shop") || "#"} target="_blank" rel="noopener noreferrer" className="block group">
                           <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow group-hover:shadow-lg">
                             {imageUrl ? (
                               <img src={imageUrl} alt={product.name} className="w-full h-48 object-cover" />
@@ -625,13 +643,26 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                       );
                     })}
                   </div>
-                  {section.shopUrl && (
-                    <div className="mt-8 text-center">
-                      <a href={section.shopUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
-                        View All Products
-                      </a>
-                    </div>
-                  )}
+                  {(() => {
+                    const sectionData = section as unknown as Record<string, unknown>;
+                    const shopHref = resolveLinkHref(sectionData, "shop");
+                    const shopLabel = sectionData.shopLabel as string || "View All Products";
+                    if (!shopHref) return null;
+                    const external = isExternalLink(sectionData, "shop");
+                    return (
+                      <div className="mt-8 text-center">
+                        {external ? (
+                          <a href={shopHref} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                            {shopLabel}
+                          </a>
+                        ) : (
+                          <Link href={shopHref} className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                            {shopLabel}
+                          </Link>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               </section>
             );

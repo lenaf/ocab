@@ -314,9 +314,9 @@ export interface Page {
             label?: string | null;
             title?: string | null;
             limit?: number | null;
-            /**
-             * Link to full external store (shown as View All)
-             */
+            shopLabel?: string | null;
+            shopLinkType?: ('page' | 'url') | null;
+            shopPage?: (string | null) | Page;
             shopUrl?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -627,6 +627,8 @@ export interface Page {
             filterFeatured?: boolean | null;
             upcomingOnly?: boolean | null;
             viewAllLabel?: string | null;
+            viewAllLinkType?: ('page' | 'url') | null;
+            viewAllPage?: (string | null) | Page;
             viewAllUrl?: string | null;
             emptyMessage?: string | null;
             /**
@@ -1362,6 +1364,9 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               title?: T;
               limit?: T;
+              shopLabel?: T;
+              shopLinkType?: T;
+              shopPage?: T;
               shopUrl?: T;
               id?: T;
               blockName?: T;
@@ -1508,6 +1513,8 @@ export interface PagesSelect<T extends boolean = true> {
               filterFeatured?: T;
               upcomingOnly?: T;
               viewAllLabel?: T;
+              viewAllLinkType?: T;
+              viewAllPage?: T;
               viewAllUrl?: T;
               emptyMessage?: T;
               pinnedItems?:

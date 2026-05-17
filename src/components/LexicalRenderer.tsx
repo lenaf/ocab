@@ -49,9 +49,16 @@ export function LexicalRenderer({
       );
     }
     if (node.type === "block" && node.fields?.blockType === "button") {
-      const { text, url, style = "btn-primary", size = "md" } = node.fields;
+      const { text, linkType, page, url, style = "btn-primary", size = "md" } = node.fields;
+      const isExternal = linkType === "url";
+      let href: string | undefined;
+      if (isExternal) {
+        href = url || undefined;
+      } else if (typeof page === "object" && page?.slug) {
+        href = `/${page.slug === "home" ? "" : page.slug}`;
+      }
       return (
-        <Button key={i} classNames={style} size={size} href={url}>
+        <Button key={i} classNames={style} size={size} href={href} isExternal={isExternal}>
           {text}
         </Button>
       );
