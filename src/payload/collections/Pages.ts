@@ -115,18 +115,6 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
   ],
 });
 
-const carouselSectionFields = (itemType: string): Field[] => [
-  { name: "title", type: "text", label: "Section Title" },
-  {
-    name: "limit",
-    type: "number",
-    label: `Number of ${itemType}`,
-    defaultValue: 6,
-    min: 1,
-    max: 20,
-  },
-];
-
 const positionGroupField = (name: string): Field => ({
   name,
   type: "group",
@@ -339,91 +327,6 @@ export const Pages: CollectionConfig = {
               type: "array",
               label: "Slides",
               fields: [contentField, designLayoutCollapsible()],
-            },
-          ],
-        },
-        {
-          slug: "blogPostsCarouselSection",
-          labels: {
-            singular: "Blog Posts Carousel (deprecated)",
-            plural: "Blog Posts Carousels",
-          },
-          fields: [labelField, ...carouselSectionFields("Posts")],
-        },
-        {
-          slug: "eventsCarouselSection",
-          labels: { singular: "Events Carousel (deprecated)", plural: "Events Carousels" },
-          fields: [labelField, ...carouselSectionFields("Events")],
-        },
-        {
-          slug: "pressCarouselSection",
-          labels: { singular: "Press Carousel (deprecated)", plural: "Press Carousels" },
-          fields: [labelField, ...carouselSectionFields("Articles")],
-        },
-        {
-          slug: "campaignsSection",
-          labels: { singular: "Campaigns Section", plural: "Campaigns Sections" },
-          admin: { custom: { useAsTitle: "label" } },
-          fields: [
-            labelField,
-            { name: "title", type: "text", label: "Section Title" },
-            { name: "limit", type: "number", label: "Max Items", defaultValue: 6, min: 1, max: 20 },
-            {
-              name: "filter",
-              type: "select",
-              label: "Filter by Status",
-              defaultValue: "all",
-              options: [
-                { label: "All", value: "all" },
-                { label: "Active Only", value: "active" },
-                { label: "Past Only", value: "past" },
-              ],
-            },
-          ],
-        },
-        {
-          slug: "teamMembersSection",
-          labels: { singular: "Team Members Section", plural: "Team Members Sections" },
-          admin: { custom: { useAsTitle: "label" } },
-          fields: [
-            labelField,
-            { name: "title", type: "text", label: "Section Title" },
-            {
-              name: "filter",
-              type: "select",
-              label: "Filter by Type",
-              defaultValue: "all",
-              options: [
-                { label: "All", value: "all" },
-                { label: "Staff Only", value: "staff" },
-                { label: "Board Only", value: "board" },
-              ],
-            },
-          ],
-        },
-        {
-          slug: "researchSection",
-          labels: { singular: "Research Section", plural: "Research Sections" },
-          admin: { custom: { useAsTitle: "label" } },
-          fields: [labelField, ...carouselSectionFields("Publications")],
-        },
-        {
-          slug: "booksSection",
-          labels: { singular: "Bookshelf Section", plural: "Bookshelf Sections" },
-          admin: { custom: { useAsTitle: "label" } },
-          fields: [labelField, ...carouselSectionFields("Books")],
-        },
-        {
-          slug: "productsGridSection",
-          labels: { singular: "Products / Shop Section", plural: "Products Sections" },
-          admin: { custom: { useAsTitle: "label" } },
-          fields: [
-            labelField,
-            { name: "title", type: "text", label: "Section Title" },
-            { name: "limit", type: "number", label: "Max Items", defaultValue: 12, min: 1, max: 24 },
-            {
-              type: "row",
-              fields: linkFields("shop", "Shop Link"),
             },
           ],
         },

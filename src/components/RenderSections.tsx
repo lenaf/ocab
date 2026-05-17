@@ -7,14 +7,6 @@ import { themeConfig } from "@/config/theme";
 import { useState, useEffect } from "react";
 import type {
   Page,
-  BlogPost,
-  Event,
-  PressArticle,
-  Campaign,
-  TeamMember,
-  Research,
-  Book,
-  Product,
   Media,
 } from "@/payload-types";
 
@@ -228,436 +220,365 @@ export function RenderSections({ sections }: { sections: Section[] }) {
           );
         }
 
-        if (section.blockType === "blogPostsCarouselSection") {
-          const BlogPostsCarousel = () => {
-            const [posts, setPosts] = useState<BlogPost[]>([]);
+
+        if (section.blockType === "collectionListSection") {
+          const CollectionList = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const [items, setItems] = useState<Record<string, any>[]>([]);
+            const sectionData = section as unknown as Record<string, unknown>;
+            const dataSource = sectionData.dataSource as string;
+            const layout = (sectionData.layout as string) || "grid";
+            const columns = (sectionData.columns as string) || "3";
+            const limit = (sectionData.limit as number) || 6;
+            const sortField = (sectionData.sortField as string) || "createdAt_desc";
+            const filterFeatured = sectionData.filterFeatured as boolean;
+            const upcomingOnly = sectionData.upcomingOnly as boolean;
+            const title = sectionData.title as string | undefined;
+            const subtitle = sectionData.subtitle as string | undefined;
+            const emptyMessage = (sectionData.emptyMessage as string) || "Nothing to show right now. Check back soon!";
+
             useEffect(() => {
-              fetch(`/api/blog-posts?limit=${section.limit || 6}`)
-                .then((res) => res.json())
-                .then((data) => setPosts(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
-                  )}
-                  <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    {posts.map((post, i) => (
-                      <div key={i} className="flex-shrink-0 w-80">
-                        <Link
-                          href={`/blog/${post.slug}`}
-                          className="block h-full"
-                        >
-                          <div
-                            className="h-[350px] overflow-hidden shadow-lg"
-                            style={{
-                              backgroundColor: getBgClass("primary"),
-                              color: getContentClass("primary"),
-                            }}
-                          >
-                            <div className="p-6 h-full flex flex-col justify-between">
-                              <div>
-                                <div className="text-sm font-semibold mb-2">
-                                  {post.category}
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3">
-                                  {post.title}
-                                </h3>
-                                <p className="text-sm opacity-90">
-                                  {post.excerpt}
-                                </p>
-                              </div>
-                              <div className="text-sm">
-                                {new Date(
-                                  post.publishedAt,
-                                ).toLocaleDateString()}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <BlogPostsCarousel key={index} />;
-        }
-
-        if (section.blockType === "eventsCarouselSection") {
-          const EventsCarousel = () => {
-            const [events, setEvents] = useState<Event[]>([]);
-            useEffect(() => {
-              fetch(`/api/events?limit=${section.limit || 6}`)
-                .then((res) => res.json())
-                .then((data) => setEvents(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
-                  )}
-                  <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    {events.map((event, i) => (
-                      <div key={i} className="flex-shrink-0 w-80">
-                        <Link
-                          href={`/events/${event.slug}`}
-                          className="block h-full"
-                        >
-                          <div
-                            className="h-[350px] overflow-hidden shadow-lg"
-                            style={{
-                              backgroundColor: getBgClass(
-                                event.backgroundColor || "secondary",
-                              ),
-                              color: getContentClass(
-                                event.backgroundColor || "secondary",
-                              ),
-                            }}
-                          >
-                            <div className="p-6 h-full flex flex-col justify-between">
-                              <div>
-                                <h3 className="text-2xl font-bold mb-3">
-                                  {event.title}
-                                </h3>
-                                <p className="text-sm mb-2">
-                                  {event.location && [
-                                    event.location.venue,
-                                    event.location.city,
-                                    event.location.state
-                                  ].filter(Boolean).join(', ')}
-                                </p>
-                              </div>
-                              <div className="text-sm">
-                                {new Date(event.startDate).toLocaleDateString()}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <EventsCarousel key={index} />;
-        }
-
-        if (section.blockType === "pressCarouselSection") {
-          const PressCarousel = () => {
-            const [articles, setArticles] = useState<PressArticle[]>([]);
-            useEffect(() => {
-              fetch(`/api/press-articles?limit=${section.limit || 6}`)
-                .then((res) => res.json())
-                .then((data) => setArticles(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
-                  )}
-                  <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    {articles.map((article, i) => (
-                      <div key={i} className="flex-shrink-0 w-80">
-                        <a
-                          href={article.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block h-full"
-                        >
-                          <div
-                            className="h-[350px] overflow-hidden shadow-lg"
-                            style={{
-                              backgroundColor: getBgClass("accent"),
-                              color: getContentClass("accent"),
-                            }}
-                          >
-                            <div className="p-6 h-full flex flex-col justify-between">
-                              <div>
-                                <div className="text-sm font-semibold mb-2">
-                                  {article.publication}
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3">
-                                  {article.title}
-                                </h3>
-                                <p className="text-sm opacity-90">
-                                  {article.excerpt}
-                                </p>
-                              </div>
-                              <div className="text-sm">
-                                {new Date(
-                                  article.publishedAt,
-                                ).toLocaleDateString()}
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <PressCarousel key={index} />;
-        }
-
-        if (section.blockType === "campaignsSection") {
-          const CampaignsGrid = () => {
-            const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-            useEffect(() => {
-              const filterParam = section.filter && section.filter !== "all"
-                ? `&where[status][equals]=${section.filter}`
-                : "";
-              fetch(`/api/campaigns?limit=${section.limit || 6}&sort=order${filterParam}`)
-                .then((res) => res.json())
-                .then((data) => setCampaigns(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
-                  )}
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {campaigns.map((campaign, i) => (
-                      <Link key={i} href={`/campaigns/${campaign.slug}`} className="block">
-                        <div
-                          className="h-full overflow-hidden shadow-lg p-6"
-                          style={{
-                            backgroundColor: getBgClass("accent"),
-                            color: getContentClass("accent"),
-                          }}
-                        >
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className={`inline-block px-2 py-0.5 text-xs font-bold ${
-                              campaign.status === "active" ? "bg-green-500 text-white" : "bg-gray-500 text-white"
-                            }`}>
-                              {campaign.status}
-                            </span>
-                            {campaign.year && (
-                              <span className="text-sm opacity-75">{campaign.year}</span>
-                            )}
-                          </div>
-                          <h3 className="text-xl font-bold mb-2">{campaign.title}</h3>
-                          <p className="text-sm opacity-90">{campaign.summary}</p>
-                          <span className="inline-block mt-4 text-sm font-bold underline">
-                            {campaign.callToAction || "Learn More"}
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <CampaignsGrid key={index} />;
-        }
-
-        if (section.blockType === "teamMembersSection") {
-          const TeamGrid = () => {
-            const [members, setMembers] = useState<TeamMember[]>([]);
-            useEffect(() => {
-              const filterParam = section.filter && section.filter !== "all"
-                ? `&where[type][equals]=${section.filter}`
-                : "";
-              fetch(`/api/team-members?sort=order${filterParam}`)
-                .then((res) => res.json())
-                .then((data) => setMembers(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
-                  )}
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {members.map((member, i) => {
-                      const photoUrl = member.photo && typeof member.photo === "object" ? (member.photo as Media).url : "";
-                      return (
-                        <div key={i} className="text-center">
-                          {photoUrl ? (
-                            <img src={photoUrl} alt={member.name} className="w-32 h-32 rounded-full object-cover mx-auto mb-3" />
-                          ) : (
-                            <div className="w-32 h-32 rounded-full bg-base-200 mx-auto mb-3 flex items-center justify-center text-3xl font-bold opacity-40">
-                              {member.name.charAt(0)}
-                            </div>
-                          )}
-                          <h3 className="font-bold text-lg">{member.name}</h3>
-                          {member.role && <p className="text-sm opacity-75">{member.role}</p>}
-                          {member.pronouns && <p className="text-xs opacity-50">{member.pronouns}</p>}
-                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs ${
-                            member.type === "staff" ? "bg-primary/10 text-primary" :
-                            member.type === "board" ? "bg-accent/10 text-accent" :
-                            "bg-base-200 text-base-content"
-                          }`}>
-                            {member.type}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <TeamGrid key={index} />;
-        }
-
-        if (section.blockType === "researchSection") {
-          const ResearchGrid = () => {
-            const [items, setItems] = useState<Research[]>([]);
-            useEffect(() => {
-              fetch(`/api/research?limit=${section.limit || 6}&sort=-publishedAt`)
+              if (!dataSource) return;
+              const [field, dir] = sortField.split("_");
+              const sortParam = dir === "desc" ? `-${field}` : field;
+              let whereParams = "";
+              if (filterFeatured) whereParams += "&where[featured][equals]=true";
+              if (upcomingOnly && dataSource === "events") {
+                whereParams += `&where[startDate][greater_than]=${new Date().toISOString()}`;
+              }
+              fetch(`/api/${dataSource}?limit=${limit}&sort=${sortParam}${whereParams}&depth=1`)
                 .then((res) => res.json())
                 .then((data) => setItems(data.docs || []));
-            }, []);
+            }, [dataSource, limit, sortField, filterFeatured, upcomingOnly]);
+
+            const getItemImage = (item: Record<string, any>): string => {
+              const imgFields = ["image", "coverImage", "cover", "photo"];
+              for (const f of imgFields) {
+                const media = item[f];
+                if (media && typeof media === "object" && (media as Record<string, unknown>).url) {
+                  return (media as Record<string, unknown>).url as string;
+                }
+              }
+              return "";
+            };
+
+            const getItemTitle = (item: Record<string, any>): string => {
+              return (item.title || item.name || "") as string;
+            };
+
+            const getItemHref = (item: Record<string, any>): string | null => {
+              if (item.slug && dataSource) {
+                const pathMap: Record<string, string> = {
+                  "blog-posts": "/blog",
+                  "press-articles": "/press",
+                  events: "/events",
+                  campaigns: "/campaigns",
+                  research: "/research",
+                };
+                const base = pathMap[dataSource];
+                if (base) return `${base}/${item.slug}`;
+              }
+              if (item.url) return item.url as string;
+              if (item.externalUrl) return item.externalUrl as string;
+              return null;
+            };
+
+            const getItemSubtitle = (item: Record<string, any>): string => {
+              return (item.excerpt || item.summary || item.role || item.author || item.publication || "") as string;
+            };
+
+            const getItemMeta = (item: Record<string, any>): string => {
+              if (item.publishedAt) return new Date(item.publishedAt as string).toLocaleDateString();
+              if (item.startDate) return new Date(item.startDate as string).toLocaleDateString();
+              if (item.year) return String(item.year);
+              if (item.category) return item.category as string;
+              if (item.type) return (item.type as string).replace("-", " ");
+              return "";
+            };
+
+            const isItemExternal = (item: Record<string, any>): boolean => {
+              if (item.accessType === "url") return true;
+              if (dataSource === "press-articles" || dataSource === "books" || dataSource === "products") return true;
+              return false;
+            };
+
+            const colsClass: Record<string, string> = {
+              "2": "md:grid-cols-2",
+              "3": "md:grid-cols-2 lg:grid-cols-3",
+              "4": "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+            };
+
+            const wrapWithLink = (content: React.ReactNode, item: Record<string, any>, i: number) => {
+              const href = getItemHref(item);
+              const external = isItemExternal(item);
+              if (!href) return <div key={i}>{content}</div>;
+              if (external) return <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="block h-full">{content}</a>;
+              return <Link key={i} href={href} className="block h-full">{content}</Link>;
+            };
+
+            const renderCard = (item: Record<string, any>, i: number) => {
+              switch (dataSource) {
+                case "events": {
+                  const imageUrl = getItemImage(item);
+                  const startDate = item.startDate ? new Date(item.startDate as string) : null;
+                  const location = item.location as Record<string, any> | undefined;
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        {startDate && (
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs font-bold bg-primary/10 text-primary px-2 py-0.5">
+                              {startDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                            </span>
+                            {item.eventType && <span className="text-xs opacity-60 capitalize">{(item.eventType as string).replace("-", " ")}</span>}
+                          </div>
+                        )}
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
+                        {location?.venue && <p className="text-sm opacity-60">{location.venue as string}</p>}
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "blog-posts": {
+                  const imageUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        <div className="flex items-center gap-2 mb-2">
+                          {item.category && <span className="text-xs font-bold uppercase text-primary">{item.category as string}</span>}
+                          {item.publishedAt && <span className="text-xs opacity-50">{new Date(item.publishedAt as string).toLocaleDateString()}</span>}
+                        </div>
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
+                        {item.excerpt && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.excerpt as string}</p>}
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "press-articles": {
+                  const imageUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        <div className="flex items-center gap-2 mb-2">
+                          {item.publication && <span className="text-xs font-bold text-accent">{item.publication as string}</span>}
+                          {item.type && <span className="text-xs opacity-50 capitalize">{(item.type as string).replace("-", " ")}</span>}
+                        </div>
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
+                        {item.excerpt && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.excerpt as string}</p>}
+                        {item.publishedAt && <p className="text-xs opacity-50 mt-auto pt-2">{new Date(item.publishedAt as string).toLocaleDateString()}</p>}
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "campaigns": {
+                  const imageUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-neutral text-neutral-content transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
+                        {item.summary && <p className="text-sm opacity-80 line-clamp-3 flex-1">{item.summary as string}</p>}
+                        <span className="inline-block mt-3 text-sm font-bold underline">
+                          {(item.callToAction as string) || "Learn More"}
+                        </span>
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "team-members": {
+                  const photoUrl = getItemImage(item);
+                  return (
+                    <div key={i} className="text-center">
+                      {photoUrl ? (
+                        <img src={photoUrl} alt={item.name as string} className="w-32 h-32 rounded-full object-cover mx-auto mb-3" />
+                      ) : (
+                        <div className="w-32 h-32 rounded-full bg-base-200 mx-auto mb-3 flex items-center justify-center text-3xl font-bold opacity-40">
+                          {(item.name as string)?.charAt(0)}
+                        </div>
+                      )}
+                      <h3 className="font-bold text-lg">{item.name as string}</h3>
+                      {item.role && <p className="text-sm opacity-75">{item.role as string}</p>}
+                      {item.pronouns && <p className="text-xs opacity-50">{item.pronouns as string}</p>}
+                    </div>
+                  );
+                }
+
+                case "books": {
+                  const coverUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {coverUrl ? (
+                        <img src={coverUrl} alt={item.title as string} className="w-full h-52 object-cover" />
+                      ) : (
+                        <div className="w-full h-52 bg-primary/10 flex items-center justify-center text-4xl">📚</div>
+                      )}
+                      <div className="p-4 flex-1">
+                        <h3 className="font-bold text-sm mb-1 line-clamp-2">{item.title as string}</h3>
+                        {item.author && <p className="text-xs opacity-75">{item.author as string}</p>}
+                        {item.year && <p className="text-xs opacity-50">{item.year as string}</p>}
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "products": {
+                  const imageUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl ? (
+                        <img src={imageUrl} alt={item.name as string} className="w-full h-48 object-cover" />
+                      ) : (
+                        <div className="w-full h-48 bg-base-200 flex items-center justify-center text-3xl">🛍️</div>
+                      )}
+                      <div className="p-4 flex-1">
+                        <h3 className="font-bold text-sm mb-1">{item.name as string}</h3>
+                        <div className="flex items-center gap-2">
+                          {item.price && <span className="font-bold text-primary">{item.price as string}</span>}
+                          {item.outOfStock && <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5">Out of Stock</span>}
+                        </div>
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                case "research": {
+                  const coverUrl = getItemImage(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {coverUrl && <img src={coverUrl} alt={item.title as string} className="w-full h-40 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        {item.type && <span className="text-xs font-bold uppercase text-primary mb-1">{(item.type as string).replace("-", " ")}</span>}
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
+                        {item.summary && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.summary as string}</p>}
+                        <span className="inline-block mt-3 text-sm font-bold text-primary">{(item.ctaLabel as string) || "Read More"} →</span>
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+
+                default: {
+                  const imageUrl = getItemImage(item);
+                  const itemTitle = getItemTitle(item);
+                  const sub = getItemSubtitle(item);
+                  const meta = getItemMeta(item);
+                  return wrapWithLink(
+                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
+                      {imageUrl && <img src={imageUrl} alt={itemTitle} className="w-full h-48 object-cover" />}
+                      <div className="p-5 flex-1 flex flex-col">
+                        {meta && <span className="text-xs font-bold uppercase text-primary mb-1">{meta}</span>}
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{itemTitle}</h3>
+                        {sub && <p className="text-sm opacity-75 line-clamp-3 flex-1">{sub}</p>}
+                      </div>
+                    </div>,
+                    item, i
+                  );
+                }
+              }
+            };
+
+            if (items.length === 0 && emptyMessage) {
+              return (
+                <section className="py-12 md:py-16">
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
+                    {subtitle && <p className="text-lg opacity-75 mb-8">{subtitle}</p>}
+                    <p className="text-center opacity-60 py-8">{emptyMessage}</p>
+                  </div>
+                </section>
+              );
+            }
 
             return (
               <section className="py-12 md:py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
+                  {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
+                  {subtitle && <p className="text-lg opacity-75 mb-8">{subtitle}</p>}
+
+                  {layout === "grid" && (
+                    <div className={`grid gap-6 ${colsClass[columns] || colsClass["3"]}`}>
+                      {items.map((item, i) => renderCard(item, i))}
+                    </div>
                   )}
-                  <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    {items.map((item, i) => {
-                      const coverUrl = item.coverImage && typeof item.coverImage === "object" ? (item.coverImage as Media).url : "";
-                      const href = item.accessType === "url" && item.externalUrl
-                        ? item.externalUrl
-                        : `/research/${item.slug}`;
-                      return (
-                        <a key={i} href={href} target={item.accessType === "url" ? "_blank" : undefined} rel="noopener noreferrer" className="flex-shrink-0 w-72 block">
-                          <div className="h-[380px] overflow-hidden shadow-lg bg-white border border-gray-100">
-                            {coverUrl && (
-                              <img src={coverUrl} alt={item.title} className="w-full h-40 object-cover" />
+
+                  {layout === "list" && (
+                    <div className="space-y-4">
+                      {items.map((item, i) => {
+                        const imageUrl = getItemImage(item);
+                        const itemTitle = getItemTitle(item);
+                        const href = getItemHref(item);
+                        const sub = getItemSubtitle(item);
+                        const meta = getItemMeta(item);
+                        const external = isItemExternal(item);
+
+                        const row = (
+                          <div className="flex gap-4 p-4 bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                            {imageUrl && (
+                              <img src={imageUrl} alt={itemTitle} className="w-24 h-24 object-cover shrink-0" />
                             )}
-                            <div className="p-5">
-                              <span className="text-xs font-bold uppercase text-primary mb-1 block">{item.type?.replace("-", " ")}</span>
-                              <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title}</h3>
-                              <p className="text-sm opacity-75 line-clamp-3">{item.summary}</p>
-                              <span className="inline-block mt-3 text-sm font-bold text-primary">{item.ctaLabel || "Check it out"} →</span>
+                            <div className="flex-1 min-w-0">
+                              {meta && <span className="text-xs font-bold uppercase text-primary">{meta}</span>}
+                              <h3 className="font-bold text-lg line-clamp-1">{itemTitle}</h3>
+                              {sub && <p className="text-sm opacity-75 line-clamp-2">{sub}</p>}
                             </div>
                           </div>
-                        </a>
-                      );
-                    })}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <ResearchGrid key={index} />;
-        }
+                        );
 
-        if (section.blockType === "booksSection") {
-          const BooksGrid = () => {
-            const [books, setBooks] = useState<Book[]>([]);
-            useEffect(() => {
-              fetch(`/api/books?limit=${section.limit || 6}&sort=order`)
-                .then((res) => res.json())
-                .then((data) => setBooks(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
+                        if (!href) return <div key={i}>{row}</div>;
+                        if (external) return <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="block">{row}</a>;
+                        return <Link key={i} href={href} className="block">{row}</Link>;
+                      })}
+                    </div>
                   )}
-                  <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    {books.map((book, i) => {
-                      const coverUrl = book.cover && typeof book.cover === "object" ? (book.cover as Media).url : "";
-                      return (
-                        <a key={i} href={book.url || "#"} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 w-56 block">
-                          <div className="h-[360px] overflow-hidden shadow-lg bg-white border border-gray-100">
-                            {coverUrl ? (
-                              <img src={coverUrl} alt={book.title} className="w-full h-52 object-cover" />
-                            ) : (
-                              <div className="w-full h-52 bg-primary/10 flex items-center justify-center text-4xl">📚</div>
-                            )}
-                            <div className="p-4">
-                              <h3 className="font-bold text-sm mb-1 line-clamp-2">{book.title}</h3>
-                              {book.author && <p className="text-xs opacity-75">{book.author}</p>}
-                              {book.year && <p className="text-xs opacity-50">{book.year}</p>}
-                            </div>
-                          </div>
-                        </a>
-                      );
-                    })}
-                  </div>
-                </div>
-              </section>
-            );
-          };
-          return <BooksGrid key={index} />;
-        }
 
-        if (section.blockType === "productsGridSection") {
-          const ProductsGrid = () => {
-            const [products, setProducts] = useState<Product[]>([]);
-            useEffect(() => {
-              fetch(`/api/products?limit=${section.limit || 12}&sort=order`)
-                .then((res) => res.json())
-                .then((data) => setProducts(data.docs || []));
-            }, []);
-
-            return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {section.title && (
-                    <h2 className="text-3xl font-bold mb-8">{section.title}</h2>
+                  {layout === "carousel" && (
+                    <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                      {items.map((item, i) => (
+                        <div key={i} className="flex-shrink-0 w-72">
+                          {renderCard(item, i)}
+                        </div>
+                      ))}
+                    </div>
                   )}
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {products.map((product, i) => {
-                      const imageUrl = product.image && typeof product.image === "object" ? (product.image as Media).url : "";
-                      return (
-                        <a key={i} href={product.url || resolveLinkHref(section as unknown as Record<string, unknown>, "shop") || "#"} target="_blank" rel="noopener noreferrer" className="block group">
-                          <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow group-hover:shadow-lg">
-                            {imageUrl ? (
-                              <img src={imageUrl} alt={product.name} className="w-full h-48 object-cover" />
-                            ) : (
-                              <div className="w-full h-48 bg-base-200 flex items-center justify-center text-3xl">🛍️</div>
-                            )}
-                            <div className="p-4">
-                              <h3 className="font-bold text-sm mb-1">{product.name}</h3>
-                              <div className="flex items-center gap-2">
-                                {product.price && <span className="font-bold text-primary">{product.price}</span>}
-                                {product.outOfStock && (
-                                  <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5">Out of Stock</span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      );
-                    })}
-                  </div>
+
+                  {layout === "featured" && items.length > 0 && (
+                    <div className="grid gap-6 lg:grid-cols-2">
+                      <div className="lg:row-span-2">
+                        {renderCard(items[0], 0)}
+                      </div>
+                      <div className={`grid gap-4 ${items.length > 2 ? "grid-rows-2" : ""}`}>
+                        {items.slice(1, 5).map((item, i) => renderCard(item, i + 1))}
+                      </div>
+                    </div>
+                  )}
+
                   {(() => {
-                    const sectionData = section as unknown as Record<string, unknown>;
-                    const shopHref = resolveLinkHref(sectionData, "shop");
-                    const shopLabel = sectionData.shopLabel as string || "View All Products";
-                    if (!shopHref) return null;
-                    const external = isExternalLink(sectionData, "shop");
+                    const viewAllHref = resolveLinkHref(sectionData, "viewAll");
+                    const viewAllLabel = (sectionData.viewAllLabel as string) || "View All";
+                    if (!viewAllHref) return null;
+                    const external = isExternalLink(sectionData, "viewAll");
                     return (
                       <div className="mt-8 text-center">
                         {external ? (
-                          <a href={shopHref} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
-                            {shopLabel}
+                          <a href={viewAllHref} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                            {viewAllLabel}
                           </a>
                         ) : (
-                          <Link href={shopHref} className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
-                            {shopLabel}
+                          <Link href={viewAllHref} className="inline-block px-6 py-3 bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                            {viewAllLabel}
                           </Link>
                         )}
                       </div>
@@ -667,8 +588,9 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               </section>
             );
           };
-          return <ProductsGrid key={index} />;
+          return <CollectionList key={index} />;
         }
+
 
         if (section.blockType === "contentGridSection") {
           const gapMap: Record<string, string> = {
