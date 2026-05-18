@@ -16,6 +16,8 @@ const colors = {
   secondaryContent: themeConfig.match(/secondaryContent:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
   accent: themeConfig.match(/accent:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
   accentContent: themeConfig.match(/accentContent:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
+  accent2: themeConfig.match(/accent2:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
+  accent2Content: themeConfig.match(/accent2Content:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
   neutral: themeConfig.match(/neutral:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
   neutralContent: themeConfig.match(/neutralContent:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
   base100: themeConfig.match(/base100:\s*"(#[0-9A-Fa-f]{6})"/)?.[1],
@@ -48,7 +50,10 @@ const css = `/* Auto-generated from /src/config/theme.ts - DO NOT EDIT */
   
   --color-accent: oklch(${hexToOklch(colors.accent)});          /* ${colors.accent} */
   --color-accent-content: oklch(${hexToOklch(colors.accentContent)});  /* ${colors.accentContent} */
-  
+
+  --color-accent2: oklch(${hexToOklch(colors.accent2)});         /* ${colors.accent2} */
+  --color-accent2-content: oklch(${hexToOklch(colors.accent2Content)});  /* ${colors.accent2Content} */
+
   --color-neutral: oklch(${hexToOklch(colors.neutral)});        /* ${colors.neutral} */
   --color-neutral-content: oklch(${hexToOklch(colors.neutralContent)});  /* ${colors.neutralContent} */
   
