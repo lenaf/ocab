@@ -471,6 +471,8 @@ export interface Page {
             blockType: 'contentGridSection';
           }
         | {
+            heading?: string | null;
+            description?: string | null;
             /**
              * Which collection to pull items from
              */
@@ -481,9 +483,13 @@ export interface Page {
               | 'books'
               | 'team-members'
               | 'campaigns'
-              | 'products';
+              | 'products'
+              | 'tags';
             layout?: ('grid' | 'list' | 'carousel' | 'featured') | null;
             columns?: ('2' | '3' | '4') | null;
+            /**
+             * Leave empty for carousel to show all items
+             */
             limit?: number | null;
             sortField?: ('createdAt_desc' | 'createdAt_asc' | 'title_asc' | 'order_asc' | 'startDate_asc') | null;
             filterFeatured?: boolean | null;
@@ -706,6 +712,7 @@ export interface Tag {
   id: string;
   name: string;
   slug?: string | null;
+  color?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -748,12 +755,7 @@ export interface BlogPost {
   authorName?: string | null;
   category?: ('News' | 'campaign-update' | 'Action' | 'Victory' | 'Analysis' | 'press-release' | 'community') | null;
   featured?: boolean | null;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  tags?: (string | Tag)[] | null;
   /**
    * Select related blog posts to display
    */
@@ -808,14 +810,9 @@ export interface PressArticle {
   id: string;
   title: string;
   publication?: string | null;
-  type?: ('news' | 'op-ed' | 'interview' | 'photo-essay') | null;
   excerpt?: string | null;
   url: string;
   image?: (string | null) | Media;
-  /**
-   * Featured articles appear in the press section on the homepage
-   */
-  featured?: boolean | null;
   publishedAt: string;
   tags?: (string | Tag)[] | null;
   updatedAt: string;
@@ -851,10 +848,46 @@ export interface Campaign {
   id: string;
   title: string;
   slug?: string | null;
-  status?: ('active' | 'past' | 'upcoming') | null;
   year?: number | null;
-  endYear?: number | null;
-  featured?: boolean | null;
+  /**
+   * Leave as 'Same year' if it started and ended in the same year
+   */
+  endYear?:
+    | (
+        | 'same'
+        | 'present'
+        | '2026'
+        | '2025'
+        | '2024'
+        | '2023'
+        | '2022'
+        | '2021'
+        | '2020'
+        | '2019'
+        | '2018'
+        | '2017'
+        | '2016'
+        | '2015'
+        | '2014'
+        | '2013'
+        | '2012'
+        | '2011'
+        | '2010'
+        | '2009'
+        | '2008'
+        | '2007'
+        | '2006'
+        | '2005'
+        | '2004'
+        | '2003'
+        | '2002'
+        | '2001'
+        | '2000'
+        | '1999'
+        | '1998'
+        | '1997'
+      )
+    | null;
   tags?: (string | Tag)[] | null;
   summary?: string | null;
   content?: {
@@ -876,7 +909,6 @@ export interface Campaign {
   seo?: {
     title?: string | null;
     description?: string | null;
-    ogImage?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -1205,6 +1237,8 @@ export interface PagesSelect<T extends boolean = true> {
         collectionListSection?:
           | T
           | {
+              heading?: T;
+              description?: T;
               dataSource?: T;
               layout?: T;
               columns?: T;
@@ -1325,12 +1359,7 @@ export interface BlogPostsSelect<T extends boolean = true> {
   authorName?: T;
   category?: T;
   featured?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
+  tags?: T;
   relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1402,10 +1431,8 @@ export interface EventsSelect<T extends boolean = true> {
 export interface CampaignsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  status?: T;
   year?: T;
   endYear?: T;
-  featured?: T;
   tags?: T;
   summary?: T;
   content?: T;
@@ -1415,7 +1442,6 @@ export interface CampaignsSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        ogImage?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1427,11 +1453,9 @@ export interface CampaignsSelect<T extends boolean = true> {
 export interface PressArticlesSelect<T extends boolean = true> {
   title?: T;
   publication?: T;
-  type?: T;
   excerpt?: T;
   url?: T;
   image?: T;
-  featured?: T;
   publishedAt?: T;
   tags?: T;
   updatedAt?: T;
@@ -1495,6 +1519,7 @@ export interface ProductsSelect<T extends boolean = true> {
 export interface TagsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  color?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -105,16 +105,11 @@ export const BlogPosts: CollectionConfig = {
     },
     {
       name: 'tags',
-      type: 'array',
-      fields: [
-        {
-          name: 'tag',
-          type: 'text',
-        },
-      ],
-      admin: {
-        position: 'sidebar',
-      },
+      type: 'relationship',
+      relationTo: 'tags' as never,
+      hasMany: true,
+      label: 'Tags',
+      admin: { position: 'sidebar' },
     },
     {
       name: 'relatedPosts',

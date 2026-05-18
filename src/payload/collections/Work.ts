@@ -6,7 +6,7 @@ export const Work: CollectionConfig = {
   labels: { singular: "Work", plural: "Work" },
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "status", "featured"],
+    defaultColumns: ["title", "year", "tags"],
     description: "Campaigns, research, reports, and other OCAB work",
     group: "📚 Collections",
     listSearchableFields: ["title", "slug", "summary"],
@@ -30,34 +30,28 @@ export const Work: CollectionConfig = {
     { name: "title", type: "text", required: true },
     { name: "slug", type: "text", unique: true, admin: { position: "sidebar" } },
     {
-      name: "status",
-      type: "select",
-      options: [
-        { label: "Active", value: "active" },
-        { label: "Past", value: "past" },
-        { label: "Upcoming", value: "upcoming" },
-      ],
-      defaultValue: "active",
-      admin: { position: "sidebar" },
-    },
-    {
       name: "year",
       type: "number",
-      label: "Year",
+      label: "Start Year",
       admin: { position: "sidebar" },
     },
     {
       name: "endYear",
-      type: "number",
-      label: "End Year (if multi-year)",
-      admin: { position: "sidebar", condition: (_, s) => !!s?.year },
-    },
-    {
-      name: "featured",
-      type: "checkbox",
-      label: "Featured",
-      defaultValue: false,
-      admin: { position: "sidebar" },
+      type: "select",
+      label: "End Year",
+      options: [
+        { label: "Same year (ended)", value: "same" },
+        { label: "Present (ongoing)", value: "present" },
+        ...Array.from({ length: 30 }, (_, i) => {
+          const y = new Date().getFullYear() - i;
+          return { label: String(y), value: String(y) };
+        }),
+      ],
+      admin: {
+        position: "sidebar",
+        condition: (_, s) => !!s?.year,
+        description: "Leave as 'Same year' if it started and ended in the same year",
+      },
     },
     {
       name: "tags",
@@ -78,7 +72,6 @@ export const Work: CollectionConfig = {
       fields: [
         { name: "title", type: "text" },
         { name: "description", type: "textarea", maxLength: 160 },
-        { name: "ogImage", type: "upload", relationTo: "media" as never, label: "Social Share Image" },
       ],
     },
   ],

@@ -25,5 +25,16 @@ export const Tags: CollectionConfig = {
   fields: [
     { name: "name", type: "text", required: true },
     { name: "slug", type: "text", unique: true, admin: { position: "sidebar" } },
+    {
+      name: "color",
+      type: "text",
+      label: "Color",
+      admin: {
+        position: "sidebar",
+        components: {
+          Field: "@/payload/components/ColorPickerField#ColorPickerField",
+        },
+      },
+    },
   ],
 };

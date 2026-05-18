@@ -43,22 +43,13 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
         </div>
       )}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-center gap-3 mb-4">
-          {item.status && (
-            <span className={`inline-block px-3 py-1 text-sm font-bold ${
-              item.status === 'active' ? 'bg-green-500 text-white' :
-              item.status === 'upcoming' ? 'bg-blue-500 text-white' :
-              'bg-gray-500 text-white'
-            }`}>
-              {item.status}
-            </span>
-          )}
-          {item.year && (
+        {item.year && (
+          <div className="mb-4">
             <span className="text-sm text-gray-500">
-              {item.year}{item.endYear ? `–${item.endYear}` : ''}
+              {item.year}{item.endYear === 'present' ? '–Present' : item.endYear && item.endYear !== 'same' ? `–${item.endYear}` : ''}
             </span>
-          )}
-        </div>
+          </div>
+        )}
         <h1 className="text-4xl md:text-5xl font-bold mb-6">{item.title}</h1>
         {item.summary && (
           <p className="text-xl text-gray-600 mb-8">{item.summary}</p>

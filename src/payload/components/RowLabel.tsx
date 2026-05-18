@@ -10,6 +10,7 @@ const DATA_SOURCE_LABELS: Record<string, string> = {
   "team-members": "Team",
   campaigns: "Work",
   products: "Products",
+  tags: "Tags",
 };
 
 const LAYOUT_LABELS: Record<string, string> = {

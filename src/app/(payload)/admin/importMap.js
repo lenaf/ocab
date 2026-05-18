@@ -27,6 +27,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { ColorSchemeField as ColorSchemeField_eaa434971ec6d637869ac48c60190ba3 } from '@/payload/components/ColorSchemeField'
 import { FloatingArrayField as FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3 } from '@/payload/components/FloatingArrayField'
 import { BlockLabel as BlockLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
+import { ColorPickerField as ColorPickerField_231cea9390dde05be64e71973c26440a } from '@/payload/components/ColorPickerField'
 import { NavItemRowLabel as NavItemRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { CtaButtonRowLabel as CtaButtonRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1 } from '@/payload/components/RowLabel'
 import { LogoutButton as LogoutButton_4fa0da4f39e65c0a260a976af575b7d4 } from '@/payload/components/LogoutButton'
@@ -63,6 +64,7 @@ export const importMap = {
   "@/payload/components/ColorSchemeField#ColorSchemeField": ColorSchemeField_eaa434971ec6d637869ac48c60190ba3,
   "@/payload/components/FloatingArrayField#FloatingArrayField": FloatingArrayField_06528f4bdcd70fdc4d6eff64bd2b45f3,
   "@/payload/components/RowLabel#BlockLabel": BlockLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
+  "@/payload/components/ColorPickerField#ColorPickerField": ColorPickerField_231cea9390dde05be64e71973c26440a,
   "@/payload/components/RowLabel#NavItemRowLabel": NavItemRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/RowLabel#CtaButtonRowLabel": CtaButtonRowLabel_330bd7521fe9b72cd9d2defbdaf80bf1,
   "@/payload/components/LogoutButton#LogoutButton": LogoutButton_4fa0da4f39e65c0a260a976af575b7d4,

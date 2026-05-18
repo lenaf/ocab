@@ -546,6 +546,17 @@ export const Pages: CollectionConfig = {
           admin: { components: { Label: "@/payload/components/RowLabel#BlockLabel" } },
           fields: [
             {
+              name: "heading",
+              type: "text",
+              label: "Heading",
+            },
+            {
+              name: "description",
+              type: "textarea",
+              label: "Description",
+              admin: { rows: 2 },
+            },
+            {
               name: "dataSource",
               type: "select",
               label: "Data Source",
@@ -559,6 +570,7 @@ export const Pages: CollectionConfig = {
                 { label: "Team Members", value: "team-members" },
                 { label: "Work (Campaigns & Research)", value: "campaigns" },
                 { label: "Products / Merch", value: "products" },
+                { label: "Tags", value: "tags" },
               ],
             },
             {
@@ -585,7 +597,7 @@ export const Pages: CollectionConfig = {
               ],
               admin: { condition: (_, s) => s?.layout === "grid" || s?.layout === "featured" },
             },
-            { name: "limit", type: "number", label: "Max Items to Show", defaultValue: 6, min: 1, max: 24 },
+            { name: "limit", type: "number", label: "Max Items to Show", min: 1, max: 50, admin: { description: "Leave empty for carousel to show all items" } },
             {
               name: "sortField",
               type: "select",

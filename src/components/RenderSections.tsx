@@ -4,11 +4,19 @@ import Link from "next/link";
 import { LexicalRenderer } from "./LexicalRenderer";
 import { HeroCarousel } from "./HeroCarousel";
 import { themeConfig } from "@/config/theme";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type {
   Page,
   Media,
 } from "@/payload-types";
+import { EventCard } from "./cards/EventCard";
+import { BlogPostCard } from "./cards/BlogPostCard";
+import { PressCard } from "./cards/PressCard";
+import { WorkCard } from "./cards/WorkCard";
+import { TeamMemberCard } from "./cards/TeamMemberCard";
+import { BookCard } from "./cards/BookCard";
+import { ProductCard } from "./cards/ProductCard";
+import { TagCard } from "./cards/TagCard";
 
 type Section = NonNullable<Page["sections"]>[number];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -229,11 +237,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
           const CollectionList = () => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const [items, setItems] = useState<AnyRecord[]>([]);
+            const carouselRef = useRef<HTMLDivElement>(null);
             const sectionData = section as unknown as Record<string, unknown>;
             const dataSource = sectionData.dataSource as string;
             const layout = (sectionData.layout as string) || "grid";
             const columns = (sectionData.columns as string) || "3";
-            const limit = (sectionData.limit as number) || 6;
+            const limit = (sectionData.limit as number) || 50;
             const sortField = (sectionData.sortField as string) || "createdAt_desc";
             const filterFeatured = sectionData.filterFeatured as boolean;
             const upcomingOnly = sectionData.upcomingOnly as boolean;
@@ -275,6 +284,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   "press-articles": "/press",
                   events: "/events",
                   campaigns: "/work",
+                  tags: "/tags",
                 };
                 const base = pathMap[dataSource];
                 if (base) return `${base}/${item.slug}`;
@@ -319,139 +329,29 @@ export function RenderSections({ sections }: { sections: Section[] }) {
 
             const renderCard = (item: AnyRecord, i: number) => {
               switch (dataSource) {
-                case "events": {
-                  const imageUrl = getItemImage(item);
-                  const startDate = item.startDate ? new Date(item.startDate as string) : null;
-                  const location = item.location as AnyRecord | undefined;
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
-                      <div className="p-5 flex-1 flex flex-col">
-                        {startDate && (
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-xs font-bold bg-primary/10 text-primary px-2 py-0.5">
-                              {startDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-                            </span>
-                            {item.eventType && <span className="text-xs opacity-60 capitalize">{(item.eventType as string).replace("-", " ")}</span>}
-                          </div>
-                        )}
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
-                        {location?.venue && <p className="text-sm opacity-60">{location.venue as string}</p>}
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "events":
+                  return wrapWithLink(<EventCard item={item} getItemImage={getItemImage} />, item, i);
 
-                case "blog-posts": {
-                  const imageUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
-                      <div className="p-5 flex-1 flex flex-col">
-                        <div className="flex items-center gap-2 mb-2">
-                          {item.category && <span className="text-xs font-bold uppercase text-primary">{item.category as string}</span>}
-                          {item.publishedAt && <span className="text-xs opacity-50">{new Date(item.publishedAt as string).toLocaleDateString()}</span>}
-                        </div>
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
-                        {item.excerpt && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.excerpt as string}</p>}
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "blog-posts":
+                  return wrapWithLink(<BlogPostCard item={item} getItemImage={getItemImage} />, item, i);
 
-                case "press-articles": {
-                  const imageUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
-                      <div className="p-5 flex-1 flex flex-col">
-                        <div className="flex items-center gap-2 mb-2">
-                          {item.publication && <span className="text-xs font-bold text-accent">{item.publication as string}</span>}
-                          {item.type && <span className="text-xs opacity-50 capitalize">{(item.type as string).replace("-", " ")}</span>}
-                        </div>
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
-                        {item.excerpt && <p className="text-sm opacity-75 line-clamp-3 flex-1">{item.excerpt as string}</p>}
-                        {item.publishedAt && <p className="text-xs opacity-50 mt-auto pt-2">{new Date(item.publishedAt as string).toLocaleDateString()}</p>}
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "press-articles":
+                  return wrapWithLink(<PressCard item={item} getItemImage={getItemImage} />, item, i);
 
-                case "campaigns": {
-                  const imageUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-neutral text-neutral-content transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
-                      <div className="p-5 flex-1 flex flex-col">
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title as string}</h3>
-                        {item.summary && <p className="text-sm opacity-80 line-clamp-3 flex-1">{item.summary as string}</p>}
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "campaigns":
+                  return wrapWithLink(<WorkCard item={item} getItemImage={getItemImage} />, item, i);
 
-                case "team-members": {
-                  const photoUrl = getItemImage(item);
-                  return (
-                    <div key={i} className="text-center">
-                      {photoUrl ? (
-                        <img src={photoUrl} alt={item.name as string} className="w-32 h-32 rounded-full object-cover mx-auto mb-3" />
-                      ) : (
-                        <div className="w-32 h-32 rounded-full bg-base-200 mx-auto mb-3 flex items-center justify-center text-3xl font-bold opacity-40">
-                          {(item.name as string)?.charAt(0)}
-                        </div>
-                      )}
-                      <h3 className="font-bold text-lg">{item.name as string}</h3>
-                      {item.role && <p className="text-sm opacity-75">{item.role as string}</p>}
-                      {item.pronouns && <p className="text-xs opacity-50">{item.pronouns as string}</p>}
-                    </div>
-                  );
-                }
+                case "team-members":
+                  return <TeamMemberCard key={i} item={item} getItemImage={getItemImage} />;
 
-                case "books": {
-                  const coverUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {coverUrl ? (
-                        <img src={coverUrl} alt={item.title as string} className="w-full h-52 object-cover" />
-                      ) : (
-                        <div className="w-full h-52 bg-primary/10 flex items-center justify-center text-4xl">📚</div>
-                      )}
-                      <div className="p-4 flex-1">
-                        <h3 className="font-bold text-sm mb-1 line-clamp-2">{item.title as string}</h3>
-                        {item.author && <p className="text-xs opacity-75">{item.author as string}</p>}
-                        {item.year && <p className="text-xs opacity-50">{item.year as string}</p>}
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "books":
+                  return wrapWithLink(<BookCard item={item} getItemImage={getItemImage} />, item, i);
 
-                case "products": {
-                  const imageUrl = getItemImage(item);
-                  return wrapWithLink(
-                    <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
-                      {imageUrl ? (
-                        <img src={imageUrl} alt={item.name as string} className="w-full h-48 object-cover" />
-                      ) : (
-                        <div className="w-full h-48 bg-base-200 flex items-center justify-center text-3xl">🛍️</div>
-                      )}
-                      <div className="p-4 flex-1">
-                        <h3 className="font-bold text-sm mb-1">{item.name as string}</h3>
-                        <div className="flex items-center gap-2">
-                          {item.price && <span className="font-bold text-primary">{item.price as string}</span>}
-                          {item.outOfStock && <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5">Out of Stock</span>}
-                        </div>
-                      </div>
-                    </div>,
-                    item, i
-                  );
-                }
+                case "products":
+                  return wrapWithLink(<ProductCard item={item} getItemImage={getItemImage} />, item, i);
 
+                case "tags":
+                  return <TagCard key={i} item={item} />;
 
                 default: {
                   const imageUrl = getItemImage(item);
@@ -483,9 +383,34 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               );
             }
 
+            const bgColor = sectionData.backgroundColor as string | undefined;
+
             return (
-              <section className="py-12 md:py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <section
+                className="relative py-12 md:py-16"
+                style={{
+                  backgroundColor: getBgClass(bgColor),
+                  color: getContentClass(bgColor),
+                }}
+              >
+                {getMediaUrl(sectionData.backgroundImage as string | Media | null | undefined) && (
+                  <>
+                    <img src={getMediaUrl(sectionData.backgroundImage as string | Media | null | undefined)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                    {sectionData.darkScrim && <div className="absolute inset-0 bg-black/50" />}
+                  </>
+                )}
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  {(() => {
+                    const heading = sectionData.heading as string | undefined;
+                    const desc = sectionData.description as string | undefined;
+                    if (!heading && !desc) return null;
+                    return (
+                      <div className="mb-8">
+                        {heading && <h2 className="text-3xl md:text-4xl font-bold">{heading}</h2>}
+                        {desc && <p className="mt-2 text-lg opacity-75">{desc}</p>}
+                      </div>
+                    );
+                  })()}
 
                   {layout === "grid" && (
                     <div className={`grid gap-6 ${colsClass[columns] || colsClass["3"]}`}>
@@ -524,12 +449,32 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                   )}
 
                   {layout === "carousel" && (
-                    <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                      {items.map((item, i) => (
-                        <div key={i} className="flex-shrink-0 w-72">
-                          {renderCard(item, i)}
-                        </div>
-                      ))}
+                    <div className="relative">
+                      <div ref={carouselRef} className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none" }}>
+                        {items.map((item, i) => (
+                          <div key={i} className={`flex-shrink-0 snap-start ${dataSource === "tags" ? "w-28" : "w-72"}`}>
+                            {renderCard(item, i)}
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => carouselRef.current?.scrollBy({ left: -300, behavior: "smooth" })}
+                        className="absolute -left-14 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-70"
+                        style={{ color: getContentClass(bgColor) || "currentColor" }}
+                        aria-label="Scroll left"
+                      >
+                        <svg className="w-7 h-14" fill="currentColor" viewBox="0 0 10 20"><path d="M8 2L2 10l6 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => carouselRef.current?.scrollBy({ left: 300, behavior: "smooth" })}
+                        className="absolute -right-14 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-70"
+                        style={{ color: getContentClass(bgColor) || "currentColor" }}
+                        aria-label="Scroll right"
+                      >
+                        <svg className="w-7 h-14" fill="currentColor" viewBox="0 0 10 20"><path d="M2 2l6 8-6 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>
+                      </button>
                     </div>
                   )}
 
