@@ -1571,7 +1571,7 @@ export interface Navigation {
   ctaButtons?:
     | {
         label: string;
-        style?: ('primary' | 'accent' | 'success' | 'neutral' | 'outline') | null;
+        style?: ('primary' | 'accent' | 'accent2' | 'secondary' | 'outline') | null;
         linkType?: ('page' | 'url') | null;
         page?: (string | null) | Page;
         url?: string | null;

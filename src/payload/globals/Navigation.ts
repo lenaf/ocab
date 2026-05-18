@@ -159,8 +159,8 @@ export const Navigation: GlobalConfig = {
                       options: [
                         { label: "Blue (Primary)", value: "primary" },
                         { label: "Orange (Accent)", value: "accent" },
-                        { label: "Amber (Success)", value: "success" },
-                        { label: "Dark (Neutral)", value: "neutral" },
+                        { label: "Amber (Secondary Accent)", value: "accent2" },
+                        { label: "Dark (Secondary)", value: "secondary" },
                         { label: "Outline", value: "outline" },
                       ],
                       defaultValue: "primary",

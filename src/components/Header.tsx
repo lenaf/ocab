@@ -9,8 +9,10 @@ import type { Media, Navigation, Page, SiteSetting } from "@/payload-types";
 const BUTTON_STYLES: Record<string, string> = {
   primary: "bg-primary text-primary-content",
   accent: "bg-accent text-accent-content",
-  success: "bg-success text-success-content",
-  neutral: "bg-neutral text-neutral-content",
+  accent2: "bg-accent2 text-accent2-content",
+  success: "bg-accent2 text-accent2-content",
+  secondary: "bg-secondary text-secondary-content",
+  neutral: "bg-secondary text-secondary-content",
   outline: "border-2 border-current bg-transparent",
 };
 
