@@ -11,6 +11,8 @@ import type {
 } from "@/payload-types";
 
 type Section = NonNullable<Page["sections"]>[number];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyRecord = Record<string, any>;
 
 function resolveLinkHref(section: Record<string, unknown>, prefix: string): string | null {
   const linkType = section[`${prefix}LinkType`];
@@ -224,7 +226,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
         if (section.blockType === "collectionListSection") {
           const CollectionList = () => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const [items, setItems] = useState<Record<string, any>[]>([]);
+            const [items, setItems] = useState<AnyRecord[]>([]);
             const sectionData = section as unknown as Record<string, unknown>;
             const dataSource = sectionData.dataSource as string;
             const layout = (sectionData.layout as string) || "grid";
@@ -249,7 +251,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 .then((data) => setItems(data.docs || []));
             }, [dataSource, limit, sortField, filterFeatured, upcomingOnly]);
 
-            const getItemImage = (item: Record<string, any>): string => {
+            const getItemImage = (item: AnyRecord): string => {
               const imgFields = ["image", "coverImage", "cover", "photo"];
               for (const f of imgFields) {
                 const media = item[f];
@@ -260,11 +262,11 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               return "";
             };
 
-            const getItemTitle = (item: Record<string, any>): string => {
+            const getItemTitle = (item: AnyRecord): string => {
               return (item.title || item.name || "") as string;
             };
 
-            const getItemHref = (item: Record<string, any>): string | null => {
+            const getItemHref = (item: AnyRecord): string | null => {
               if (item.slug && dataSource) {
                 const pathMap: Record<string, string> = {
                   "blog-posts": "/blog",
@@ -280,11 +282,11 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               return null;
             };
 
-            const getItemSubtitle = (item: Record<string, any>): string => {
+            const getItemSubtitle = (item: AnyRecord): string => {
               return (item.excerpt || item.summary || item.role || item.author || item.publication || "") as string;
             };
 
-            const getItemMeta = (item: Record<string, any>): string => {
+            const getItemMeta = (item: AnyRecord): string => {
               if (item.publishedAt) return new Date(item.publishedAt as string).toLocaleDateString();
               if (item.startDate) return new Date(item.startDate as string).toLocaleDateString();
               if (item.year) return String(item.year);
@@ -293,7 +295,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               return "";
             };
 
-            const isItemExternal = (item: Record<string, any>): boolean => {
+            const isItemExternal = (item: AnyRecord): boolean => {
               if (item.accessType === "url") return true;
               if (dataSource === "press-articles" || dataSource === "books" || dataSource === "products") return true;
               return false;
@@ -305,7 +307,7 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               "4": "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
             };
 
-            const wrapWithLink = (content: React.ReactNode, item: Record<string, any>, i: number) => {
+            const wrapWithLink = (content: React.ReactNode, item: AnyRecord, i: number) => {
               const href = getItemHref(item);
               const external = isItemExternal(item);
               if (!href) return <div key={i}>{content}</div>;
@@ -313,12 +315,12 @@ export function RenderSections({ sections }: { sections: Section[] }) {
               return <Link key={i} href={href} className="block h-full">{content}</Link>;
             };
 
-            const renderCard = (item: Record<string, any>, i: number) => {
+            const renderCard = (item: AnyRecord, i: number) => {
               switch (dataSource) {
                 case "events": {
                   const imageUrl = getItemImage(item);
                   const startDate = item.startDate ? new Date(item.startDate as string) : null;
-                  const location = item.location as Record<string, any> | undefined;
+                  const location = item.location as AnyRecord | undefined;
                   return wrapWithLink(
                     <div className="overflow-hidden shadow-md bg-white border border-gray-100 transition-shadow hover:shadow-lg h-full flex flex-col">
                       {imageUrl && <img src={imageUrl} alt={item.title as string} className="w-full h-44 object-cover" />}
