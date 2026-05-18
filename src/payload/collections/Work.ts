@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { slugify } from "../utils/slugify";
+import { revalidate } from "../utils/revalidate";
 
 export const Work: CollectionConfig = {
   slug: "campaigns",
@@ -24,6 +25,12 @@ export const Work: CollectionConfig = {
         if (data?.title && !data?.slug) data.slug = slugify(data.title);
         return data;
       },
+    ],
+    afterChange: [
+      async ({ doc }) => { await revalidate(["/", "/work", `/work/${doc.slug}`]); },
+    ],
+    afterDelete: [
+      async () => { await revalidate(["/", "/work"]); },
     ],
   },
   fields: [

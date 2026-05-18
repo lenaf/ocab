@@ -1,4 +1,5 @@
 import type { CollectionConfig, Field } from "payload";
+import { revalidate } from "../utils/revalidate";
 
 const linkFields = (prefix: string, label: string): Field[] => [
   {
@@ -173,25 +174,6 @@ const floatingImagesCollapsible: Field = {
 
 const columnFields: Field[] = [contentField, designLayoutCollapsible()];
 
-const revalidatePage = async (slug: string) => {
-  try {
-    const revalidateUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`;
-
-    const res = await fetch(revalidateUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug, collection: 'pages' }),
-    });
-
-    if (!res.ok) {
-      console.error(`Failed to revalidate ${slug}:`, await res.text());
-    } else {
-      console.log(`Successfully revalidated ${slug}`);
-    }
-  } catch (error) {
-    console.error(`Error revalidating ${slug}:`, error);
-  }
-};
 
 export const Pages: CollectionConfig = {
   slug: "pages" as const,
@@ -259,18 +241,10 @@ export const Pages: CollectionConfig = {
       },
     ],
     afterChange: [
-      async ({ doc }) => {
-        if (doc.slug) {
-          await revalidatePage(doc.slug);
-        }
-      },
+      async ({ doc }) => { await revalidate(["/", `/${doc.slug}`]); },
     ],
     afterDelete: [
-      async ({ doc }) => {
-        if (doc.slug) {
-          await revalidatePage(doc.slug);
-        }
-      },
+      async ({ doc }) => { await revalidate(["/", `/${doc.slug}`]); },
     ],
   },
   fields: [

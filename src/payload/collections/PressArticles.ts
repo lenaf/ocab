@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidate } from '../utils/revalidate'
 
 export const PressArticles: CollectionConfig = {
   slug: 'press-articles' as const,
@@ -8,6 +9,14 @@ export const PressArticles: CollectionConfig = {
     description: 'News coverage of OCAB from external publications',
     group: '📚 Collections',
     listSearchableFields: ['title', 'publication'],
+  },
+  hooks: {
+    afterChange: [
+      async () => { await revalidate(["/", "/press"]); },
+    ],
+    afterDelete: [
+      async () => { await revalidate(["/", "/press"]); },
+    ],
   },
   fields: [
     {

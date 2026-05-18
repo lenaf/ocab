@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { slugify } from '../utils/slugify'
+import { revalidate } from '../utils/revalidate'
 
 export const Events: CollectionConfig = {
   slug: 'events' as const,
@@ -24,6 +25,12 @@ export const Events: CollectionConfig = {
         }
         return data
       },
+    ],
+    afterChange: [
+      async ({ doc }) => { await revalidate(["/", "/events", `/events/${doc.slug}`]); },
+    ],
+    afterDelete: [
+      async ({ doc }) => { await revalidate(["/", "/events"]); },
     ],
   },
   fields: [

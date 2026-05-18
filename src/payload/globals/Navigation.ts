@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { revalidate } from "../utils/revalidate";
 
 export const Navigation: GlobalConfig = {
   slug: "navigation",
@@ -6,6 +7,11 @@ export const Navigation: GlobalConfig = {
   access: {
     read: () => true,
     update: ({ req: { user } }) => !!user,
+  },
+  hooks: {
+    afterChange: [
+      async () => { await revalidate(["/(.*)"]) },
+    ],
   },
   fields: [
     {

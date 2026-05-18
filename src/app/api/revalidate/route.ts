@@ -2,7 +2,6 @@ import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  // Check for secret to confirm this is a valid request
   const secret = request.nextUrl.searchParams.get('secret')
 
   if (secret !== process.env.REVALIDATE_SECRET) {
@@ -11,32 +10,30 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { slug, collection } = body
+    const { slug, collection, paths } = body
 
-    // Revalidate based on collection type
+    // New: revalidate an array of paths
+    if (paths && Array.isArray(paths)) {
+      for (const p of paths) {
+        revalidatePath(p)
+      }
+      return NextResponse.json({ revalidated: true, paths, now: Date.now() })
+    }
+
+    // Legacy: single slug + collection
     if (collection === 'pages') {
       if (slug === 'home') {
-        // Revalidate home page
         revalidatePath('/')
-        console.log(`Revalidated home page`)
-      } else {
-        // Revalidate specific page
+      } else if (slug) {
         revalidatePath(`/${slug}`)
-        console.log(`Revalidated /${slug}`)
       }
     }
 
-    // Also revalidate the page that was updated
     if (slug) {
       revalidatePath(`/${slug}`)
     }
 
-    return NextResponse.json({
-      revalidated: true,
-      now: Date.now(),
-      slug,
-      collection
-    })
+    return NextResponse.json({ revalidated: true, now: Date.now(), slug, collection })
   } catch (err) {
     console.error('Error revalidating:', err)
     return NextResponse.json({
