@@ -15,7 +15,11 @@ export async function POST(request: NextRequest) {
     // New: revalidate an array of paths
     if (paths && Array.isArray(paths)) {
       for (const p of paths) {
-        revalidatePath(p)
+        if (p === "/(.*)" || p === "*") {
+          revalidatePath("/", "layout")
+        } else {
+          revalidatePath(p)
+        }
       }
       return NextResponse.json({ revalidated: true, paths, now: Date.now() })
     }
