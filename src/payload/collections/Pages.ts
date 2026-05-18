@@ -61,13 +61,12 @@ const designLayoutCollapsible = (includeMaxWidth = false): Field => ({
           type: "select",
           label: "Color Scheme",
           options: [
-            { label: "Primary (blue bg, white text)", value: "primary" },
-            { label: "Secondary (dark blue bg, white text)", value: "secondary" },
-            { label: "Accent (orange bg, dark text)", value: "accent" },
-            { label: "Neutral (charcoal bg, white text)", value: "neutral" },
+            { label: "Primary (blue, white text)", value: "primary" },
+            { label: "Secondary (black, white text)", value: "secondary" },
+            { label: "Accent (orange, white text)", value: "accent" },
+            { label: "Secondary Accent (amber, dark text)", value: "accent2" },
             { label: "White", value: "base-100" },
             { label: "Light Gray", value: "base-200" },
-            { label: "Medium Gray", value: "base-300" },
           ],
           admin: {
             width: "50%",

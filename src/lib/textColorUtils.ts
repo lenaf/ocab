@@ -6,8 +6,8 @@ export function getTextColorForBackground(bgColor: string | null | undefined): '
   if (!bgColor) return 'dark'; // Default to dark text if no background
   
   // DaisyUI color names - map to their typical luminance
-  const darkBackgrounds = ['primary', 'secondary', 'accent', 'neutral'];
-  const lightBackgrounds = ['base-100', 'base-200', 'base-300'];
+  const darkBackgrounds = ['primary', 'secondary', 'neutral', 'accent'];
+  const lightBackgrounds = ['base-100', 'base-200', 'accent2'];
   
   if (darkBackgrounds.includes(bgColor)) return 'light';
   if (lightBackgrounds.includes(bgColor)) return 'dark';

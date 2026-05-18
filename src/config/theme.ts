@@ -9,24 +9,27 @@ export const themeConfig = {
     accent: "#F1562A",
     accentContent: "#FFFFFF",
 
+    accent2: "#F89825",
+    accent2Content: "#1A1A1A",
+
     neutral: "#1A1A1A",
     neutralContent: "#FFFFFF",
 
     base100: "#FFFFFF",
     base200: "#FAF9F5",
-    base300: "#E8E8E8",
+    base300: "#6B6B6B",
     baseContent: "#1A1A1A",
 
     info: "#3CA0DB",
     infoContent: "#FFFFFF",
 
-    success: "#F89825",
+    success: "#7BB662",
     successContent: "#FFFFFF",
 
-    warning: "#F1562A",
-    warningContent: "#FFFFFF",
+    warning: "#F89825",
+    warningContent: "#1A1A1A",
 
-    error: "#DC2626",
+    error: "#C5341B",
     errorContent: "#FFFFFF",
   },
 

@@ -184,9 +184,7 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            backgroundColor?:
-              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-              | null;
+            backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             padding?: ('none' | 'small' | 'standard' | 'large') | null;
             backgroundImage?: (string | null) | Media;
             /**
@@ -215,9 +213,7 @@ export interface Page {
                     };
                     [k: string]: unknown;
                   } | null;
-                  backgroundColor?:
-                    | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                    | null;
+                  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
                   backgroundImage?: (string | null) | Media;
                   /**
                    * Semi-transparent overlay to improve text readability over the image
@@ -246,9 +242,7 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            backgroundColor?:
-              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-              | null;
+            backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             padding?: ('none' | 'small' | 'standard' | 'large') | null;
             backgroundImage?: (string | null) | Media;
             /**
@@ -299,9 +293,7 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?:
-                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                | null;
+              backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
               backgroundImage?: (string | null) | Media;
               /**
                * Semi-transparent overlay to improve text readability over the image
@@ -324,9 +316,7 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?:
-                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                | null;
+              backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
               backgroundImage?: (string | null) | Media;
               /**
                * Semi-transparent overlay to improve text readability over the image
@@ -355,9 +345,7 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?:
-                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                | null;
+              backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
               backgroundImage?: (string | null) | Media;
               /**
                * Semi-transparent overlay to improve text readability over the image
@@ -380,9 +368,7 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?:
-                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                | null;
+              backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
               backgroundImage?: (string | null) | Media;
               /**
                * Semi-transparent overlay to improve text readability over the image
@@ -405,9 +391,7 @@ export interface Page {
                 };
                 [k: string]: unknown;
               } | null;
-              backgroundColor?:
-                | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                | null;
+              backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
               backgroundImage?: (string | null) | Media;
               /**
                * Semi-transparent overlay to improve text readability over the image
@@ -440,9 +424,7 @@ export interface Page {
              */
             embedCode?: string | null;
             successMessage?: string | null;
-            backgroundColor?:
-              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-              | null;
+            backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             backgroundImage?: (string | null) | Media;
             /**
              * Semi-transparent overlay to improve text readability over the image
@@ -475,9 +457,7 @@ export interface Page {
                     };
                     [k: string]: unknown;
                   } | null;
-                  backgroundColor?:
-                    | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-                    | null;
+                  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
                   backgroundImage?: (string | null) | Media;
                   /**
                    * Semi-transparent overlay to improve text readability over the image
@@ -550,9 +530,7 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
-            backgroundColor?:
-              | ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300')
-              | null;
+            backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             backgroundImage?: (string | null) | Media;
             /**
              * Semi-transparent overlay to improve text readability over the image
@@ -716,7 +694,7 @@ export interface Event {
   seoTitle?: string | null;
   seoDescription?: string | null;
   seoKeywords?: string | null;
-  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'neutral' | 'base-100' | 'base-200' | 'base-300') | null;
+  backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
   updatedAt: string;
   createdAt: string;
 }

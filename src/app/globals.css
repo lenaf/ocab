@@ -109,7 +109,7 @@
 
   /* Enhanced focus states */
   :focus-visible {
-    outline: 2px solid #3CA0DB;
+    outline: 2px solid var(--color-secondary);
     outline-offset: 2px;
   }
 
@@ -119,7 +119,7 @@
   }
 
   a:hover {
-    color: #3CA0DB;
+    color: var(--color-secondary);
   }
 
   /* Badge improvements */
