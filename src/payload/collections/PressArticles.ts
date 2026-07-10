@@ -3,6 +3,9 @@ import { revalidate } from '../utils/revalidate'
 
 export const PressArticles: CollectionConfig = {
   slug: 'press-articles' as const,
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'publication', 'publishedAt', 'tags'],

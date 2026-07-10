@@ -4,6 +4,9 @@ import { revalidate } from '../utils/revalidate'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts' as const,
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'featured', 'publishedAt'],

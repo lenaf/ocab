@@ -17,6 +17,8 @@ import { TeamMemberCard } from "./cards/TeamMemberCard";
 import { BookCard } from "./cards/BookCard";
 import { ProductCard } from "./cards/ProductCard";
 import { TagCard } from "./cards/TagCard";
+import { SignupForm } from "./SignupForm";
+import { ActionNetworkForm } from "./ActionNetworkForm";
 
 type Section = NonNullable<Page["sections"]>[number];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -680,19 +682,16 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 {formType === "embed" && section.embedCode && (
                   <div className="mt-8" dangerouslySetInnerHTML={{ __html: section.embedCode as string }} />
                 )}
-                {formType === "contact" && (
-                  <form className="mt-8 space-y-4">
-                    <input type="text" placeholder="Name" className="w-full p-3 border border-current/20 bg-transparent" />
-                    <input type="email" placeholder="Email" className="w-full p-3 border border-current/20 bg-transparent" />
-                    <textarea placeholder="Message" rows={4} className="w-full p-3 border border-current/20 bg-transparent" />
-                    <button type="submit" className="btn btn-primary">Send</button>
-                  </form>
-                )}
-                {formType === "newsletter" && (
-                  <form className="mt-8 flex gap-3">
-                    <input type="email" placeholder="Your email" className="flex-1 p-3 border border-current/20 bg-transparent" />
-                    <button type="submit" className="btn btn-primary">Subscribe</button>
-                  </form>
+                {(formType === "contact" || formType === "newsletter") && (
+                  section.actionNetworkFormUrl ? (
+                    <ActionNetworkForm formUrl={section.actionNetworkFormUrl as string} />
+                  ) : (
+                    <SignupForm
+                      mode={formType === "contact" ? "contact" : "newsletter"}
+                      source={formType}
+                      successMessage={(section.successMessage as string) || undefined}
+                    />
+                  )
                 )}
               </div>
             </section>

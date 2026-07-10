@@ -423,6 +423,10 @@ export interface Page {
              * Paste embed code from Action Network, Mailchimp, Google Forms, etc.
              */
             embedCode?: string | null;
+            /**
+             * Paste the URL (or slug) of an Action Network form to embed it here. Recommended — submissions go straight to Action Network. Leave blank to use the basic built-in form.
+             */
+            actionNetworkFormUrl?: string | null;
             successMessage?: string | null;
             backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             backgroundImage?: (string | null) | Media;
@@ -1207,6 +1211,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               formType?: T;
               embedCode?: T;
+              actionNetworkFormUrl?: T;
               successMessage?: T;
               backgroundColor?: T;
               backgroundImage?: T;

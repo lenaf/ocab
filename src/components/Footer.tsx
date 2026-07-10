@@ -22,7 +22,6 @@ export async function Footer() {
     { title: "Our Work", slug: "work" },
     { title: "Get Involved", slug: "get-involved" },
     { title: "Events", slug: "events" },
-    { title: "Blog", slug: "blog" },
     { title: "Press", slug: "press" },
     { title: "Contact", slug: "contact" },
   ];

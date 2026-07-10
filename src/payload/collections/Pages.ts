@@ -422,6 +422,17 @@ export const Pages: CollectionConfig = {
               },
             },
             {
+              name: "actionNetworkFormUrl",
+              type: "text",
+              label: "Action Network Form URL",
+              admin: {
+                condition: (_, s) => s?.formType === "newsletter" || s?.formType === "contact",
+                placeholder: "https://actionnetwork.org/forms/your-form-slug",
+                description:
+                  "Paste the URL (or slug) of an Action Network form to embed it here. Recommended — submissions go straight to Action Network. Leave blank to use the basic built-in form.",
+              },
+            },
+            {
               name: "successMessage",
               type: "text",
               label: "Success Message",
