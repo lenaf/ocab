@@ -43,3 +43,9 @@ export function CtaButtonRowLabel() {
   if (data?.label) return <span>{data.label}</span>;
   return <span>{`Button ${String(rowNumber).padStart(2, "0")}`}</span>;
 }
+
+export function FormFieldRowLabel() {
+  const { data, rowNumber } = useRowLabel<{ label?: string; mapsTo?: string }>();
+  if (data?.label) return <span>{data.label}{data.mapsTo ? ` → ${data.mapsTo}` : ""}</span>;
+  return <span>{`Field ${String(rowNumber).padStart(2, "0")}`}</span>;
+}

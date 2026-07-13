@@ -406,11 +406,12 @@ export const Pages: CollectionConfig = {
               label: "Form Type",
               required: true,
               options: [
+                { label: "Action Network Signup", value: "actionNetwork" },
                 { label: "Contact Form", value: "contact" },
                 { label: "Newsletter Signup", value: "newsletter" },
                 { label: "Custom Embed", value: "embed" },
               ],
-              defaultValue: "contact",
+              defaultValue: "actionNetwork",
             },
             {
               name: "embedCode",
@@ -426,11 +427,84 @@ export const Pages: CollectionConfig = {
               type: "text",
               label: "Action Network Form URL",
               admin: {
-                condition: (_, s) => s?.formType === "newsletter" || s?.formType === "contact",
+                condition: (_, s) => s?.formType !== "embed",
                 placeholder: "https://actionnetwork.org/forms/your-form-slug",
                 description:
-                  "Paste the URL (or slug) of an Action Network form to embed it here. Recommended — submissions go straight to Action Network. Leave blank to use the basic built-in form.",
+                  "URL (or slug) of the Action Network form that receives submissions. Action Network blocks direct posts, so the form loads AN's widget hidden and submits through it. Leave blank to use the basic built-in form (email only, no Action Network).",
               },
+            },
+            {
+              name: "fields",
+              type: "array",
+              label: "Form Fields",
+              admin: {
+                condition: (_, s) => s?.formType === "actionNetwork" && !!s?.actionNetworkFormUrl,
+                description:
+                  "The inputs shown to visitors. Each maps to a field on the Action Network form. If left empty, a First name + Email form is used.",
+                initCollapsed: true,
+                components: { RowLabel: "@/payload/components/RowLabel#FormFieldRowLabel" },
+              },
+              fields: [
+                {
+                  type: "row",
+                  fields: [
+                    { name: "label", type: "text", required: true, label: "Label / Placeholder", admin: { width: "40%" } },
+                    {
+                      name: "mapsTo",
+                      type: "select",
+                      label: "Action Network Field",
+                      required: true,
+                      defaultValue: "email",
+                      options: [
+                        { label: "Email", value: "email" },
+                        { label: "First Name", value: "first_name" },
+                        { label: "Last Name", value: "last_name" },
+                        { label: "Zip / Postal Code", value: "zip_code" },
+                        { label: "Phone", value: "phone" },
+                        { label: "Country", value: "country" },
+                        { label: "Custom…", value: "custom" },
+                      ],
+                      admin: { width: "35%" },
+                    },
+                    {
+                      name: "customField",
+                      type: "text",
+                      label: "Custom AN Field",
+                      admin: {
+                        width: "25%",
+                        condition: (_, s) => s?.mapsTo === "custom",
+                        description: "The answer[…] field name",
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: "row",
+                  fields: [
+                    {
+                      name: "inputType",
+                      type: "select",
+                      label: "Input Type",
+                      defaultValue: "text",
+                      options: [
+                        { label: "Text", value: "text" },
+                        { label: "Email", value: "email" },
+                        { label: "Phone", value: "tel" },
+                      ],
+                      admin: { width: "40%" },
+                    },
+                    { name: "required", type: "checkbox", label: "Required", defaultValue: false, admin: { width: "30%" } },
+                    { name: "fullWidth", type: "checkbox", label: "Full width", defaultValue: false, admin: { width: "30%" } },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "submitLabel",
+              type: "text",
+              label: "Submit Button Label",
+              defaultValue: "Sign Up",
+              admin: { condition: (_, s) => s?.formType !== "embed" },
             },
             {
               name: "successMessage",

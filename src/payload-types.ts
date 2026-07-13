@@ -418,15 +418,33 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            formType: 'contact' | 'newsletter' | 'embed';
+            formType: 'actionNetwork' | 'contact' | 'newsletter' | 'embed';
             /**
              * Paste embed code from Action Network, Mailchimp, Google Forms, etc.
              */
             embedCode?: string | null;
             /**
-             * Paste the URL (or slug) of an Action Network form to embed it here. Recommended — submissions go straight to Action Network. Leave blank to use the basic built-in form.
+             * URL (or slug) of the Action Network form that receives submissions. Action Network blocks direct posts, so the form loads AN's widget hidden and submits through it. Leave blank to use the basic built-in form (email only, no Action Network).
              */
             actionNetworkFormUrl?: string | null;
+            /**
+             * The inputs shown to visitors. Each maps to a field on the Action Network form. If left empty, a First name + Email form is used.
+             */
+            fields?:
+              | {
+                  label: string;
+                  mapsTo: 'email' | 'first_name' | 'last_name' | 'zip_code' | 'phone' | 'country' | 'custom';
+                  /**
+                   * The answer[…] field name
+                   */
+                  customField?: string | null;
+                  inputType?: ('text' | 'email' | 'tel') | null;
+                  required?: boolean | null;
+                  fullWidth?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            submitLabel?: string | null;
             successMessage?: string | null;
             backgroundColor?: ('primary' | 'secondary' | 'accent' | 'accent2' | 'base-100' | 'base-200') | null;
             backgroundImage?: (string | null) | Media;
@@ -1212,6 +1230,18 @@ export interface PagesSelect<T extends boolean = true> {
               formType?: T;
               embedCode?: T;
               actionNetworkFormUrl?: T;
+              fields?:
+                | T
+                | {
+                    label?: T;
+                    mapsTo?: T;
+                    customField?: T;
+                    inputType?: T;
+                    required?: T;
+                    fullWidth?: T;
+                    id?: T;
+                  };
+              submitLabel?: T;
               successMessage?: T;
               backgroundColor?: T;
               backgroundImage?: T;

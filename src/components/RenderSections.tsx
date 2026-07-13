@@ -18,7 +18,7 @@ import { BookCard } from "./cards/BookCard";
 import { ProductCard } from "./cards/ProductCard";
 import { TagCard } from "./cards/TagCard";
 import { SignupForm } from "./SignupForm";
-import { ActionNetworkForm } from "./ActionNetworkForm";
+import { ActionNetworkForm, type FormFieldConfig } from "./ActionNetworkForm";
 
 type Section = NonNullable<Page["sections"]>[number];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -682,9 +682,14 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 {formType === "embed" && section.embedCode && (
                   <div className="mt-8" dangerouslySetInnerHTML={{ __html: section.embedCode as string }} />
                 )}
-                {(formType === "contact" || formType === "newsletter") && (
+                {(formType === "actionNetwork" || formType === "contact" || formType === "newsletter") && (
                   section.actionNetworkFormUrl ? (
-                    <ActionNetworkForm formUrl={section.actionNetworkFormUrl as string} />
+                    <ActionNetworkForm
+                      formUrl={section.actionNetworkFormUrl as string}
+                      fields={section.fields as FormFieldConfig[] | null | undefined}
+                      buttonLabel={(section.submitLabel as string) || undefined}
+                      successMessage={(section.successMessage as string) || undefined}
+                    />
                   ) : (
                     <SignupForm
                       mode={formType === "contact" ? "contact" : "newsletter"}

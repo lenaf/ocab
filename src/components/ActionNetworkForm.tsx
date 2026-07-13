@@ -5,14 +5,28 @@ import { useEffect, useRef, useState } from "react";
 /**
  * Action Network signup — custom OCAB-styled UI over a hidden AN widget.
  *
- * AN's Cloudflare blocks server-side API writes, and AN's visible embed widget
- * can't be styled to match the site. So we load the AN form widget hidden
- * off-screen, render our own on-brand form, and on submit copy the values into
- * the hidden AN form and trigger its native submit. The visitor's browser does
- * the POST to Action Network (which handles storage, opt-in, and compliance).
+ * AN blocks direct/server-side posts (CSRF `authenticity_token` + a JS-solved
+ * anti-spam challenge), so we load the AN form widget hidden off-screen, render
+ * our own on-brand fields, and on submit copy the values into the hidden AN
+ * form and trigger its native submit. The visitor's browser does the POST, so
+ * AN's token + challenge are already populated by its own JS.
  *
- * `formUrl` accepts the full widget URL, a plain form URL, or just the slug.
+ * Fields are configurable in the CMS; each maps to an Action Network field.
  */
+
+export interface FormFieldConfig {
+  label: string;
+  mapsTo: string; // email | first_name | last_name | zip_code | phone | country | custom
+  customField?: string | null;
+  inputType?: string | null; // text | email | tel
+  required?: boolean | null;
+  fullWidth?: boolean | null;
+}
+
+const DEFAULT_FIELDS: FormFieldConfig[] = [
+  { label: "First name (optional)", mapsTo: "first_name", inputType: "text", required: false },
+  { label: "Email address", mapsTo: "email", inputType: "email", required: true, fullWidth: false },
+];
 
 function parseSlug(formUrl: string): string | null {
   const trimmed = (formUrl || "").trim();
@@ -23,9 +37,22 @@ function parseSlug(formUrl: string): string | null {
   return null;
 }
 
+/** CSS selector for the AN input a configured field maps to. */
+function anSelector(field: FormFieldConfig): string {
+  const key = field.mapsTo === "custom" ? (field.customField || "").trim() : field.mapsTo;
+  if (!key) return "";
+  if (field.mapsTo === "phone") return `#form-phone_number, input[name="answer[phone]"]`;
+  return `#form-${key}, [name="answer[${key}]"]`;
+}
+
 /** Set a value on an AN input so its framework notices the change. */
-function setNativeValue(el: HTMLInputElement | HTMLSelectElement, value: string) {
-  const proto = el instanceof HTMLSelectElement ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+function setNativeValue(el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, value: string) {
+  const proto =
+    el instanceof HTMLSelectElement
+      ? HTMLSelectElement.prototype
+      : el instanceof HTMLTextAreaElement
+        ? HTMLTextAreaElement.prototype
+        : HTMLInputElement.prototype;
   const setter = Object.getOwnPropertyDescriptor(proto, "value")?.set;
   if (setter) setter.call(el, value);
   else (el as HTMLInputElement).value = value;
@@ -38,21 +65,24 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 interface Props {
   formUrl: string;
+  fields?: FormFieldConfig[] | null;
   successMessage?: string;
   buttonLabel?: string;
 }
 
 export function ActionNetworkForm({
   formUrl,
+  fields,
   successMessage = "You're in! Watch your inbox for ways to take action.",
   buttonLabel = "Sign Up",
 }: Props) {
   const slug = parseSlug(formUrl);
+  const activeFields = fields && fields.length > 0 ? fields : DEFAULT_FIELDS;
+
   const hiddenRef = useRef<HTMLDivElement>(null);
   const anFormRef = useRef<HTMLFormElement | null>(null);
 
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
+  const [values, setValues] = useState<Record<number, string>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -92,16 +122,26 @@ export function ActionNetworkForm({
       return;
     }
 
-    const emailEl = anForm.querySelector<HTMLInputElement>("#form-email, input[name='answer[email]']");
-    const firstEl = anForm.querySelector<HTMLInputElement>("#form-first_name, input[name='answer[first_name]']");
-    if (!emailEl) {
-      setError("Something went wrong. Please try again.");
-      setStatus("error");
-      return;
-    }
+    // Copy each configured value into its matching Action Network field.
+    let mappedEmail = false;
+    activeFields.forEach((field, i) => {
+      const value = values[i] || "";
+      if (!value) return;
+      const sel = anSelector(field);
+      if (!sel) return;
+      const target = anForm.querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(sel);
+      if (target) {
+        setNativeValue(target, value);
+        if (field.mapsTo === "email") mappedEmail = true;
+      }
+    });
 
-    setNativeValue(emailEl, email);
-    if (firstEl && firstName) setNativeValue(firstEl, firstName);
+    if (!mappedEmail) {
+      // Fall back to any email input the AN form exposes.
+      const emailEl = anForm.querySelector<HTMLInputElement>('#form-email, [name="answer[email]"]');
+      const emailField = activeFields.findIndex((f) => f.mapsTo === "email");
+      if (emailEl && emailField >= 0 && values[emailField]) setNativeValue(emailEl, values[emailField]);
+    }
 
     // Opt in to the email group if the form offers it.
     anForm
@@ -176,24 +216,19 @@ export function ActionNetworkForm({
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-8 max-w-2xl">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              placeholder="First name (optional)"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className={`${inputClass} sm:max-w-[34%]`}
-              autoComplete="given-name"
-            />
-            <input
-              type="email"
-              required
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={inputClass}
-              autoComplete="email"
-            />
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:items-start">
+            {activeFields.map((field, i) => (
+              <input
+                key={i}
+                type={field.inputType || "text"}
+                required={!!field.required}
+                placeholder={field.label}
+                aria-label={field.label}
+                value={values[i] || ""}
+                onChange={(e) => setValues((v) => ({ ...v, [i]: e.target.value }))}
+                className={`${inputClass} ${field.fullWidth ? "sm:basis-full" : "sm:flex-1 sm:min-w-[160px]"}`}
+              />
+            ))}
             <button
               type="submit"
               disabled={status === "submitting"}
@@ -202,9 +237,7 @@ export function ActionNetworkForm({
               {status === "submitting" ? "Signing up…" : buttonLabel}
             </button>
           </div>
-          {status === "error" && error && (
-            <p className="mt-3 text-sm font-semibold">{error}</p>
-          )}
+          {status === "error" && error && <p className="mt-3 text-sm font-semibold">{error}</p>}
         </form>
       )}
     </>
