@@ -418,27 +418,19 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            formType: 'actionNetwork' | 'contact' | 'newsletter' | 'embed';
+            formType: 'actionNetwork' | 'embed';
             /**
              * Paste embed code from Action Network, Mailchimp, Google Forms, etc.
              */
             embedCode?: string | null;
-            /**
-             * The inputs shown to visitors. Each maps to an Action Network person field; submissions post server-side to Action Network. If left empty, a First name + Email form is used.
-             */
-            fields?:
+            anForm?:
               | {
-                  label: string;
-                  mapsTo: 'email' | 'first_name' | 'last_name' | 'zip_code' | 'phone' | 'country' | 'custom';
-                  /**
-                   * The answer[…] field name
-                   */
-                  customField?: string | null;
-                  inputType?: ('text' | 'email' | 'tel') | null;
-                  required?: boolean | null;
-                  fullWidth?: boolean | null;
-                  id?: string | null;
-                }[]
+                  [k: string]: unknown;
+                }
+              | unknown[]
+              | string
+              | number
+              | boolean
               | null;
             submitLabel?: string | null;
             successMessage?: string | null;
@@ -1225,17 +1217,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               formType?: T;
               embedCode?: T;
-              fields?:
-                | T
-                | {
-                    label?: T;
-                    mapsTo?: T;
-                    customField?: T;
-                    inputType?: T;
-                    required?: T;
-                    fullWidth?: T;
-                    id?: T;
-                  };
+              anForm?: T;
               submitLabel?: T;
               successMessage?: T;
               backgroundColor?: T;

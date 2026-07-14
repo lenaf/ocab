@@ -17,7 +17,7 @@ import { TeamMemberCard } from "./cards/TeamMemberCard";
 import { BookCard } from "./cards/BookCard";
 import { ProductCard } from "./cards/ProductCard";
 import { TagCard } from "./cards/TagCard";
-import { ActionNetworkForm, type FormFieldConfig } from "./ActionNetworkForm";
+import { ActionNetworkForm, type ANFormValue } from "./ActionNetworkForm";
 
 type Section = NonNullable<Page["sections"]>[number];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -683,8 +683,8 @@ export function RenderSections({ sections }: { sections: Section[] }) {
                 )}
                 {(formType === "actionNetwork" || formType === "contact" || formType === "newsletter") && (
                   <ActionNetworkForm
-                    fields={section.fields as FormFieldConfig[] | null | undefined}
-                    buttonLabel={(section.submitLabel as string) || undefined}
+                    anForm={section.anForm as ANFormValue | null | undefined}
+                    submitLabel={(section.submitLabel as string) || undefined}
                     successMessage={(section.successMessage as string) || undefined}
                     source={formType}
                   />
