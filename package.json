@@ -11,6 +11,7 @@
     "generate-colors": "node scripts/generate-colors.mjs",
     "populate": "tsx scripts/populate-pages.ts",
     "sync:events": "tsx scripts/syncEvents.ts",
+    "sync:an-forms": "tsx scripts/syncANForms.ts",
     "payload:generate": "payload generate:types",
     "payload:importmap": "payload generate:importmap"
   },

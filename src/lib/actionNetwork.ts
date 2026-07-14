@@ -31,8 +31,23 @@ function apiKey(): string {
   return key;
 }
 
-/** Call the Action Network OSDI API via node:https (bypasses the undici block). */
-function anApi(
+/** Call the Action Network OSDI API via node:https, retrying on rate-limit. */
+async function anApi(
+  method: "GET" | "POST",
+  path: string,
+  body?: unknown,
+  attempt = 0,
+): Promise<{ status: number; json: unknown }> {
+  const result = await anRequest(method, path, body);
+  // AN intermittently rate-limits with a 403/429; back off and retry.
+  if ((result.status === 403 || result.status === 429) && attempt < 4) {
+    await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+    return anApi(method, path, body, attempt + 1);
+  }
+  return result;
+}
+
+function anRequest(
   method: "GET" | "POST",
   path: string,
   body?: unknown,
@@ -111,27 +126,39 @@ function slugFromUrl(url: string | undefined): string {
 let formsCache: { at: number; forms: ANFormSummary[] } | null = null;
 const FORMS_TTL = 5 * 60 * 1000;
 
-/** List the org's Action Network forms. */
+/**
+ * List the org's Action Network forms.
+ *
+ * NOTE: `?per_page=100` triggers a Cloudflare WAF 403 on AN — the default
+ * page size (25) is fine. Paginate with `?page=N` for >25 forms.
+ */
 export async function listForms(): Promise<ANFormSummary[]> {
   if (formsCache && Date.now() - formsCache.at < FORMS_TTL) return formsCache.forms;
 
-  const { status, json } = await anApi("GET", "/forms?per_page=100");
-  if (status < 200 || status >= 300) throw new Error(`Action Network forms list failed: ${status}`);
-  const forms = (((json as Record<string, unknown>)?._embedded as Record<string, unknown>)?.["osdi:forms"] ??
-    []) as Record<string, unknown>[];
-  const mapped = forms
-    .map((f) => {
+  const mapped: ANFormSummary[] = [];
+  let page = 1;
+  let totalPages = 1;
+  do {
+    const { status, json } = await anApi("GET", page === 1 ? "/forms" : `/forms?page=${page}`);
+    if (status < 200 || status >= 300) throw new Error(`Action Network forms list failed: ${status}`);
+    const doc = json as Record<string, unknown>;
+    totalPages = (doc?.total_pages as number) || 1;
+    const forms = ((doc?._embedded as Record<string, unknown>)?.["osdi:forms"] ?? []) as Record<string, unknown>[];
+    for (const f of forms) {
       const id =
         ((f.identifiers as string[]) || [])
           .find((i) => i.startsWith("action_network:"))
           ?.replace("action_network:", "") ?? "";
-      return {
+      const entry = {
         id,
         slug: slugFromUrl(f.browser_url as string),
         title: (f.title as string) || (f.name as string) || "Untitled form",
       };
-    })
-    .filter((f) => f.id && f.slug);
+      if (entry.id && entry.slug) mapped.push(entry);
+    }
+    page++;
+  } while (page <= totalPages);
+
   formsCache = { at: Date.now(), forms: mapped };
   return mapped;
 }

@@ -25,6 +25,7 @@ import { SiteSettings } from "./payload/globals/SiteSettings";
 import { themeConfig } from "@/config/theme";
 
 import { Navigation } from "./payload/globals/Navigation";
+import { ActionNetworkForms } from "./payload/globals/ActionNetworkForms";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -96,7 +97,7 @@ export default buildConfig({
     Media,
     BlogPosts, Events, Work, PressArticles, TeamMembers, Books, Products, Tags,
   ],
-  globals: [Navigation, SiteSettings],
+  globals: [Navigation, SiteSettings, ActionNetworkForms],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

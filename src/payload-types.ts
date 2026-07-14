@@ -108,10 +108,12 @@ export interface Config {
   globals: {
     navigation: Navigation;
     'site-settings': SiteSetting;
+    'action-network-forms': ActionNetworkForm;
   };
   globalsSelect: {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'action-network-forms': ActionNetworkFormsSelect<false> | ActionNetworkFormsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1653,6 +1655,30 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "action-network-forms".
+ */
+export interface ActionNetworkForm {
+  id: string;
+  /**
+   * Last time `pnpm sync:an-forms` ran.
+   */
+  syncedAt?: string | null;
+  /**
+   * Synced from Action Network — run `pnpm sync:an-forms` to refresh.
+   */
+  forms?:
+    | {
+        formId?: string | null;
+        slug?: string | null;
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation_select".
  */
 export interface NavigationSelect<T extends boolean = true> {
@@ -1717,6 +1743,24 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         twitter?: T;
         tiktok?: T;
         youtube?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "action-network-forms_select".
+ */
+export interface ActionNetworkFormsSelect<T extends boolean = true> {
+  syncedAt?: T;
+  forms?:
+    | T
+    | {
+        formId?: T;
+        slug?: T;
+        title?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
