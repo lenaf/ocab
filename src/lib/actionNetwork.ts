@@ -44,10 +44,9 @@ function anApi(
         host: AN_HOST,
         path: `/api/v2${path}`,
         method,
-        // Force a fresh HTTP/1.1 connection — Cloudflare bot-blocks the HTTP/2
-        // fingerprint the Next.js runtime otherwise negotiates for this host.
+        // Fresh connection; node:https is HTTP/1.1, whose fingerprint AN's
+        // Cloudflare allows (unlike undici's HTTP/2).
         agent: new https.Agent({ keepAlive: false }),
-        ALPNProtocols: ["http/1.1"],
         headers: {
           "OSDI-API-Token": apiKey(),
           "Content-Type": "application/json",
