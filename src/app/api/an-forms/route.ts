@@ -8,6 +8,11 @@ export async function GET() {
     return NextResponse.json({ forms });
   } catch (err) {
     console.error("[an-forms] list failed:", err);
-    return NextResponse.json({ forms: [], error: "Could not load Action Network forms." }, { status: 502 });
+    // Temporary diagnostic: surface the real upstream status so we can see
+    // what Vercel's runtime actually gets from Action Network.
+    return NextResponse.json(
+      { forms: [], error: "Could not load Action Network forms.", detail: (err as Error)?.message || String(err) },
+      { status: 502 },
+    );
   }
 }
