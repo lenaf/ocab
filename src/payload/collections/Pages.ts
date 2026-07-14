@@ -423,24 +423,13 @@ export const Pages: CollectionConfig = {
               },
             },
             {
-              name: "actionNetworkFormUrl",
-              type: "text",
-              label: "Action Network Form URL",
-              admin: {
-                condition: (_, s) => s?.formType !== "embed",
-                placeholder: "https://actionnetwork.org/forms/your-form-slug",
-                description:
-                  "URL (or slug) of the Action Network form that receives submissions. Action Network blocks direct posts, so the form loads AN's widget hidden and submits through it. Leave blank to use the basic built-in form (email only, no Action Network).",
-              },
-            },
-            {
               name: "fields",
               type: "array",
               label: "Form Fields",
               admin: {
-                condition: (_, s) => s?.formType === "actionNetwork" && !!s?.actionNetworkFormUrl,
+                condition: (_, s) => s?.formType === "actionNetwork",
                 description:
-                  "The inputs shown to visitors. Each maps to a field on the Action Network form. If left empty, a First name + Email form is used.",
+                  "The inputs shown to visitors. Each maps to an Action Network person field; submissions post server-side to Action Network. If left empty, a First name + Email form is used.",
                 initCollapsed: true,
                 components: { RowLabel: "@/payload/components/RowLabel#FormFieldRowLabel" },
               },

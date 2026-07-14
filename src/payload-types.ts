@@ -424,11 +424,7 @@ export interface Page {
              */
             embedCode?: string | null;
             /**
-             * URL (or slug) of the Action Network form that receives submissions. Action Network blocks direct posts, so the form loads AN's widget hidden and submits through it. Leave blank to use the basic built-in form (email only, no Action Network).
-             */
-            actionNetworkFormUrl?: string | null;
-            /**
-             * The inputs shown to visitors. Each maps to a field on the Action Network form. If left empty, a First name + Email form is used.
+             * The inputs shown to visitors. Each maps to an Action Network person field; submissions post server-side to Action Network. If left empty, a First name + Email form is used.
              */
             fields?:
               | {
@@ -1229,7 +1225,6 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               formType?: T;
               embedCode?: T;
-              actionNetworkFormUrl?: T;
               fields?:
                 | T
                 | {
