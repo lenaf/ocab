@@ -69,9 +69,17 @@ export async function POST(request: NextRequest) {
 
     if (!anRes.ok) {
       const detail = await anRes.text().catch(() => "");
+      const keyConfigured = apiKey !== "your_action_network_api_key_here";
       console.error(`[subscribe] Action Network returned ${anRes.status}: ${detail.slice(0, 500)}`);
       return NextResponse.json(
-        { ok: false, error: "Something went wrong signing you up. Please try again." },
+        {
+          ok: false,
+          error: "Something went wrong signing you up. Please try again.",
+          // Diagnostics (non-sensitive): distinguish missing key vs Cloudflare block.
+          upstreamStatus: anRes.status,
+          keyConfigured,
+          cloudflareChallenge: /cf-|cloudflare|challenge-platform/i.test(detail),
+        },
         { status: 502 },
       );
     }
