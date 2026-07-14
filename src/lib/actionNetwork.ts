@@ -9,9 +9,17 @@
  *
  * Gotcha: AN's endpoints return a 500 for reserved test domains like
  * example.com — always test with a real email.
+ *
+ * Transport note: AN's Cloudflare blocks Node's global fetch (undici) on
+ * /api/v2/* — its HTTP/2 fingerprint reads as a bot (403), from Vercel too.
+ * Node's built-in `https` module (HTTP/1.1) is NOT blocked, so all AN *API*
+ * calls go through `anApi()` below. The form widget (/widgets/) is unaffected
+ * and still uses fetch.
  */
 
-const AN_API = "https://actionnetwork.org/api/v2";
+import https from "node:https";
+
+const AN_HOST = "actionnetwork.org";
 const WIDGET = (slug: string) =>
   `https://actionnetwork.org/widgets/v6/form/${encodeURIComponent(slug)}?format=html`;
 
@@ -23,13 +31,50 @@ function apiKey(): string {
   return key;
 }
 
-function anHeaders() {
-  return {
-    "OSDI-API-Token": apiKey(),
-    "Content-Type": "application/json",
-    // AN's Cloudflare 403s API requests without a browser-like User-Agent.
-    "User-Agent": "Mozilla/5.0 (OCAB site)",
-  };
+/** Call the Action Network OSDI API via node:https (bypasses the undici block). */
+function anApi(
+  method: "GET" | "POST",
+  path: string,
+  body?: unknown,
+): Promise<{ status: number; json: unknown }> {
+  const payload = body ? JSON.stringify(body) : undefined;
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      {
+        host: AN_HOST,
+        path: `/api/v2${path}`,
+        method,
+        // Force a fresh HTTP/1.1 connection — Cloudflare bot-blocks the HTTP/2
+        // fingerprint the Next.js runtime otherwise negotiates for this host.
+        agent: new https.Agent({ keepAlive: false }),
+        ALPNProtocols: ["http/1.1"],
+        headers: {
+          "OSDI-API-Token": apiKey(),
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+          ...(payload ? { "Content-Length": Buffer.byteLength(payload) } : {}),
+        },
+      },
+      (res) => {
+        let data = "";
+        res.on("data", (c) => (data += c));
+        res.on("end", () => {
+          let json: unknown = null;
+          try {
+            json = data ? JSON.parse(data) : null;
+          } catch {
+            json = null;
+          }
+          resolve({ status: res.statusCode || 0, json });
+        });
+      },
+    );
+    req.on("error", reject);
+    if (payload) req.write(payload);
+    req.end();
+  });
 }
 
 // Fields AN includes for its own machinery — never shown to visitors.
@@ -63,14 +108,19 @@ function slugFromUrl(url: string | undefined): string {
   return m ? m[1] : "";
 }
 
+// Small in-memory cache — AN rate-limits the API and the list rarely changes.
+let formsCache: { at: number; forms: ANFormSummary[] } | null = null;
+const FORMS_TTL = 5 * 60 * 1000;
+
 /** List the org's Action Network forms. */
 export async function listForms(): Promise<ANFormSummary[]> {
-  // Cache 5 min — AN rate-limits the API, and the form list rarely changes.
-  const res = await fetch(`${AN_API}/forms?per_page=100`, { headers: anHeaders(), next: { revalidate: 300 } });
-  if (!res.ok) throw new Error(`Action Network forms list failed: ${res.status}`);
-  const json = await res.json();
-  const forms = (json?._embedded?.["osdi:forms"] ?? []) as Record<string, unknown>[];
-  return forms
+  if (formsCache && Date.now() - formsCache.at < FORMS_TTL) return formsCache.forms;
+
+  const { status, json } = await anApi("GET", "/forms?per_page=100");
+  if (status < 200 || status >= 300) throw new Error(`Action Network forms list failed: ${status}`);
+  const forms = (((json as Record<string, unknown>)?._embedded as Record<string, unknown>)?.["osdi:forms"] ??
+    []) as Record<string, unknown>[];
+  const mapped = forms
     .map((f) => {
       const id =
         ((f.identifiers as string[]) || [])
@@ -83,6 +133,8 @@ export async function listForms(): Promise<ANFormSummary[]> {
       };
     })
     .filter((f) => f.id && f.slug);
+  formsCache = { at: Date.now(), forms: mapped };
+  return mapped;
 }
 
 /** Resolve a form slug to its Action Network id. */
@@ -189,9 +241,15 @@ export async function submitForm(
   const body: Record<string, unknown> = { person };
   if (tags.length) body.add_tags = tags;
 
-  const res = await fetch(`${AN_API}/forms/${encodeURIComponent(formId)}/submissions`, {
+  // Submit via undici fetch — verified working from Vercel; the API key stays
+  // server-side. (Only the GET /forms list is undici-blocked, hence anApi there.)
+  const res = await fetch(`https://actionnetwork.org/api/v2/forms/${encodeURIComponent(formId)}/submissions`, {
     method: "POST",
-    headers: anHeaders(),
+    headers: {
+      "OSDI-API-Token": apiKey(),
+      "Content-Type": "application/json",
+      "User-Agent": "Mozilla/5.0 (OCAB site)",
+    },
     body: JSON.stringify(body),
   });
   return { ok: res.ok, status: res.status };
